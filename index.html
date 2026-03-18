@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>KoreaStarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F6F4EF;
+  --surface: #FFFFFF;
+  --ink: #18181B;
+  --ink-soft: #62626A;
+  --ink-light: #A0A0A8;
+  --accent: #E03D1A;
+  --accent-soft: #FEF0EC;
+  --border: #E6E2D8;
+  --sim: #1755A8;
+  --sim-soft: #EDF2FC;
+  --job: #157A50;
+  --job-soft: #EAF7F1;
+  --comm: #7535A2;
+  --comm-soft: #F4ECFB;
+  --kakao: #FAE100;
+  --kakao-ink: #3B1E08;
+  --google: #4285F4;
+  --fb: #1877F2;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 2px 20px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.13);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════════════════════
+   NAV
+════════════════════════════════ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(246,244,239,0.93);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  height: 58px;
+  display: flex; align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+}
+.logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 19px; color: var(--ink);
+  display: flex; align-items: center; gap: 7px;
+  cursor: pointer; flex-shrink: 0;
+  text-decoration: none; user-select: none;
+}
+.logo-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; }
+.logo span { color: var(--accent); }
+
+.nav-center {
+  display: flex; gap: 2px; list-style: none;
+  flex: 1; justify-content: center;
+}
+.nav-center a {
+  text-decoration: none; color: var(--ink-soft);
+  font-size: 13.5px; font-weight: 500;
+  padding: 6px 13px; border-radius: 8px;
+  transition: all 0.16s; white-space: nowrap;
+}
+.nav-center a:hover { background: var(--border); color: var(--ink); }
+.nav-center a.active { color: var(--accent); background: var(--accent-soft); }
+
+.nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* Language selector */
+.lang-sel {
+  position: relative;
+}
+.lang-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 10px; border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface); cursor: pointer;
+  font-size: 13px; font-weight: 500; color: var(--ink-soft);
+  transition: all 0.16s;
+}
+.lang-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+.lang-dropdown {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg);
+  min-width: 140px; overflow: hidden;
+  display: none; z-index: 300;
+}
+.lang-dropdown.open { display: block; }
+.lang-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; font-size: 13.5px;
+  cursor: pointer; transition: background 0.14s;
+  border-bottom: 1px solid var(--border);
+}
+.lang-option:last-child { border: none; }
+.lang-option:hover { background: var(--bg); }
+.lang-option.selected { color: var(--accent); font-weight: 600; }
+
+/* Login button */
+.btn-login {
+  padding: 7px 16px; border-radius: 9px;
+  background: var(--ink); color: white;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all 0.16s; white-space: nowrap;
+}
+.btn-login:hover { background: #333; }
+.user-pill {
+  display: none; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 6px; border-radius: 100px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  cursor: pointer; font-size: 13px; font-weight: 500;
+}
+.user-pill.show { display: flex; }
+.user-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; border: none; background: none;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink); border-radius: 2px;
+  transition: all 0.2s;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none; position: fixed;
+  inset: 58px 0 0 0; z-index: 150;
+  background: var(--bg);
+  padding: 20px;
+  flex-direction: column; gap: 8px;
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+}
+.mobile-menu.open { display: flex; }
+.mobile-nav-link {
+  display: block; padding: 13px 16px;
+  background: var(--surface); border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 500; color: var(--ink);
+  cursor: pointer; border: 1px solid var(--border);
+  text-align: left; transition: all 0.16s;
+}
+.mobile-nav-link.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.mobile-nav-link:hover { border-color: var(--ink-soft); }
+
+/* ════════════════════════════════
+   PAGES
+════════════════════════════════ */
+.page { display: none; animation: fadeIn 0.22s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* ════════════════════════════════
+   HOME
+════════════════════════════════ */
+.hero {
+  max-width: 820px; margin: 0 auto;
+  padding: 64px 24px 48px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid #F3BEAF;
+  border-radius: 100px; padding: 5px 16px;
+  font-size: 12.5px; font-weight: 600;
+  margin-bottom: 26px; letter-spacing: 0.04em;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 6vw, 58px);
+  line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+h1 em { color: var(--accent); font-style: italic; }
+.hero-sub {
+  font-size: clamp(15px, 2.5vw, 17px);
+  color: var(--ink-soft); max-width: 480px;
+  margin: 0 auto 36px; line-height: 1.65;
+}
+.hero-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-hero-primary {
+  padding: 12px 26px; border-radius: 12px;
+  background: var(--accent); color: white;
+  font-size: 14px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.18s;
+}
+.btn-hero-primary:hover { background: #B8300F; transform: translateY(-1px); }
+.btn-hero-secondary {
+  padding: 12px 26px; border-radius: 12px;
+  background: var(--surface); color: var(--ink);
+  font-size: 14px; font-weight: 600;
+  border: 1.5px solid var(--border); cursor: pointer; transition: all 0.18s;
+}
+.btn-hero-secondary:hover { border-color: var(--ink-soft); }
+
+.categories {
+  max-width: 920px; margin: 0 auto;
+  padding: 0 20px 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.cat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  cursor: pointer; transition: all 0.22s;
+  position: relative; overflow: hidden;
+}
+.cat-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.cat-card.sim::after { background: var(--sim); }
+.cat-card.job::after { background: var(--job); }
+.cat-card.comm::after { background: var(--comm); }
+.cat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: transparent; }
+.cat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 15px;
+}
+.cat-card.sim .cat-icon { background: var(--sim-soft); }
+.cat-card.job .cat-icon { background: var(--job-soft); }
+.cat-card.comm .cat-icon { background: var(--comm-soft); }
+.cat-title { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 6px; }
+.cat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+.cat-arrow { display: inline-flex; align-items: center; gap: 4px; margin-top: 14px; font-size: 13px; font-weight: 600; }
+.cat-card.sim .cat-arrow { color: var(--sim); }
+.cat-card.job .cat-arrow { color: var(--job); }
+.cat-card.comm .cat-arrow { color: var(--comm); }
+
+.trust-strip {
+  background: var(--ink);
+  padding: 18px 24px;
+  display: flex; justify-content: center;
+  gap: 32px; flex-wrap: wrap;
+  font-size: 12.5px; color: rgba(255,255,255,0.55);
+}
+.trust-item { display: flex; align-items: center; gap: 7px; }
+.trust-item strong { color: rgba(255,255,255,0.9); }
+
+/* ════════════════════════════════
+   PAGE HEADER
+════════════════════════════════ */
+.page-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 24px 24px;
+}
+.breadcrumb {
+  font-size: 12px; color: var(--ink-light);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+}
+.breadcrumb span { cursor: pointer; }
+.breadcrumb span:hover { color: var(--accent); }
+.page-title { font-family: 'DM Serif Display', serif; font-size: 27px; margin-bottom: 4px; }
+.page-subtitle { font-size: 14px; color: var(--ink-soft); }
+
+/* ════════════════════════════════
+   SIM CARDS
+════════════════════════════════ */
+.sim-content { max-width: 880px; margin: 0 auto; padding: 32px 20px; }
+
+.carrier-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+.carrier-tab {
+  padding: 7px 18px; border-radius: 100px;
+  border: 1.5px solid var(--border);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.16s;
+  background: var(--surface); color: var(--ink-soft);
+}
+.carrier-tab.active { border-color: var(--sim); color: var(--sim); background: var(--sim-soft); }
+.carrier-tab.soon { opacity: 0.45; cursor: not-allowed; }
+
+.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 28px; }
+
+.plan-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  position: relative; transition: all 0.2s;
+}
+.plan-card:hover { box-shadow: var(--shadow); border-color: var(--sim); }
+.plan-card.popular { border-color: var(--sim); box-shadow: 0 0 0 3px rgba(23,85,168,0.1); }
+.popular-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: var(--sim); color: white;
+  font-size: 10.5px; font-weight: 700;
+  padding: 3px 12px; border-radius: 100px;
+  white-space: nowrap; letter-spacing: 0.04em;
+}
+.plan-name { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+.plan-price { font-family: 'DM Serif Display', serif; font-size: 30px; color: var(--ink); }
+.plan-price sup { font-size: 15px; vertical-align: super; }
+.plan-price sub { font-size: 13px; color: var(--ink-soft); }
+.plan-period { font-size: 11.5px; color: var(--ink-light); margin-bottom: 14px; }
+.plan-features { list-style: none; margin-bottom: 18px; }
+.plan-features li {
+  font-size: 12.5px; padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 7px; color: var(--ink-soft);
+}
+.plan-features li:last-child { border: none; }
+.plan-features li::before { content: '✓'; color: var(--sim); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+.btn-plan {
+  display: block; width: 100%;
+  padding: 9px 0; border-radius: 10px;
+  text-align: center; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.16s;
+  text-decoration: none; border: none;
+}
+.btn-plan-primary { background: var(--sim); color: white; }
+.btn-plan-primary:hover { background: #0E3A80; }
+.btn-plan-outline { background: var(--surface); color: var(--sim); border: 1.5px solid var(--sim); }
+.btn-plan-outline:hover { background: var(--sim-soft); }
+
+/* Kakao consultation box */
+.kakao-box {
+  background: var(--kakao);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  display: flex; align-items: center; gap: 20px;
+  flex-wrap: wrap; margin-bottom: 24px;
+}
+.kakao-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: rgba(0,0,0,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+}
+.kakao-text { flex: 1; min-width: 180px; }
+.kakao-text h3 { font-size: 15px; font-weight: 700; color: var(--kakao-ink); margin-bottom: 3px; }
+.kakao-text p { font-size: 13px; color: rgba(59,30,8,0.7); line-height: 1.5; }
+.btn-kakao {
+  padding: 10px 22px; border-radius: 11px;
+  background: var(--kakao-ink); color: var(--kakao);
+  font-size: 13.5px; font-weight: 700;
+  border: none; cursor: pointer; transition: all 0.16s;
+  white-space: nowrap; display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.btn-kakao:hover { background: #1e0f04; transform: translateY(-1px); }
+.kakao-channel-hint {
+  font-size: 11px; color: rgba(59,30,8,0.5);
+  margin-top: 6px; display: block;
+}
+
+.sim-note {
+  background: var(--sim-soft); border-radius: var(--radius);
+  border: 1px solid #C0CFF0;
+  padding: 14px 18px; font-size: 13px; color: var(--ink-soft);
+  display: flex; gap: 10px; align-items: flex-start; line-height: 1.55;
+}
+
+/* ════════════════════════════════
+   JOB BOARD
+════════════════════════════════ */
+.board-wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px; }
+
+.board-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 22px; gap: 12px; flex-wrap: wrap;
+}
+.search-box {
+  flex: 1; min-width: 180px; max-width: 320px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 8px 14px;
+}
+.search-box input {
+  border: none; background: none; outline: none;
+  font-family: inherit; font-size: 13.5px; color: var(--ink);
+  flex: 1;
+}
+.search-box input::placeholder { color: var(--ink-light); }
+
+.btn-post-job {
+  padding: 9px 20px; border-radius: 10px;
+  background: var(--job); color: white;
+  font-size: 13.5px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.16s;
+  white-space: nowrap;
+}
+.btn-post-job:hover { background: #0E5939; }
+
+.post-list { display: flex; flex-direction: column; gap: 9px; }
+.post-row {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 15px 18px;
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 12px;
+  cursor: pointer; transition: all 0.16s;
+}
+.post-row:hover { border-color: var(--job); box-shadow: var(--shadow); }
+.post-row-body { flex: 1; min-width: 0; }
+.post-row-title { font-weight: 600; font-size: 14.5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.post-row-meta { font-size: 12px; color: var(--ink-light); }
+.post-tag {
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.03em; flex-shrink: 0; white-space: nowrap;
+  align-self: flex-start; margin-top: 2px;
+}
+.tag-ft { background: #E5F4EC; color: #157A50; }
+.tag-pt { background: #FEF4E2; color: #B05500; }
+.tag-remote { background: var(--sim-soft); color: var(--sim); }
+.tag-other { background: var(--comm-soft); color: var(--comm); }
+
+/* ════════════════════════════════
+   COMMUNITY
+════════════════════════════════ */
+.comm-filters {
+  display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.filter-chip {
+  padding: 5px 13px; border-radius: 100px;
+  font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: all 0.16s;
+  border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--ink-soft);
+  white-space: nowrap;
+}
+.filter-chip.active { border-color: var(--comm); color: var(--comm); background: var(--comm-soft); }
+
+.comm-post {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+  margin-bottom: 9px; cursor: pointer; transition: all 0.16s;
+}
+.comm-post:hover { border-color: var(--comm); box-shadow: var(--shadow); }
+.comm-post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+.comm-post-title { font-weight: 600; font-size: 14.5px; }
+.comm-post-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+.comm-post-foot { display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--ink-light); }
+
+.btn-new-post {
+  padding: 9px 20px; border-radius: 10px;
+  background: var(--comm); color: white;
+  font-size: 13.5px; font-weight: 600;
+  border: none; cursor: pointer; transition: all 0.16s;
+  white-space: nowrap;
+}
+.btn-new-post:hover { background: #561E7B; }
+
+/* ════════════════════════════════
+   MODALS
+════════════════════════════════ */
+.overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 400; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.overlay.open { display: flex; animation: overlayIn 0.18s ease; }
+@keyframes overlayIn { from { opacity:0; } to { opacity:1; } }
+
+.modal {
+  background: var(--surface); border-radius: 20px;
+  padding: 30px 28px; width: 100%; max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  max-height: 90vh; overflow-y: auto;
+}
+@keyframes modalIn { from { transform:scale(0.93) translateY(10px); opacity:0; } to { transform:scale(1) translateY(0); opacity:1; } }
+
+.modal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; margin-bottom: 20px;
+}
+.form-group { margin-bottom: 14px; }
+.form-label {
+  display: block; font-size: 11.5px; font-weight: 700;
+  color: var(--ink-soft); margin-bottom: 5px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%; padding: 10px 13px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: inherit; font-size: 14px;
+  background: var(--bg); color: var(--ink);
+  transition: border 0.16s; outline: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); background: var(--surface); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+.btn-cancel {
+  flex: 1; padding: 10px; border-radius: 10px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-weight: 600; font-size: 13.5px; cursor: pointer;
+  color: var(--ink-soft); transition: all 0.16s;
+}
+.btn-cancel:hover { border-color: var(--ink-soft); }
+.btn-submit {
+  flex: 2; padding: 10px; border-radius: 10px;
+  color: white; font-weight: 600; font-size: 13.5px;
+  cursor: pointer; border: none; transition: all 0.16s;
+}
+.btn-submit.job-color { background: var(--job); }
+.btn-submit.job-color:hover { background: #0E5939; }
+.btn-submit.comm-color { background: var(--comm); }
+.btn-submit.comm-color:hover { background: #561E7B; }
+
+/* ════════════════════════════════
+   LOGIN MODAL
+════════════════════════════════ */
+.login-modal {
+  background: var(--surface); border-radius: 22px;
+  padding: 36px 30px; width: 100%; max-width: 400px;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  text-align: center;
+}
+.login-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px; margin-bottom: 6px;
+}
+.login-logo span { color: var(--accent); }
+.login-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 28px; line-height: 1.5; }
+.login-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0; color: var(--ink-light); font-size: 12.5px;
+}
+.login-divider::before, .login-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.btn-social {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 11px 16px; border-radius: 12px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  border: 1.5px solid var(--border); background: var(--surface);
+  color: var(--ink); transition: all 0.16s; margin-bottom: 10px;
+}
+.btn-social:hover { border-color: var(--ink-soft); box-shadow: var(--shadow); transform: translateY(-1px); }
+.btn-social:last-child { margin-bottom: 0; }
+.btn-social.kakao { background: var(--kakao); border-color: var(--kakao); color: var(--kakao-ink); }
+.btn-social.kakao:hover { background: #EDD100; border-color: #EDD100; }
+.social-icon {
+  width: 24px; height: 24px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.social-icon.google { background: #f1f1f1; }
+.social-icon.facebook { background: var(--fb); color: white; font-size: 14px; font-weight: 700; }
+.social-icon.kakao-i { background: rgba(0,0,0,0.1); }
+.social-label { flex: 1; text-align: left; }
+.login-footer { font-size: 11.5px; color: var(--ink-light); margin-top: 20px; line-height: 1.6; }
+.login-footer a { color: var(--ink-soft); }
+
+/* ════════════════════════════════
+   EMPTY STATE
+════════════════════════════════ */
+.empty { text-align: center; padding: 50px 20px; color: var(--ink-light); }
+.empty-icon { font-size: 38px; margin-bottom: 10px; }
+.empty p { font-size: 14px; }
+
+/* ════════════════════════════════
+   FOOTER
+════════════════════════════════ */
+footer {
+  background: var(--ink); color: rgba(255,255,255,0.45);
+  padding: 24px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; flex-wrap: wrap; gap: 12px;
+}
+footer strong { color: rgba(255,255,255,0.85); }
+.footer-links { display: flex; gap: 18px; }
+.footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.16s; }
+.footer-links a:hover { color: white; }
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav-center { display: none; }
+  .hamburger { display: flex; }
+  .btn-login { padding: 6px 12px; font-size: 12.5px; }
+  .lang-btn { padding: 5px 8px; font-size: 12px; }
+
+  .hero { padding: 44px 20px 36px; }
+  h1 { font-size: 32px; }
+
+  .categories { grid-template-columns: 1fr; padding: 0 16px 44px; gap: 12px; }
+  .cat-card { padding: 20px 18px; }
+
+  .plans-grid { grid-template-columns: 1fr; }
+
+  .trust-strip { gap: 18px; }
+
+  .board-toolbar { flex-direction: column; align-items: stretch; }
+  .search-box { max-width: 100%; }
+  .btn-post-job, .btn-new-post { width: 100%; text-align: center; }
+
+  .modal, .login-modal { padding: 24px 20px; border-radius: 18px; }
+  .page-header { padding: 22px 16px 18px; }
+  .sim-content, .board-wrap { padding: 24px 16px; }
+
+  .kakao-box { flex-direction: column; gap: 14px; }
+  .btn-kakao { width: 100%; justify-content: center; }
+
+  footer { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+@media (max-width: 420px) {
+  nav { padding: 0 14px; gap: 8px; }
+  h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav>
+  <a class="logo" onclick="goHome()">
+    <div class="logo-dot"></div>Korea<span>Starter</span>
+  </a>
+
+  <ul class="nav-center">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active" data-i18n="nav_home">Home</a></li>
+    <li><a href="#" onclick="showPage('sim')" id="nav-sim" data-i18n="nav_sim">SIM Cards</a></li>
+    <li><a href="#" onclick="showPage('job')" id="nav-job" data-i18n="nav_job">Job Board</a></li>
+    <li><a href="#" onclick="showPage('comm')" id="nav-comm" data-i18n="nav_comm">Community</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- Language -->
+    <div class="lang-sel">
+      <button class="lang-btn" onclick="toggleLang()" id="lang-btn-label">🌐 EN</button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-option selected" onclick="setLang('en')">🇺🇸 English</div>
+        <div class="lang-option" onclick="setLang('ko')">🇰🇷 한국어</div>
+        <div class="lang-option" onclick="setLang('zh')">🇨🇳 中文</div>
+        <div class="lang-option" onclick="setLang('vi')">🇻🇳 Tiếng Việt</div>
+      </div>
+    </div>
+
+    <!-- Auth -->
+    <button class="btn-login" id="btn-login-nav" onclick="openModal('login-overlay')" data-i18n="nav_login">Login</button>
+    <div class="user-pill" id="user-pill" onclick="logoutUser()">
+      <div class="user-avatar" id="user-avatar">U</div>
+      <span id="user-name-nav">User</span>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-nav-link active" id="mob-home" onclick="showPage('home');closeMobileMenu()" data-i18n="nav_home">🏠 Home</button>
+  <button class="mobile-nav-link" id="mob-sim" onclick="showPage('sim');closeMobileMenu()" data-i18n="nav_sim">📱 SIM Cards</button>
+  <button class="mobile-nav-link" id="mob-job" onclick="showPage('job');closeMobileMenu()" data-i18n="nav_job">💼 Job Board</button>
+  <button class="mobile-nav-link" id="mob-comm" onclick="showPage('comm');closeMobileMenu()" data-i18n="nav_comm">💬 Community</button>
+  <div style="height:1px;background:var(--border);margin:4px 0;"></div>
+  <button class="mobile-nav-link" onclick="openModal('login-overlay');closeMobileMenu()" id="mob-login" data-i18n="nav_login">🔐 Login / Sign Up</button>
+</div>
+
+<!-- ════ HOME ════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge">🇰🇷 <span data-i18n="hero_badge">For Foreigners in Korea</span></div>
+    <h1 data-i18n="hero_h1_html">Start your life in Korea<br><em>the easy way</em></h1>
+    <p class="hero-sub" data-i18n="hero_sub">Everything you need to get settled — SIM cards, jobs, and a community of people who've been there too.</p>
+    <div class="hero-cta">
+      <button class="btn-hero-primary" onclick="showPage('sim')" data-i18n="hero_cta1">Get a SIM Card</button>
+      <button class="btn-hero-secondary" onclick="showPage('comm')" data-i18n="hero_cta2">Join Community</button>
+    </div>
+  </div>
+
+  <div class="categories">
+    <div class="cat-card sim" onclick="showPage('sim')">
+      <div class="cat-icon">📱</div>
+      <div class="cat-title" data-i18n="cat_sim_title">SIM Cards</div>
+      <div class="cat-desc" data-i18n="cat_sim_desc">Korean mobile plans for foreigners. SK Telecom postpaid — online sign-up in minutes.</div>
+      <div class="cat-arrow" data-i18n="cat_sim_cta">Browse plans →</div>
+    </div>
+    <div class="cat-card job" onclick="showPage('job')">
+      <div class="cat-icon">💼</div>
+      <div class="cat-title" data-i18n="cat_job_title">Job Board</div>
+      <div class="cat-desc" data-i18n="cat_job_desc">Find work or post a job. From teaching to startups — the community is hiring.</div>
+      <div class="cat-arrow" data-i18n="cat_job_cta">See listings →</div>
+    </div>
+    <div class="cat-card comm" onclick="showPage('comm')">
+      <div class="cat-icon">💬</div>
+      <div class="cat-title" data-i18n="cat_comm_title">Community</div>
+      <div class="cat-desc" data-i18n="cat_comm_desc">Ask questions, share tips, find housing, buy & sell. Your Korea life bulletin board.</div>
+      <div class="cat-arrow" data-i18n="cat_comm_cta">Join conversation →</div>
+    </div>
+  </div>
+
+  <div class="trust-strip">
+    <div class="trust-item">📡 <strong>SK Telecom</strong> <span data-i18n="trust_sk">Official Plans</span></div>
+    <div class="trust-item">🌍 <strong>4</strong> <span data-i18n="trust_lang">Languages</span></div>
+    <div class="trust-item">🆓 <span data-i18n="trust_free">Free to post & browse</span></div>
+    <div class="trust-item">💬 <span data-i18n="trust_kakao">KakaoTalk Support</span></div>
+  </div>
+</div>
+
+<!-- ════ SIM CARDS ════ -->
+<div class="page" id="page-sim">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_sim">SIM Cards</span>
+    </div>
+    <div class="page-title">📱 <span data-i18n="nav_sim">SIM Cards</span></div>
+    <div class="page-subtitle" data-i18n="sim_subtitle">Official SK Telecom postpaid plans — sign up online, no store visit needed.</div>
+  </div>
+
+  <div class="sim-content">
+    <!-- KakaoTalk Consultation -->
+    <div class="kakao-box">
+      <div class="kakao-icon">💬</div>
+      <div class="kakao-text">
+        <h3 data-i18n="kakao_title">Need help choosing a plan?</h3>
+        <p data-i18n="kakao_desc">Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.</p>
+        <span class="kakao-channel-hint" data-i18n="kakao_hint">Mon–Fri 9AM–6PM KST · Usually replies within 1 hour</span>
+      </div>
+      <a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" class="btn-kakao" id="kakao-consult-btn">
+        <span>💬</span>
+        <span data-i18n="kakao_btn">KakaoTalk Consultation</span>
+      </a>
+    </div>
+
+    <!-- Carrier tabs -->
+    <div class="carrier-tabs">
+      <div class="carrier-tab active">SK Telecom</div>
+      <div class="carrier-tab soon">KT — <span data-i18n="coming_soon">Coming Soon</span></div>
+      <div class="carrier-tab soon">LG U+ — <span data-i18n="coming_soon">Coming Soon</span></div>
+    </div>
+
+    <div class="plans-grid" id="plans-grid"></div>
+
+    <div class="sim-note">
+      <span style="font-size:18px;flex-shrink:0;">ℹ️</span>
+      <span data-i18n="sim_note">All plans are postpaid (후불) contracts with SK Telecom. You'll need a valid ARC (Alien Registration Card) or passport + visa. Links go directly to SK Telecom's official website.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ JOB BOARD ════ -->
+<div class="page" id="page-job">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_job">Job Board</span>
+    </div>
+    <div class="page-title">💼 <span data-i18n="nav_job">Job Board</span></div>
+    <div class="page-subtitle" data-i18n="job_subtitle">Post a job or find your next opportunity in Korea.</div>
+  </div>
+  <div class="board-wrap">
+    <div class="board-toolbar">
+      <div class="search-box">
+        <span style="color:var(--ink-light);">🔍</span>
+        <input type="text" id="job-search" placeholder="Search jobs..." data-i18n-placeholder="search_jobs" oninput="renderJobs()">
+      </div>
+      <button class="btn-post-job" onclick="requireLogin('job-modal')" data-i18n="btn_post_job">+ Post a Job</button>
+    </div>
+    <div class="post-list" id="job-list"></div>
+  </div>
+</div>
+
+<!-- ════ COMMUNITY ════ -->
+<div class="page" id="page-comm">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_comm">Community</span>
+    </div>
+    <div class="page-title">💬 <span data-i18n="nav_comm">Community</span></div>
+    <div class="page-subtitle" data-i18n="comm_subtitle">Questions, tips, housing, buy & sell — all welcome.</div>
+  </div>
+  <div class="board-wrap">
+    <div class="board-toolbar">
+      <div class="comm-filters" id="comm-filter-row">
+        <div class="filter-chip active" data-tag="all" onclick="filterComm('all')" data-i18n="filter_all">All</div>
+        <div class="filter-chip" data-tag="question" onclick="filterComm('question')">❓ <span data-i18n="filter_q">Question</span></div>
+        <div class="filter-chip" data-tag="housing" onclick="filterComm('housing')">🏠 <span data-i18n="filter_h">Housing</span></div>
+        <div class="filter-chip" data-tag="tip" onclick="filterComm('tip')">💡 <span data-i18n="filter_t">Tip</span></div>
+        <div class="filter-chip" data-tag="sell" onclick="filterComm('sell')">🛍️ <span data-i18n="filter_s">Buy/Sell</span></div>
+        <div class="filter-chip" data-tag="social" onclick="filterComm('social')">🤝 <span data-i18n="filter_so">Social</span></div>
+      </div>
+      <button class="btn-new-post" onclick="requireLogin('comm-modal')" data-i18n="btn_new_post">+ New Post</button>
+    </div>
+    <div id="comm-list"></div>
+  </div>
+</div>
+
+<!-- ════ LOGIN MODAL ════ -->
+<div class="overlay" id="login-overlay">
+  <div class="login-modal">
+    <div class="login-logo">Korea<span>Starter</span></div>
+    <p class="login-sub" data-i18n="login_sub">Sign in to post jobs, ask questions, and connect with the community.</p>
+
+    <button class="btn-social kakao" onclick="mockLogin('kakao')">
+      <div class="social-icon kakao-i">💬</div>
+      <span class="social-label" data-i18n="login_kakao">Continue with KakaoTalk</span>
+    </button>
+    <button class="btn-social" onclick="mockLogin('google')">
+      <div class="social-icon google">
+        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      </div>
+      <span class="social-label" data-i18n="login_google">Continue with Google</span>
+    </button>
+    <button class="btn-social" onclick="mockLogin('facebook')">
+      <div class="social-icon facebook">f</div>
+      <span class="social-label" data-i18n="login_fb">Continue with Facebook</span>
+    </button>
+
+    <p class="login-footer" data-i18n="login_footer">By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+    <div style="margin-top:14px;">
+      <button class="btn-cancel" style="width:100%;" onclick="closeModal('login-overlay')" data-i18n="btn_cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ JOB POST MODAL ════ -->
+<div class="overlay" id="job-modal">
+  <div class="modal">
+    <div class="modal-title" data-i18n="modal_post_job">Post a Job</div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_job_title">Job Title</label>
+      <input class="form-input" id="j-title" type="text" placeholder="e.g. English Teacher, Frontend Developer">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_company">Company / Name</label>
+      <input class="form-input" id="j-company" type="text">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_type">Type</label>
+      <select class="form-select" id="j-type">
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Remote">Remote</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_location">Location</label>
+      <input class="form-input" id="j-location" type="text" placeholder="Seoul, Busan, Online…">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_desc">Description</label>
+      <textarea class="form-textarea" id="j-desc"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('job-modal')" data-i18n="btn_cancel">Cancel</button>
+      <button class="btn-submit job-color" onclick="submitJob()" data-i18n="btn_post_job">Post Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ COMMUNITY POST MODAL ════ -->
+<div class="overlay" id="comm-modal">
+  <div class="modal">
+    <div class="modal-title" data-i18n="modal_new_post">New Post</div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_title">Title</label>
+      <input class="form-input" id="c-title" type="text">
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_category">Category</label>
+      <select class="form-select" id="c-cat">
+        <option value="question">❓ Question</option>
+        <option value="tip">💡 Tip</option>
+        <option value="housing">🏠 Housing</option>
+        <option value="sell">🛍️ Buy/Sell</option>
+        <option value="social">🤝 Social</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_content">Content</label>
+      <textarea class="form-textarea" id="c-body"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('comm-modal')" data-i18n="btn_cancel">Cancel</button>
+      <button class="btn-submit comm-color" onclick="submitComm()" data-i18n="btn_post">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2025 <strong>KoreaStarter</strong> — Making Korea life easier for everyone 🇰🇷</div>
+  <div class="footer-links">
+    <a href="#" data-i18n="footer_about">About</a>
+    <a href="#" data-i18n="footer_contact">Contact</a>
+    <a href="#" data-i18n="footer_privacy">Privacy</a>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════
+   i18n
+═══════════════════════════════════════ */
+const LANGS = {
+  en: {
+    flag: '🇺🇸', label: 'EN',
+    nav_home:'Home', nav_sim:'SIM Cards', nav_job:'Job Board', nav_comm:'Community', nav_login:'Login',
+    hero_badge:'For Foreigners in Korea',
+    hero_h1_html:'Start your life in Korea<br><em>the easy way</em>',
+    hero_sub:'Everything you need to get settled — SIM cards, jobs, and a community of people who\'ve been there too.',
+    hero_cta1:'Get a SIM Card', hero_cta2:'Join Community',
+    cat_sim_title:'SIM Cards', cat_sim_desc:'Korean mobile plans for foreigners. SK Telecom postpaid — online sign-up in minutes.', cat_sim_cta:'Browse plans →',
+    cat_job_title:'Job Board', cat_job_desc:'Find work or post a job. From teaching to startups — the community is hiring.', cat_job_cta:'See listings →',
+    cat_comm_title:'Community', cat_comm_desc:'Ask questions, share tips, find housing, buy & sell. Your Korea life bulletin board.', cat_comm_cta:'Join conversation →',
+    trust_sk:'Official Plans', trust_lang:'Languages', trust_free:'Free to post & browse', trust_kakao:'KakaoTalk Support',
+    sim_subtitle:'Official SK Telecom postpaid plans — sign up online, no store visit needed.',
+    kakao_title:'Need help choosing a plan?', kakao_desc:'Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.', kakao_hint:'Mon–Fri 9AM–6PM KST · Usually replies within 1 hour', kakao_btn:'KakaoTalk Consultation',
+    coming_soon:'Coming Soon',
+    sim_note:'All plans are postpaid (후불) contracts with SK Telecom. You\'ll need a valid ARC or passport + visa. Links go to SK Telecom\'s official website.',
+    job_subtitle:'Post a job or find your next opportunity in Korea.',
+    search_jobs:'Search jobs…',
+    btn_post_job:'+ Post a Job',
+    comm_subtitle:'Questions, tips, housing, buy & sell — all welcome.',
+    filter_all:'All', filter_q:'Question', filter_h:'Housing', filter_t:'Tip', filter_s:'Buy/Sell', filter_so:'Social',
+    btn_new_post:'+ New Post',
+    login_sub:'Sign in to post jobs, ask questions, and connect with the community.',
+    login_kakao:'Continue with KakaoTalk', login_google:'Continue with Google', login_fb:'Continue with Facebook',
+    login_footer:'By signing in, you agree to our Terms of Service and Privacy Policy.',
+    modal_post_job:'Post a Job', modal_new_post:'New Post',
+    field_job_title:'Job Title', field_company:'Company / Name', field_type:'Type', field_location:'Location', field_desc:'Description',
+    field_title:'Title', field_category:'Category', field_content:'Content',
+    btn_cancel:'Cancel', btn_post:'Post',
+    footer_about:'About', footer_contact:'Contact', footer_privacy:'Privacy',
+    login_required:'Please log in to post.',
+    logout_confirm:'Log out?',
+    plan_popular:'⭐ MOST POPULAR',
+    plan_apply:'Apply on SK Telecom →',
+    plan_postpaid:'Postpaid · VAT incl.',
+  },
+  ko: {
+    flag: '🇰🇷', label: '한국어',
+    nav_home:'홈', nav_sim:'심카드', nav_job:'구인구직', nav_comm:'커뮤니티', nav_login:'로그인',
+    hero_badge:'한국 거주 외국인을 위한 서비스',
+    hero_h1_html:'한국 생활을<br><em>쉽게 시작하세요</em>',
+    hero_sub:'심카드 개통, 일자리, 그리고 같은 경험을 가진 커뮤니티까지 — 한 곳에서 해결하세요.',
+    hero_cta1:'심카드 보기', hero_cta2:'커뮤니티 가입',
+    cat_sim_title:'심카드', cat_sim_desc:'외국인을 위한 한국 통신 요금제. SK텔레콤 후불제 — 온라인으로 간편 가입.', cat_sim_cta:'요금제 보기 →',
+    cat_job_title:'구인구직', cat_job_desc:'일자리를 찾거나 공고를 올려보세요. 강사부터 스타트업까지.', cat_job_cta:'공고 보기 →',
+    cat_comm_title:'커뮤니티', cat_comm_desc:'질문, 팁 공유, 집 구하기, 중고거래 — 한국 생활 게시판.', cat_comm_cta:'대화 참여 →',
+    trust_sk:'공식 요금제', trust_lang:'개 언어 지원', trust_free:'무료 열람 및 게시', trust_kakao:'카카오톡 상담',
+    sim_subtitle:'SK텔레콤 공식 후불제 요금제 — 온라인 가입, 매장 방문 불필요.',
+    kakao_title:'요금제 선택에 도움이 필요하신가요?', kakao_desc:'카카오톡으로 상담하세요 — 영어, 한국어, 중국어, 베트남어 지원.', kakao_hint:'월~금 오전 9시~오후 6시 · 보통 1시간 이내 답변', kakao_btn:'카카오톡 상담',
+    coming_soon:'준비 중',
+    sim_note:'모든 요금제는 SK텔레콤 후불제 계약입니다. 외국인등록증(ARC) 또는 여권+비자가 필요합니다.',
+    job_subtitle:'구인 공고를 올리거나 일자리를 찾아보세요.',
+    search_jobs:'공고 검색…',
+    btn_post_job:'+ 공고 올리기',
+    comm_subtitle:'질문, 팁, 집 구하기, 중고거래 — 모두 환영합니다.',
+    filter_all:'전체', filter_q:'질문', filter_h:'주거', filter_t:'팁', filter_s:'중고거래', filter_so:'소셜',
+    btn_new_post:'+ 글쓰기',
+    login_sub:'로그인하여 공고를 올리고, 질문하고, 커뮤니티에 참여하세요.',
+    login_kakao:'카카오톡으로 계속하기', login_google:'Google로 계속하기', login_fb:'Facebook으로 계속하기',
+    login_footer:'로그인하면 이용약관 및 개인정보처리방침에 동의하게 됩니다.',
+    modal_post_job:'구인 공고 올리기', modal_new_post:'글쓰기',
+    field_job_title:'공고 제목', field_company:'회사/이름', field_type:'유형', field_location:'위치', field_desc:'상세 내용',
+    field_title:'제목', field_category:'카테고리', field_content:'내용',
+    btn_cancel:'취소', btn_post:'게시',
+    footer_about:'소개', footer_contact:'문의', footer_privacy:'개인정보',
+    login_required:'게시하려면 로그인이 필요합니다.',
+    logout_confirm:'로그아웃 하시겠어요?',
+    plan_popular:'⭐ 인기 요금제',
+    plan_apply:'SK텔레콤 공식 사이트에서 가입 →',
+    plan_postpaid:'후불제 · VAT 포함',
+  },
+  zh: {
+    flag: '🇨🇳', label: '中文',
+    nav_home:'首页', nav_sim:'SIM卡', nav_job:'招聘', nav_comm:'社区', nav_login:'登录',
+    hero_badge:'专为在韩外国人服务',
+    hero_h1_html:'在韩国开始<br><em>全新生活</em>',
+    hero_sub:'SIM卡办理、求职招聘、生活社区 — 一站式解决您的在韩生活需求。',
+    hero_cta1:'办理SIM卡', hero_cta2:'加入社区',
+    cat_sim_title:'SIM卡', cat_sim_desc:'面向外国人的韩国手机套餐。SK电讯后付费 — 在线办理，几分钟完成。', cat_sim_cta:'查看套餐 →',
+    cat_job_title:'招聘信息', cat_job_desc:'找工作或发布招聘。从教学到创业公司 — 社区正在招聘。', cat_job_cta:'查看招聘 →',
+    cat_comm_title:'社区', cat_comm_desc:'提问、分享技巧、找房、二手交易 — 您的在韩生活公告栏。', cat_comm_cta:'加入讨论 →',
+    trust_sk:'官方套餐', trust_lang:'种语言', trust_free:'免费发帖与浏览', trust_kakao:'KakaoTalk咨询',
+    sim_subtitle:'SK电讯官方后付费套餐 — 在线办理，无需到店。',
+    kakao_title:'需要帮助选择套餐？', kakao_desc:'通过KakaoTalk与我们联系 — 支持英语、韩语、中文和越南语。', kakao_hint:'周一至周五 上午9点~下午6点(KST) · 通常1小时内回复', kakao_btn:'KakaoTalk咨询',
+    coming_soon:'即将推出',
+    sim_note:'所有套餐均为SK电讯后付费合约。需要有效的外国人登记证(ARC)或护照+签证。',
+    job_subtitle:'发布招聘或在韩国寻找工作机会。',
+    search_jobs:'搜索职位…',
+    btn_post_job:'+ 发布招聘',
+    comm_subtitle:'提问、技巧分享、找房、二手交易 — 欢迎所有内容。',
+    filter_all:'全部', filter_q:'提问', filter_h:'住房', filter_t:'技巧', filter_s:'买卖', filter_so:'社交',
+    btn_new_post:'+ 发帖',
+    login_sub:'登录后发布招聘、提问并加入社区互动。',
+    login_kakao:'通过KakaoTalk继续', login_google:'通过Google继续', login_fb:'通过Facebook继续',
+    login_footer:'登录即表示您同意我们的服务条款和隐私政策。',
+    modal_post_job:'发布招聘', modal_new_post:'发布帖子',
+    field_job_title:'职位名称', field_company:'公司/姓名', field_type:'类型', field_location:'地点', field_desc:'职位描述',
+    field_title:'标题', field_category:'分类', field_content:'内容',
+    btn_cancel:'取消', btn_post:'发布',
+    footer_about:'关于我们', footer_contact:'联系我们', footer_privacy:'隐私政策',
+    login_required:'请先登录再发帖。',
+    logout_confirm:'确定要退出登录吗？',
+    plan_popular:'⭐ 最受欢迎',
+    plan_apply:'在SK电讯官网申请 →',
+    plan_postpaid:'后付费 · 含税',
+  },
+  vi: {
+    flag: '🇻🇳', label: 'VI',
+    nav_home:'Trang chủ', nav_sim:'SIM Card', nav_job:'Việc làm', nav_comm:'Cộng đồng', nav_login:'Đăng nhập',
+    hero_badge:'Dành cho người nước ngoài tại Hàn Quốc',
+    hero_h1_html:'Bắt đầu cuộc sống<br><em>ở Hàn Quốc</em>',
+    hero_sub:'Mọi thứ bạn cần để ổn định — SIM card, việc làm và cộng đồng những người đã trải qua.',
+    hero_cta1:'Mua SIM Card', hero_cta2:'Tham gia Cộng đồng',
+    cat_sim_title:'SIM Card', cat_sim_desc:'Gói cước di động Hàn Quốc cho người nước ngoài. SK Telecom trả sau — đăng ký online chỉ vài phút.', cat_sim_cta:'Xem gói cước →',
+    cat_job_title:'Việc làm', cat_job_desc:'Tìm việc hoặc đăng tuyển dụng. Từ giảng dạy đến startup — cộng đồng đang tuyển dụng.', cat_job_cta:'Xem tin tuyển dụng →',
+    cat_comm_title:'Cộng đồng', cat_comm_desc:'Đặt câu hỏi, chia sẻ mẹo, tìm nhà, mua bán — Bảng tin cuộc sống Hàn Quốc của bạn.', cat_comm_cta:'Tham gia trò chuyện →',
+    trust_sk:'Gói chính hãng', trust_lang:'Ngôn ngữ', trust_free:'Miễn phí đăng và xem', trust_kakao:'Tư vấn KakaoTalk',
+    sim_subtitle:'Gói cước trả sau chính hãng SK Telecom — đăng ký online, không cần đến cửa hàng.',
+    kakao_title:'Cần giúp đỡ chọn gói cước?', kakao_desc:'Nhắn tin qua KakaoTalk — chúng tôi hỗ trợ tiếng Anh, Hàn, Trung và Việt.', kakao_hint:'Thứ 2–6 9AM–6PM KST · Thường phản hồi trong 1 giờ', kakao_btn:'Tư vấn KakaoTalk',
+    coming_soon:'Sắp ra mắt',
+    sim_note:'Tất cả các gói đều là hợp đồng trả sau với SK Telecom. Cần ARC hợp lệ hoặc hộ chiếu + visa.',
+    job_subtitle:'Đăng tuyển dụng hoặc tìm cơ hội việc làm tại Hàn Quốc.',
+    search_jobs:'Tìm kiếm việc làm…',
+    btn_post_job:'+ Đăng tuyển dụng',
+    comm_subtitle:'Câu hỏi, mẹo hay, tìm nhà, mua bán — tất cả đều được chào đón.',
+    filter_all:'Tất cả', filter_q:'Câu hỏi', filter_h:'Nhà ở', filter_t:'Mẹo hay', filter_s:'Mua/Bán', filter_so:'Xã hội',
+    btn_new_post:'+ Bài viết mới',
+    login_sub:'Đăng nhập để đăng việc làm, đặt câu hỏi và kết nối với cộng đồng.',
+    login_kakao:'Tiếp tục với KakaoTalk', login_google:'Tiếp tục với Google', login_fb:'Tiếp tục với Facebook',
+    login_footer:'Bằng cách đăng nhập, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi.',
+    modal_post_job:'Đăng tuyển dụng', modal_new_post:'Bài viết mới',
+    field_job_title:'Tên vị trí', field_company:'Công ty / Tên', field_type:'Loại hình', field_location:'Địa điểm', field_desc:'Mô tả',
+    field_title:'Tiêu đề', field_category:'Danh mục', field_content:'Nội dung',
+    btn_cancel:'Hủy', btn_post:'Đăng',
+    footer_about:'Giới thiệu', footer_contact:'Liên hệ', footer_privacy:'Bảo mật',
+    login_required:'Vui lòng đăng nhập để đăng bài.',
+    logout_confirm:'Đăng xuất?',
+    plan_popular:'⭐ PHỔ BIẾN NHẤT',
+    plan_apply:'Đăng ký trên SK Telecom →',
+    plan_postpaid:'Trả sau · Đã gồm VAT',
+  }
+};
+
+let currentLang = 'en';
+
+function t(key) { return (LANGS[currentLang] || LANGS.en)[key] || LANGS.en[key] || key; }
+
+function applyLang() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key === 'hero_h1_html') { el.innerHTML = t(key); return; }
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+  document.getElementById('lang-btn-label').textContent = `${LANGS[currentLang].flag} ${LANGS[currentLang].label}`;
+
+  // update lang options
+  document.querySelectorAll('.lang-option').forEach(el => {
+    el.classList.toggle('selected', el.getAttribute('onclick').includes(`'${currentLang}'`));
+  });
+
+  // re-render dynamic content
+  renderPlans();
+  renderJobs();
+  renderComm();
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  applyLang();
+  document.getElementById('lang-dropdown').classList.remove('open');
+}
+
+function toggleLang() {
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-sel')) {
+    document.getElementById('lang-dropdown').classList.remove('open');
+  }
+});
+
+/* ═══════════════════════════════════════
+   AUTH (mock)
+═══════════════════════════════════════ */
+let currentUser = null;
+const PROVIDER_NAMES = { kakao:'KakaoTalk', google:'Google', facebook:'Facebook' };
+const PROVIDER_AVATARS = { kakao:'💬', google:'G', facebook:'f' };
+
+function mockLogin(provider) {
+  currentUser = { provider, name: provider === 'kakao' ? 'KakaoUser' : provider === 'google' ? 'GoogleUser' : 'FBUser', avatar: PROVIDER_AVATARS[provider] };
+  closeModal('login-overlay');
+  document.getElementById('btn-login-nav').style.display = 'none';
+  const pill = document.getElementById('user-pill');
+  pill.classList.add('show');
+  document.getElementById('user-avatar').textContent = currentUser.avatar;
+  document.getElementById('user-name-nav').textContent = currentUser.name;
+  document.getElementById('mob-login').style.display = 'none';
+}
+
+function logoutUser() {
+  if (!confirm(t('logout_confirm'))) return;
+  currentUser = null;
+  document.getElementById('btn-login-nav').style.display = '';
+  document.getElementById('user-pill').classList.remove('show');
+  document.getElementById('mob-login').style.display = '';
+}
+
+function requireLogin(modalId) {
+  if (!currentUser) { openModal('login-overlay'); return; }
+  openModal(modalId);
+}
+
+/* ═══════════════════════════════════════
+   NAV / PAGES
+═══════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-center a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-link').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  const mob = document.getElementById('mob-' + id);
+  if (nav) nav.classList.add('active');
+  if (mob) mob.classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+  if (id === 'sim') renderPlans();
+  if (id === 'job') renderJobs();
+  if (id === 'comm') renderComm();
+}
+
+function goHome() { showPage('home'); }
+
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
+/* ═══════════════════════════════════════
+   MODALS
+═══════════════════════════════════════ */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('overlay')) {
+    e.target.classList.remove('open');
+  }
+});
+
+/* ═══════════════════════════════════════
+   SIM PLANS
+═══════════════════════════════════════ */
+const PLANS = [
+  { key:'basic', name:'Basic', price:'29,000', data:'5GB', features:['5GB_data','unlimited_calls','unlimited_sms','basic_vm'], popular:false },
+  { key:'standard', name:'Standard', price:'45,000', data:'30GB', features:['30gb_data','2gb_day','unlimited_calls_sms','tmap_free'], popular:true },
+  { key:'premium', name:'Premium', price:'69,000', data:'Unlimited', features:['unlimited_data','5g_included','unlimited_calls_sms','roaming_10d'], popular:false },
+];
+const PLAN_FEATURES = {
+  en:{ '5GB_data':'5GB high-speed data','unlimited_calls':'Unlimited calls (Korea)','unlimited_sms':'Unlimited SMS','basic_vm':'Basic voicemail','30gb_data':'30GB high-speed data','2gb_day':'2GB/day after limit','unlimited_calls_sms':'Unlimited calls & SMS','tmap_free':'T map navigation free','unlimited_data':'Truly unlimited data','5g_included':'5G included','roaming_10d':'Global roaming (10 days)' },
+  ko:{ '5GB_data':'5GB 고속 데이터','unlimited_calls':'국내 통화 무제한','unlimited_sms':'SMS 무제한','basic_vm':'기본 음성사서함','30gb_data':'30GB 고속 데이터','2gb_day':'소진 후 2GB/일','unlimited_calls_sms':'통화·SMS 무제한','tmap_free':'T맵 네비게이션 무료','unlimited_data':'완전 무제한 데이터','5g_included':'5G 포함','roaming_10d':'해외 로밍 (10일)' },
+  zh:{ '5GB_data':'5GB高速流量','unlimited_calls':'国内通话无限制','unlimited_sms':'短信无限制','basic_vm':'基本语音信箱','30gb_data':'30GB高速流量','2gb_day':'超出后每日2GB','unlimited_calls_sms':'无限通话和短信','tmap_free':'T map导航免费','unlimited_data':'真正无限流量','5g_included':'包含5G','roaming_10d':'全球漫游(10天)' },
+  vi:{ '5GB_data':'5GB dữ liệu tốc độ cao','unlimited_calls':'Gọi nội địa không giới hạn','unlimited_sms':'SMS không giới hạn','basic_vm':'Hộp thư thoại cơ bản','30gb_data':'30GB dữ liệu tốc độ cao','2gb_day':'2GB/ngày sau khi hết','unlimited_calls_sms':'Gọi & SMS không giới hạn','tmap_free':'Miễn phí T map','unlimited_data':'Dữ liệu không giới hạn thực sự','5g_included':'Bao gồm 5G','roaming_10d':'Chuyển vùng toàn cầu (10 ngày)' },
+};
+
+function renderPlans() {
+  const grid = document.getElementById('plans-grid');
+  if (!grid) return;
+  const feats = PLAN_FEATURES[currentLang] || PLAN_FEATURES.en;
+  grid.innerHTML = PLANS.map(p => `
+    <div class="plan-card${p.popular?' popular':''}">
+      ${p.popular ? `<div class="popular-badge">${t('plan_popular')}</div>` : ''}
+      <div class="plan-name">SK TELECOM</div>
+      <div class="plan-price"><sup>₩</sup>${p.price}<sub>/mo</sub></div>
+      <div class="plan-period">${t('plan_postpaid')}</div>
+      <ul class="plan-features">
+        ${p.features.map(f=>`<li>${feats[f]||f}</li>`).join('')}
+      </ul>
+      <a href="https://www.tworld.co.kr" target="_blank" class="btn-plan ${p.popular?'btn-plan-primary':'btn-plan-outline'}">
+        ${t('plan_apply')}
+      </a>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════
+   JOB BOARD
+═══════════════════════════════════════ */
+let jobPosts = [
+  { id:1, title:'English Conversation Teacher', company:'Seoul Language School', type:'Part-time', location:'Gangnam, Seoul', desc:'Looking for a native English speaker for afternoon classes.', date:'2 days ago' },
+  { id:2, title:'Frontend Developer (React)', company:'K-Startup', type:'Full-time', location:'Pangyo', desc:'Join our growing product team. Korean not required.', date:'3 days ago' },
+  { id:3, title:'Barista', company:'Café Hanok', type:'Part-time', location:'Insadong, Seoul', desc:'English-speaking barista wanted. Experience preferred.', date:'5 days ago' },
+];
+let jobId = 4;
+const typeClass = { 'Full-time':'tag-ft','Part-time':'tag-pt','Remote':'tag-remote','Other':'tag-other' };
+
+function renderJobs() {
+  const list = document.getElementById('job-list');
+  if (!list) return;
+  const q = (document.getElementById('job-search')?.value || '').toLowerCase();
+  const filtered = jobPosts.filter(j => !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q));
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">💼</div><p>No jobs found.</p></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(j => `
+    <div class="post-row">
+      <div class="post-row-body">
+        <div class="post-row-title">${j.title}</div>
+        <div class="post-row-meta">${j.company} · ${j.location} · ${j.date}</div>
+      </div>
+      <span class="post-tag ${typeClass[j.type]||'tag-other'}">${j.type}</span>
+    </div>
+  `).join('');
+}
+
+function submitJob() {
+  const title = document.getElementById('j-title').value.trim();
+  const company = document.getElementById('j-company').value.trim();
+  if (!title || !company) { alert('Please fill in title and company.'); return; }
+  jobPosts.unshift({ id:jobId++, title, company, type:document.getElementById('j-type').value, location:document.getElementById('j-location').value||'Korea', desc:document.getElementById('j-desc').value, date:'Just now' });
+  ['j-title','j-company','j-location','j-desc'].forEach(id => document.getElementById(id).value='');
+  closeModal('job-modal');
+  renderJobs();
+}
+
+/* ═══════════════════════════════════════
+   COMMUNITY
+═══════════════════════════════════════ */
+let commPosts = [
+  { id:1, title:'Best neighborhoods for foreigners in Seoul?', category:'question', name:'Mike T.', body:'Moving to Seoul next month, any recommendations for areas with good English support?', date:'1 hour ago' },
+  { id:2, title:'How to register your ARC faster 💡', category:'tip', name:'Julia K.', body:'Go to the immigration office on Wednesday mornings — much shorter queues than Monday.', date:'4 hours ago' },
+  { id:3, title:'Room for rent — Hongdae area 🏠', category:'housing', name:'Sarah P.', body:'Bright single room, 5 min walk to Hongik Univ station. ₩650,000/month.', date:'Yesterday' },
+  { id:4, title:'iPhone 15 Pro for sale', category:'sell', name:'David L.', body:'Selling my iPhone 15 Pro 256GB, pristine condition. ₩950,000. Moving back home.', date:'2 days ago' },
+];
+let commFilter = 'all';
+let commId = 5;
+const catLabel = { question:'❓', tip:'💡', housing:'🏠', sell:'🛍️', social:'🤝' };
+
+function filterComm(tag) {
+  commFilter = tag;
+  document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.dataset.tag === tag));
+  renderComm();
+}
+
+function renderComm() {
+  const list = document.getElementById('comm-list');
+  if (!list) return;
+  const filtered = commFilter === 'all' ? commPosts : commPosts.filter(p => p.category === commFilter);
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">💬</div><p>No posts yet.</p></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(p => `
+    <div class="comm-post">
+      <div class="comm-post-head">
+        <div class="comm-post-title">${p.title}</div>
+        <span class="post-tag tag-other" style="font-size:12px;">${catLabel[p.category]||''}</span>
+      </div>
+      <div class="comm-post-body">${p.body}</div>
+      <div class="comm-post-foot"><span>👤 ${p.name}</span><span>🕐 ${p.date}</span></div>
+    </div>
+  `).join('');
+}
+
+function submitComm() {
+  const title = document.getElementById('c-title').value.trim();
+  const body = document.getElementById('c-body').value.trim();
+  if (!title) { alert('Please enter a title.'); return; }
+  const name = currentUser ? currentUser.name : 'Anonymous';
+  commPosts.unshift({ id:commId++, title, body, category:document.getElementById('c-cat').value, name, date:'Just now' });
+  ['c-title','c-body'].forEach(id => document.getElementById(id).value='');
+  closeModal('comm-modal');
+  commFilter = 'all';
+  document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.dataset.tag === 'all'));
+  renderComm();
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+applyLang();
+renderPlans();
+renderJobs();
+renderComm();
+</script>
+</body>
+</html>
