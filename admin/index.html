@@ -688,12 +688,57 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 
       <!-- ── SIM PLANS ── -->
       <div class="section" id="sec-sim">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
           <div>
             <h2 style="font-family:'DM Serif Display',serif;font-size:20px;" data-i18n="nav_sim">SIM 요금제</h2>
-            <p style="font-size:13px;color:var(--ink-muted);margin-top:2px;" data-i18n="sim_desc">사이트에 표시될 SK 텔레콤 후불 요금제를 관리합니다.</p>
+            <p style="font-size:13px;color:var(--ink-muted);margin-top:2px;">통신사별 요금제 관리 및 메인 노출 설정</p>
           </div>
           <button class="btn btn-primary" onclick="openAddPlanModal()" data-i18n="btn_add_plan">+ 요금제 추가</button>
+        </div>
+
+        <!-- 통신사 탭 -->
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="btn" id="carrier-tab-sk" onclick="setCarrierTab('SK Telecom')"
+            style="background:var(--blue);color:white;">📡 SK Telecom</button>
+          <button class="btn btn-ghost" id="carrier-tab-kt" onclick="setCarrierTab('KT')">📡 KT</button>
+          <button class="btn btn-ghost" id="carrier-tab-lg" onclick="setCarrierTab('LG U+')">📡 LG U+</button>
+        </div>
+
+        <!-- 통신사별 노출 토글 -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-weight:700;font-size:14px;">📡 SK Telecom</div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">메인 페이지 노출</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-sk" checked onchange="toggleCarrierVisibility('SK Telecom',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-weight:700;font-size:14px;">📡 KT</div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">메인 페이지 노출</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-kt" onchange="toggleCarrierVisibility('KT',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-weight:700;font-size:14px;">📡 LG U+</div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">메인 페이지 노출</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-lg" onchange="toggleCarrierVisibility('LG U+',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
         </div>
 
         <div id="plans-admin-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
@@ -716,6 +761,8 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <tr>
                 <th data-i18n="th_name">이름</th>
                 <th data-i18n="th_provider">가입 경로</th>
+                <th>레벨</th>
+                <th>포인트</th>
                 <th data-i18n="th_joined">가입일</th>
                 <th data-i18n="th_posts">게시물</th>
                 <th data-i18n="th_status">상태</th>
@@ -881,50 +928,109 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 
 <!-- ── ADD PLAN MODAL ── -->
 <div class="overlay" id="add-plan-modal">
-  <div class="modal">
+  <div class="modal" style="max-width:580px;">
     <div class="modal-title" id="plan-modal-title">SIM 요금제 추가</div>
     <input type="hidden" id="edit-plan-id">
+
+    <!-- 기본 정보 -->
+    <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">📋 기본 정보</div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label" data-i18n="field_plan_name">요금제 이름</label>
-        <input class="form-control" id="ap-name" placeholder="예: Basic">
+        <label class="form-label">요금제 이름</label>
+        <input class="form-control" id="ap-name" placeholder="예: 5G 슬림">
       </div>
       <div class="form-group">
-        <label class="form-label" data-i18n="field_price">요금 (₩/월)</label>
-        <input class="form-control" id="ap-price" placeholder="예: 29,000" type="text">
+        <label class="form-label">데이터</label>
+        <input class="form-control" id="ap-data" placeholder="예: 30GB">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label" data-i18n="field_data">데이터</label>
-        <input class="form-control" id="ap-data" placeholder="예: 30GB">
+        <label class="form-label">통신사</label>
+        <select class="form-control" id="ap-carrier">
+          <option value="SK Telecom">SK Telecom</option>
+          <option value="KT">KT</option>
+          <option value="LG U+">LG U+</option>
+        </select>
       </div>
       <div class="form-group">
-        <label class="form-label" data-i18n="field_apply_url">가입 URL</label>
+        <label class="form-label">인기 요금제 표시</label>
+        <select class="form-control" id="ap-popular">
+          <option value="0">아니오</option>
+          <option value="1">예 ⭐</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 요금 정보 -->
+    <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);">💰 요금 정보 (₩/월)</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">기본료</label>
+        <input class="form-control" id="ap-price" placeholder="예: 55,000" type="text">
+        <span class="form-hint">VAT 포함 기준</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">선약 12개월 약정할인</label>
+        <input class="form-control" id="ap-contract-discount" placeholder="예: -11,000" type="text">
+        <span class="form-hint">할인액 입력 (없으면 비워두기)</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">외국인 프로모션 할인</label>
+        <input class="form-control" id="ap-promo-discount" placeholder="예: -5,500" type="text">
+        <span class="form-hint">할인액 입력 (없으면 비워두기)</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">최종 납부 요금</label>
+        <input class="form-control" id="ap-final-price" placeholder="자동계산 또는 직접입력" type="text">
+        <span class="form-hint">기본료 - 약정할인 - 프로모션</span>
+      </div>
+    </div>
+
+    <!-- 개통일 안내 -->
+    <div style="font-size:11px;font-weight:700;color:var(--yellow);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);">📅 외국인 프로모션 할인 적용 안내</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">20일 이전 개통 시</label>
+        <input class="form-control" id="ap-open-before20" placeholder="예: 다음달 청구요금부터 할인" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">21일 이후 개통 시</label>
+        <input class="form-control" id="ap-open-after21" placeholder="예: 다다음달 청구요금부터 할인" type="text">
+      </div>
+    </div>
+
+    <!-- 주의사항 -->
+    <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);">⚠️ 약정 주의사항</div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label class="form-label">주의사항 (한 줄에 하나씩)</label>
+        <textarea class="form-control" id="ap-notes" rows="4" placeholder="12개월내 해지시 위약금 발생&#10;12개월내 정지시 할인 불가, 위약금 누적&#10;정지·해지 없이 12개월 지속 사용이 가장 유리&#10;요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)"></textarea>
+      </div>
+    </div>
+
+    <!-- 혜택 -->
+    <div style="font-size:11px;font-weight:700;color:var(--ink-soft);letter-spacing:0.08em;text-transform:uppercase;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);">✅ 요금제 혜택</div>
+    <div class="form-row full">
+      <div class="form-group">
+        <label class="form-label">혜택 (한 줄에 하나씩)</label>
+        <textarea class="form-control" id="ap-features" rows="3" placeholder="무제한 통화&#10;SMS 포함&#10;5G 지원"></textarea>
+      </div>
+    </div>
+
+    <!-- 가입 URL -->
+    <div class="form-row full" style="margin-top:4px;">
+      <div class="form-group">
+        <label class="form-label">가입 URL</label>
         <input class="form-control" id="ap-url" placeholder="https://tworld.co.kr/...">
       </div>
     </div>
-    <div class="form-group" style="margin-bottom:14px;">
-      <label class="form-label" data-i18n="field_features">혜택 (한 줄에 하나씩)</label>
-      <textarea class="form-control" id="ap-features" rows="4" placeholder="무제한 통화&#10;SMS 포함&#10;5G 지원"></textarea>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label" data-i18n="field_carrier">통신사</label>
-        <select class="form-control" id="ap-carrier">
-          <option>SK Telecom</option><option disabled>KT (준비중)</option><option disabled>LG U+ (준비중)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label" data-i18n="field_popular">인기 요금제 표시</label>
-        <select class="form-control" id="ap-popular">
-          <option value="0">아니오</option><option value="1">예 ⭐</option>
-        </select>
-      </div>
-    </div>
+
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('add-plan-modal')" data-i18n="btn_cancel">취소</button>
-      <button class="btn btn-primary" onclick="savePlan()" data-i18n="btn_save_plan">저장</button>
+      <button class="btn btn-ghost" onclick="closeModal('add-plan-modal')">취소</button>
+      <button class="btn btn-primary" onclick="savePlan()">저장</button>
     </div>
   </div>
 </div>
@@ -1185,7 +1291,7 @@ function applyAdminLang() {
     const val = t(key);
     if (val) el.textContent = val;
   });
-  // ID 기반 특수 요소
+  // ID 기반 특수 요소 (null 체크 포함)
   const idMap = {
     'login-brand-sub': t('login-brand-sub'),
     'label-username': t('label-username'),
@@ -1214,11 +1320,14 @@ function applyAdminLang() {
     if (titleEl) titleEl.textContent = t(`section_${id}_title`);
     if (metaEl) metaEl.textContent = t(`section_${id}_meta`);
   }
-  // 동적 테이블 재렌더
-  renderAdminJobs();
-  renderAdminComm();
-  renderMembers();
-  renderAdminPlans();
+  // 로그인 후에만 테이블 재렌더 (admin-app이 보일 때만)
+  const adminApp = document.getElementById('admin-app');
+  if (adminApp && adminApp.classList.contains('show')) {
+    renderAdminJobs();
+    renderAdminComm();
+    renderMembers();
+    renderAdminPlans();
+  }
 }
 
 /* ═══════════════ DATA ═══════════════ */
@@ -1237,20 +1346,63 @@ let DB = {
     { id:5, title:'Korean language exchange partner?', author:'Anh V.', category:'social', body:'Looking for language exchange!', status:'pending', date:'2025-01-11' },
   ],
   plans: [
-    { id:1, name:'Basic', price:'29,000', data:'5GB', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:false, features:'5GB high-speed data\nUnlimited calls (Korea)\nUnlimited SMS\nBasic voicemail' },
-    { id:2, name:'Standard', price:'45,000', data:'30GB', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:true, features:'30GB high-speed data\n2GB/day after limit\nUnlimited calls & SMS\nT map navigation free' },
-    { id:3, name:'Premium', price:'69,000', data:'Unlimited', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:false, features:'Truly unlimited data\n5G included\nUnlimited calls & SMS\nGlobal roaming (10 days)' },
+    { id:1, name:'5G 라이트', price:'47,000', data:'5GB', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:false,
+      contractDiscount:'-9,900', promoDiscount:'-4,400', finalPrice:'32,700',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'5GB 고속 데이터\n국내 통화 무제한\nSMS 무제한' },
+    { id:2, name:'5G 미디엄', price:'63,000', data:'30GB', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:true,
+      contractDiscount:'-13,200', promoDiscount:'-6,600', finalPrice:'43,200',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'30GB 고속 데이터\n소진 후 2GB/일\n국내 통화·SMS 무제한\nT맵 무료' },
+    { id:3, name:'5G 프리미엄', price:'89,000', data:'완전무제한', url:'https://www.tworld.co.kr', carrier:'SK Telecom', popular:false,
+      contractDiscount:'-19,800', promoDiscount:'-8,800', finalPrice:'60,400',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'완전 무제한 데이터\n5G 포함\n국내 통화·SMS 무제한\n해외 로밍 (10일)' },
+    { id:4, name:'KT 슬림', price:'44,000', data:'5GB', url:'https://www.kt.com', carrier:'KT', popular:false,
+      contractDiscount:'-8,800', promoDiscount:'-4,400', finalPrice:'30,800',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'5GB 고속 데이터\n국내 통화 무제한\nSMS 무제한\n멤버십 혜택' },
+    { id:5, name:'KT 미디엄', price:'61,000', data:'30GB', url:'https://www.kt.com', carrier:'KT', popular:true,
+      contractDiscount:'-12,100', promoDiscount:'-6,100', finalPrice:'42,800',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'30GB 고속 데이터\n소진 후 2GB/일\n국내 통화·SMS 무제한\n넷플릭스 제휴' },
+    { id:6, name:'KT 프리미엄', price:'87,000', data:'완전무제한', url:'https://www.kt.com', carrier:'KT', popular:false,
+      contractDiscount:'-19,000', promoDiscount:'-8,700', finalPrice:'59,300',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'완전 무제한 데이터\n5G 포함\n국내 통화·SMS 무제한\n해외 로밍 (10일)' },
+    { id:7, name:'LG 슬림', price:'42,000', data:'5GB', url:'https://www.lguplus.com', carrier:'LG U+', popular:false,
+      contractDiscount:'-8,400', promoDiscount:'-4,200', finalPrice:'29,400',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'5GB 고속 데이터\n국내 통화 무제한\nSMS 무제한\nU+멤버십' },
+    { id:8, name:'LG 미디엄', price:'59,000', data:'30GB', url:'https://www.lguplus.com', carrier:'LG U+', popular:true,
+      contractDiscount:'-11,800', promoDiscount:'-5,900', finalPrice:'41,300',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'30GB 고속 데이터\n소진 후 2GB/일\n국내 통화·SMS 무제한\n유튜브 프리미엄 제휴' },
+    { id:9, name:'LG 프리미엄', price:'85,000', data:'완전무제한', url:'https://www.lguplus.com', carrier:'LG U+', popular:false,
+      contractDiscount:'-18,700', promoDiscount:'-8,500', finalPrice:'57,800',
+      openBefore20:'다음달 청구요금부터 할인', openAfter21:'다다음달 청구요금부터 할인',
+      notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
+      features:'완전 무제한 데이터\n5G 포함\n국내 통화·SMS 무제한\n해외 로밍 (10일)' },
   ],
+  carrierVisibility: { 'SK Telecom': true, 'KT': false, 'LG U+': false },
   members: [
-    { id:1, name:'Mike Thompson', provider:'Google', joined:'2025-01-10', posts:3, status:'active' },
-    { id:2, name:'Julia Kim', provider:'KakaoTalk', joined:'2025-01-11', posts:7, status:'active' },
-    { id:3, name:'Sarah Park', provider:'Facebook', joined:'2025-01-12', posts:2, status:'active' },
-    { id:4, name:'David Lee', provider:'Google', joined:'2025-01-13', posts:1, status:'suspended' },
-    { id:5, name:'Anh Van', provider:'KakaoTalk', joined:'2025-01-14', posts:4, status:'active' },
-    { id:6, name:'Chen Wei', provider:'Google', joined:'2025-01-15', posts:0, status:'active' },
+    { id:1, name:'Mike Thompson', provider:'Google', joined:'2025-01-10', posts:3, points:8, attendance:5, status:'active' },
+    { id:2, name:'Julia Kim', provider:'KakaoTalk', joined:'2025-01-11', posts:7, points:35, attendance:32, status:'active' },
+    { id:3, name:'Sarah Park', provider:'Facebook', joined:'2025-01-12', posts:2, points:3, attendance:2, status:'active' },
+    { id:4, name:'David Lee', provider:'Google', joined:'2025-01-13', posts:1, points:2, attendance:1, status:'suspended' },
+    { id:5, name:'Anh Van', provider:'KakaoTalk', joined:'2025-01-14', posts:4, points:520, attendance:55, status:'active' },
+    { id:6, name:'Chen Wei', provider:'Google', joined:'2025-01-15', posts:0, points:1, attendance:1, status:'active' },
   ],
   nextJobId: 5,
-  nextPlanId: 4,
+  nextPlanId: 10,
 };
 
 let deleteTarget = null;
@@ -1319,20 +1471,27 @@ function startClock() {
 function updateBadges() {
   const pendingJobs = DB.jobs.filter(j => j.status === 'pending').length;
   const pendingComm = DB.community.filter(c => c.status === 'pending' || c.status === 'flagged').length;
-  document.getElementById('badge-jobs').textContent = pendingJobs;
-  document.getElementById('badge-comm').textContent = pendingComm;
-  document.getElementById('badge-jobs').style.display = pendingJobs ? 'inline' : 'none';
-  document.getElementById('badge-comm').style.display = pendingComm ? 'inline' : 'none';
+  const bj = document.getElementById('badge-jobs');
+  const bc = document.getElementById('badge-comm');
+  if (bj) { bj.textContent = pendingJobs; bj.style.display = pendingJobs ? 'inline' : 'none'; }
+  if (bc) { bc.textContent = pendingComm; bc.style.display = pendingComm ? 'inline' : 'none'; }
 }
 
 function refreshDashboard() {
-  document.getElementById('stat-members').textContent = DB.members.length;
-  document.getElementById('stat-jobs').textContent = DB.jobs.filter(j=>j.status==='approved').length;
-  document.getElementById('stat-comm').textContent = DB.community.length;
+  const sm = document.getElementById('stat-members');
+  const sj = document.getElementById('stat-jobs');
+  const sc = document.getElementById('stat-comm');
+  const sp = document.getElementById('stat-pending');
+  const djl = document.getElementById('dash-jobs-list');
+  const al = document.getElementById('activity-log');
+  if (!sm) return; // 로그인 전이면 중단
+  sm.textContent = DB.members.length;
+  if (sj) sj.textContent = DB.jobs.filter(j=>j.status==='approved').length;
+  if (sc) sc.textContent = DB.community.length;
   const pending = DB.jobs.filter(j=>j.status==='pending').length + DB.community.filter(c=>c.status==='pending'||c.status==='flagged').length;
-  document.getElementById('stat-pending').textContent = pending;
+  if (sp) sp.textContent = pending;
   const recentJobs = DB.jobs.slice(0,4);
-  document.getElementById('dash-jobs-list').innerHTML = recentJobs.map(j => `
+  if (djl) djl.innerHTML = recentJobs.map(j => `
     <div class="activity-item">
       <div class="activity-dot" style="background:${j.status==='approved'?'var(--green)':j.status==='pending'?'var(--yellow)':'var(--red)'};"></div>
       <div class="activity-body">
@@ -1380,15 +1539,19 @@ function renderAdminJobs(q='') {
     return;
   }
   tbody.innerHTML = filtered.map(j => `
-    <tr>
-      <td class="td-truncate" style="max-width:200px;"><strong>${j.title}</strong></td>
+    <tr${j.blurred ? ' style="opacity:0.55;"' : ''}>
+      <td class="td-truncate" style="max-width:200px;">
+        ${j.blurred ? '<span style="font-size:10px;background:#FEE2E2;color:#991B1B;padding:2px 6px;border-radius:4px;margin-right:5px;">🚫 블러</span>' : ''}
+        <strong>${j.title}</strong>
+      </td>
       <td>${j.company}</td>
       <td><span class="badge badge-gray">${j.type}</span></td>
       <td><span class="badge ${statusBadge(j.status)}">${t('status_'+j.status)||j.status}</span></td>
       <td style="color:var(--ink-muted);">${j.date}</td>
       <td>
-        <div style="display:flex;gap:5px;">
+        <div style="display:flex;gap:5px;flex-wrap:wrap;">
           ${j.status==='pending' ? `<button class="btn btn-success btn-sm" onclick="approveJob(${j.id})">${t('btn_approve')}</button>` : ''}
+          <button class="btn btn-warning btn-sm" onclick="toggleBlur('job',${j.id})" title="블러 처리">${j.blurred ? '👁️ 해제' : '🚫 블러'}</button>
           <button class="btn btn-ghost btn-sm btn-icon" onclick="editJob(${j.id})">${t('btn_edit')}</button>
           <button class="btn btn-danger btn-sm btn-icon" onclick="deleteConfirm('job',${j.id})">🗑️</button>
         </div>
@@ -1406,11 +1569,30 @@ function approveJob(id) {
   toast(t('toast_job_approved'), 'success');
 }
 
+function toggleBlur(type, id) {
+  const item = type === 'job'
+    ? DB.jobs.find(j=>j.id===id)
+    : DB.community.find(p=>p.id===id);
+  if (!item) return;
+  item.blurred = !item.blurred;
+  if (type === 'job') { renderAdminJobs(); logActivity(`게시글 블러 ${item.blurred?'처리':'해제'}: <strong>${item.title}</strong>`, item.blurred?'red':'green'); }
+  else { renderAdminComm(); logActivity(`게시글 블러 ${item.blurred?'처리':'해제'}: <strong>${item.title}</strong>`, item.blurred?'red':'green'); }
+  toast(item.blurred ? '🚫 블러 처리되었습니다' : '👁️ 블러 해제되었습니다', 'success');
+}
+
 function openAddPlanModal() {
   document.getElementById('plan-modal-title').textContent = t('modal_add_plan');
   document.getElementById('edit-plan-id').value = '';
-  ['ap-name','ap-price','ap-data','ap-url','ap-features'].forEach(id => document.getElementById(id).value = '');
+  ['ap-name','ap-price','ap-data','ap-url','ap-features','ap-contract-discount',
+   'ap-promo-discount','ap-final-price','ap-open-before20','ap-open-after21','ap-notes']
+    .forEach(id => document.getElementById(id).value = '');
+  document.getElementById('ap-open-before20').value = '다음달 청구요금부터 할인';
+  document.getElementById('ap-open-after21').value = '다다음달 청구요금부터 할인';
+  document.getElementById('ap-notes').value = '12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)';
   document.getElementById('ap-popular').value = '0';
+  // 현재 탭 통신사로 자동 선택
+  const sel = document.getElementById('ap-carrier');
+  if (sel) sel.value = currentCarrierTab;
   openModal('add-plan-modal');
 }
 
@@ -1448,7 +1630,7 @@ function saveJob() {
 }
 
 /* ═══════════════ COMMUNITY ═══════════════ */
-const catEmoji = { question:'❓', tip:'💡', housing:'🏠', sell:'🛍️', social:'🤝' };
+const catEmoji = { question:'❓', tip:'💡', housing:'🏠', sell:'🛍️', social:'🤝', daily:'☀️' };
 
 function renderAdminComm(q='') {
   const filtered = DB.community.filter(p => !q || p.title.toLowerCase().includes(q.toLowerCase()) || p.author.toLowerCase().includes(q.toLowerCase()));
@@ -1461,15 +1643,19 @@ function renderAdminComm(q='') {
     return;
   }
   tbody.innerHTML = filtered.map(p => `
-    <tr>
-      <td class="td-truncate"><strong>${p.title}</strong></td>
+    <tr${p.blurred ? ' style="opacity:0.55;"' : ''}>
+      <td class="td-truncate">
+        ${p.blurred ? '<span style="font-size:10px;background:#FEE2E2;color:#991B1B;padding:2px 6px;border-radius:4px;margin-right:5px;">🚫 블러</span>' : ''}
+        <strong>${p.title}</strong>
+      </td>
       <td>${p.author}</td>
       <td>${catEmoji[p.category]||''} ${p.category}</td>
       <td><span class="badge ${statusBadge(p.status)}">${t('status_'+p.status)||p.status}</span></td>
       <td style="color:var(--ink-muted);">${p.date}</td>
       <td>
-        <div style="display:flex;gap:5px;">
+        <div style="display:flex;gap:5px;flex-wrap:wrap;">
           ${p.status!=='approved' ? `<button class="btn btn-success btn-sm" onclick="approvePost(${p.id})">${t('btn_approve')}</button>` : ''}
+          <button class="btn btn-warning btn-sm" onclick="toggleBlur('comm',${p.id})" title="블러 처리">${p.blurred ? '👁️ 해제' : '🚫 블러'}</button>
           <button class="btn btn-danger btn-sm btn-icon" onclick="deleteConfirm('post',${p.id})">🗑️</button>
         </div>
       </td>
@@ -1487,19 +1673,83 @@ function approvePost(id) {
 }
 
 /* ═══════════════ SIM PLANS ═══════════════ */
+/* ═══════════════ SIM PLANS ═══════════════ */
+let currentCarrierTab = 'SK Telecom';
+
+function setCarrierTab(carrier) {
+  currentCarrierTab = carrier;
+  const tabMap = { 'SK Telecom':'sk', 'KT':'kt', 'LG U+':'lg' };
+  Object.entries(tabMap).forEach(([c, key]) => {
+    const btn = document.getElementById('carrier-tab-' + key);
+    if (!btn) return;
+    if (c === carrier) {
+      btn.style.background = 'var(--blue)';
+      btn.style.color = 'white';
+      btn.className = 'btn';
+    } else {
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.className = 'btn btn-ghost';
+    }
+  });
+  // 모달 carrier 선택도 해당 통신사로 맞춤
+  const sel = document.getElementById('ap-carrier');
+  if (sel) sel.value = carrier;
+  renderAdminPlans();
+}
+
+function toggleCarrierVisibility(carrier, visible) {
+  DB.carrierVisibility[carrier] = visible;
+  const statusText = visible ? '노출' : '비노출';
+  logActivity(`${carrier} 메인 노출 ${statusText}`, visible ? 'green' : 'red');
+  toast(`${carrier} 메인 페이지 ${statusText} 설정됨`, 'success');
+}
+
 function renderAdminPlans() {
   const container = document.getElementById('plans-admin-list');
   if (!container) return;
-  container.innerHTML = DB.plans.map(p => `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;">
-      ${p.popular ? `<span class="badge badge-yellow" style="position:absolute;top:14px;right:14px;">⭐ Popular</span>` : ''}
-      <div style="font-size:11px;font-weight:700;color:var(--ink-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">${p.carrier}</div>
-      <div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:2px;">${p.name}</div>
-      <div style="font-size:24px;font-weight:700;color:var(--blue);margin-bottom:2px;">₩${p.price}<span style="font-size:13px;color:var(--ink-muted);font-weight:400;">/mo</span></div>
-      <div style="font-size:13px;color:var(--ink-muted);margin-bottom:12px;">Data: ${p.data}</div>
-      <div style="font-size:12px;color:var(--ink-soft);margin-bottom:16px;line-height:1.6;">
-        ${p.features.split('\n').map(f=>`✓ ${f}`).join('<br>')}
+  const filtered = DB.plans.filter(p => p.carrier === currentCarrierTab);
+  const isVisible = DB.carrierVisibility[currentCarrierTab];
+
+  const statusBanner = `
+    <div style="grid-column:1/-1;background:${isVisible?'rgba(34,201,122,0.1)':'rgba(240,82,82,0.1)'};
+      border:1px solid ${isVisible?'rgba(34,201,122,0.3)':'rgba(240,82,82,0.3)'};
+      border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13.5px;">
+      <span style="font-size:18px;">${isVisible?'✅':'🔴'}</span>
+      <span><strong>${currentCarrierTab}</strong> 메인 페이지 노출 상태: <strong style="color:${isVisible?'var(--green)':'var(--red)'};">${isVisible?'노출 중':'비노출'}</strong></span>
+    </div>`;
+
+  container.innerHTML = statusBanner + filtered.map(p => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;${!isVisible?'opacity:0.6;':''}">
+      ${p.popular ? `<span class="badge badge-yellow" style="position:absolute;top:14px;right:14px;">⭐ 인기</span>` : ''}
+      <div style="font-size:10px;font-weight:700;color:var(--ink-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px;">${p.carrier}</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:10px;">${p.name} <span style="font-size:13px;color:var(--ink-muted);font-weight:400;">(${p.data})</span></div>
+      <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:12px;font-size:12.5px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--ink-soft);">기본료</span><span style="font-weight:600;">₩${p.price}</span>
+        </div>
+        ${p.contractDiscount ? `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--ink-soft);">요금할인약정 (12개월)</span><span style="color:var(--green);font-weight:600;">${p.contractDiscount}</span>
+        </div>` : ''}
+        ${p.promoDiscount ? `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);">
+          <span style="color:var(--ink-soft);">외국인 프로모션 할인 (12개월)</span><span style="color:var(--green);font-weight:600;">${p.promoDiscount}</span>
+        </div>` : ''}
+        ${p.finalPrice ? `<div style="display:flex;justify-content:space-between;padding:5px 0 0;margin-top:2px;">
+          <span style="color:var(--ink);font-weight:700;">최종 납부요금</span><span style="color:var(--blue);font-weight:700;font-size:14px;">₩${p.finalPrice}</span>
+        </div>` : ''}
       </div>
+      ${(p.openBefore20||p.openAfter21) ? `<div style="background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:12px;">
+        <div style="font-weight:700;color:var(--yellow);margin-bottom:5px;">📅 프로모션 할인 적용 안내</div>
+        ${p.openBefore20?`<div style="color:var(--ink-soft);padding:2px 0;">• 20일 이전 개통: ${p.openBefore20}</div>`:''}
+        ${p.openAfter21?`<div style="color:var(--ink-soft);padding:2px 0;">• 21일 이후 개통: ${p.openAfter21}</div>`:''}
+      </div>` : ''}
+      ${p.features ? `<div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;line-height:1.7;">
+        ${p.features.split('\n').filter(f=>f.trim()).map(f=>`<span style="display:block;">✓ ${f}</span>`).join('')}
+      </div>` : ''}
+      ${p.notes ? `<div style="background:rgba(240,82,82,0.07);border:1px solid rgba(240,82,82,0.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:11.5px;">
+        <div style="font-weight:700;color:var(--red);margin-bottom:5px;">⚠️ 약정 주의사항</div>
+        ${p.notes.split('\n').filter(n=>n.trim()).map(n=>`<div style="color:var(--ink-soft);padding:1px 0;">• ${n}</div>`).join('')}
+      </div>` : ''}
       <div style="display:flex;gap:8px;">
         <button class="btn btn-ghost btn-sm" onclick="editPlan(${p.id})" style="flex:1;">${t('btn_edit')}</button>
         <button class="btn btn-danger btn-sm" onclick="deleteConfirm('plan',${p.id})">🗑️</button>
@@ -1508,9 +1758,8 @@ function renderAdminPlans() {
   `).join('') + `
     <div style="background:var(--surface2);border:2px dashed var(--border2);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;cursor:pointer;transition:all 0.16s;" onclick="openAddPlanModal()" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--border2)'">
       <div style="font-size:32px;margin-bottom:8px;opacity:0.4;">+</div>
-      <div style="font-size:13.5px;font-weight:600;color:var(--ink-muted);">${t('add_new_plan')}</div>
-    </div>
-  `;
+      <div style="font-size:13.5px;font-weight:600;color:var(--ink-muted);">${currentCarrierTab} 요금제 추가</div>
+    </div>`;
 }
 
 function editPlan(id) {
@@ -1524,6 +1773,12 @@ function editPlan(id) {
   document.getElementById('ap-url').value = p.url;
   document.getElementById('ap-features').value = p.features;
   document.getElementById('ap-popular').value = p.popular ? '1' : '0';
+  document.getElementById('ap-contract-discount').value = p.contractDiscount || '';
+  document.getElementById('ap-promo-discount').value = p.promoDiscount || '';
+  document.getElementById('ap-final-price').value = p.finalPrice || '';
+  document.getElementById('ap-open-before20').value = p.openBefore20 || '다음달 청구요금부터 할인';
+  document.getElementById('ap-open-after21').value = p.openAfter21 || '다다음달 청구요금부터 할인';
+  document.getElementById('ap-notes').value = p.notes || '';
   openModal('add-plan-modal');
 }
 
@@ -1532,7 +1787,20 @@ function savePlan() {
   const name = document.getElementById('ap-name').value.trim();
   const price = document.getElementById('ap-price').value.trim();
   if (!name || !price) { toast(t('toast_error_fields'), 'error'); return; }
-  const data = { name, price, data:document.getElementById('ap-data').value, url:document.getElementById('ap-url').value, carrier:'SK Telecom', popular:document.getElementById('ap-popular').value==='1', features:document.getElementById('ap-features').value };
+  const data = {
+    name, price,
+    data: document.getElementById('ap-data').value,
+    url: document.getElementById('ap-url').value,
+    carrier: document.getElementById('ap-carrier').value || currentCarrierTab,
+    popular: document.getElementById('ap-popular').value === '1',
+    features: document.getElementById('ap-features').value,
+    contractDiscount: document.getElementById('ap-contract-discount').value,
+    promoDiscount: document.getElementById('ap-promo-discount').value,
+    finalPrice: document.getElementById('ap-final-price').value,
+    openBefore20: document.getElementById('ap-open-before20').value,
+    openAfter21: document.getElementById('ap-open-after21').value,
+    notes: document.getElementById('ap-notes').value,
+  };
   if (eid) {
     Object.assign(DB.plans.find(p=>p.id===parseInt(eid)), data);
     logActivity(t('activity_updated_plan') + `<strong>${name}</strong>`, 'blue');
@@ -1549,16 +1817,33 @@ function savePlan() {
 /* ═══════════════ MEMBERS ═══════════════ */
 const providerIcon = { Google:'🟢', KakaoTalk:'💛', Facebook:'🔵' };
 
+const ADMIN_LEVELS = [
+  { lv:1, icon:'🌱', cls:'#64748B', bg:'#F1F5F9', ptReq:0,   atReq:0   },
+  { lv:2, icon:'⭐', cls:'#92400E', bg:'#FEF3C7', ptReq:10,  atReq:0   },
+  { lv:3, icon:'🔥', cls:'#166534', bg:'#DCFCE7', ptReq:30,  atReq:30  },
+  { lv:4, icon:'💎', cls:'#5B21B6', bg:'#EDE9FE', ptReq:500, atReq:50  },
+  { lv:5, icon:'👑', cls:'#92400E', bg:'#FEF3C7', ptReq:2000,atReq:100 },
+];
+function calcAdminLevel(pts, att) {
+  let lv = 1;
+  for (const l of ADMIN_LEVELS) { if (pts >= l.ptReq && att >= l.atReq) lv = l.lv; }
+  return lv;
+}
+
 function renderMembers(q='') {
   const filtered = DB.members.filter(m => !q || m.name.toLowerCase().includes(q.toLowerCase()));
-  const countEl = document.getElementById('members-count');
-  if (countEl) countEl.textContent = `(${filtered.length})`;
+  document.getElementById('members-count').textContent = `(${filtered.length})`;
   const tbody = document.getElementById('members-tbody');
   if (!tbody) return;
-  tbody.innerHTML = filtered.map(m => `
+  tbody.innerHTML = filtered.map(m => {
+    const lv = calcAdminLevel(m.points||0, m.attendance||0);
+    const li = ADMIN_LEVELS[lv-1];
+    return `
     <tr>
       <td><strong>${m.name}</strong></td>
       <td>${providerIcon[m.provider]||''} ${m.provider}</td>
+      <td><span style="background:${li.bg};color:${li.cls};padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700;">${li.icon} Lv.${lv}</span></td>
+      <td style="color:var(--blue);font-weight:600;">${m.points||0} pt</td>
       <td style="color:var(--ink-muted);">${m.joined}</td>
       <td>${m.posts}</td>
       <td><span class="badge ${m.status==='active'?'badge-green':'badge-red'}">${t('status_'+m.status)||m.status}</span></td>
@@ -1570,8 +1855,8 @@ function renderMembers(q='') {
           }
         </div>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 
 function suspendMember(id) {
