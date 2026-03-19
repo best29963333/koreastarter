@@ -5,39 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>KoreaStarter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #F6F4EF;
+  --bg: #F7F8FA;
   --surface: #FFFFFF;
-  --ink: #18181B;
-  --ink-soft: #62626A;
-  --ink-light: #A0A0A8;
-  --accent: #E03D1A;
-  --accent-soft: #FEF0EC;
-  --border: #E6E2D8;
-  --sim: #1755A8;
-  --sim-soft: #EDF2FC;
-  --job: #157A50;
-  --job-soft: #EAF7F1;
-  --comm: #7535A2;
-  --comm-soft: #F4ECFB;
+  --surface2: #F0F2F5;
+  --ink: #111827;
+  --ink-soft: #6B7280;
+  --ink-light: #9CA3AF;
+  --accent: #FF3E6C;
+  --accent-soft: #FFF0F4;
+  --accent-hover: #E8265A;
+  --border: #E5E7EB;
+  --border-focus: #D1D5DB;
+  --sim: #2563EB;
+  --sim-soft: #EFF6FF;
+  --job: #059669;
+  --job-soft: #ECFDF5;
+  --comm: #7C3AED;
+  --comm-soft: #F5F3FF;
   --kakao: #FAE100;
   --kakao-ink: #3B1E08;
-  --google: #4285F4;
-  --fb: #1877F2;
-  --radius: 14px;
+  --radius: 16px;
   --radius-sm: 10px;
-  --shadow: 0 2px 20px rgba(0,0,0,0.07);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.13);
+  --radius-xs: 8px;
+  --shadow: 0 1px 8px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
   background: var(--bg);
   color: var(--ink);
   font-size: 15px;
@@ -46,28 +48,32 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ════════════════════════════════
+/* ══════════════════════════
    NAV
-════════════════════════════════ */
+══════════════════════════ */
 nav {
   position: sticky; top: 0; z-index: 200;
-  background: rgba(246,244,239,0.93);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  height: 58px;
+  height: 62px;
   display: flex; align-items: center;
-  padding: 0 20px;
-  gap: 12px;
+  padding: 0 24px; gap: 12px;
 }
 .logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 19px; color: var(--ink);
-  display: flex; align-items: center; gap: 7px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 20px; font-weight: 800;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 6px;
   cursor: pointer; flex-shrink: 0;
   text-decoration: none; user-select: none;
+  letter-spacing: -0.03em;
 }
-.logo-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; }
+.logo-dot {
+  width: 8px; height: 8px;
+  background: var(--accent); border-radius: 50%;
+}
 .logo span { color: var(--accent); }
 
 .nav-center {
@@ -76,69 +82,69 @@ nav {
 }
 .nav-center a {
   text-decoration: none; color: var(--ink-soft);
-  font-size: 13.5px; font-weight: 500;
-  padding: 6px 13px; border-radius: 8px;
-  transition: all 0.16s; white-space: nowrap;
+  font-size: 14px; font-weight: 600;
+  padding: 6px 14px; border-radius: var(--radius-xs);
+  transition: all 0.15s; white-space: nowrap;
 }
-.nav-center a:hover { background: var(--border); color: var(--ink); }
+.nav-center a:hover { background: var(--bg); color: var(--ink); }
 .nav-center a.active { color: var(--accent); background: var(--accent-soft); }
 
-.nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
-/* Language selector */
-.lang-sel {
-  position: relative;
-}
+.lang-sel { position: relative; }
 .lang-btn {
   display: flex; align-items: center; gap: 5px;
-  padding: 5px 10px; border-radius: 8px;
+  padding: 6px 12px; border-radius: var(--radius-xs);
   border: 1.5px solid var(--border);
   background: var(--surface); cursor: pointer;
-  font-size: 13px; font-weight: 500; color: var(--ink-soft);
-  transition: all 0.16s;
+  font-size: 13px; font-weight: 600; color: var(--ink-soft);
+  transition: all 0.15s;
 }
-.lang-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+.lang-btn:hover { border-color: var(--accent); color: var(--ink); }
 .lang-dropdown {
   position: absolute; top: calc(100% + 6px); right: 0;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
-  min-width: 140px; overflow: hidden;
+  min-width: 148px; overflow: hidden;
   display: none; z-index: 300;
 }
 .lang-dropdown.open { display: block; }
 .lang-option {
   display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; font-size: 13.5px;
-  cursor: pointer; transition: background 0.14s;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 14px; font-size: 13.5px; font-weight: 500;
+  cursor: pointer; transition: background 0.12s;
+  border-bottom: 1px solid var(--border); color: var(--ink-soft);
 }
 .lang-option:last-child { border: none; }
-.lang-option:hover { background: var(--bg); }
-.lang-option.selected { color: var(--accent); font-weight: 600; }
+.lang-option:hover { background: var(--bg); color: var(--ink); }
+.lang-option.selected { color: var(--accent); font-weight: 700; }
 
-/* Login button */
 .btn-login {
-  padding: 7px 16px; border-radius: 9px;
-  background: var(--ink); color: white;
-  font-size: 13px; font-weight: 600;
+  padding: 8px 20px; border-radius: 100px;
+  background: var(--accent); color: white;
+  font-size: 13.5px; font-weight: 700;
   cursor: pointer; border: none;
-  transition: all 0.16s; white-space: nowrap;
+  transition: all 0.15s; white-space: nowrap;
+  letter-spacing: -0.01em;
 }
-.btn-login:hover { background: #333; }
+.btn-login:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,62,108,0.3); }
+
 .user-pill {
   display: none; align-items: center; gap: 8px;
-  padding: 5px 12px 5px 6px; border-radius: 100px;
+  padding: 5px 14px 5px 5px; border-radius: 100px;
   background: var(--surface); border: 1.5px solid var(--border);
-  cursor: pointer; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink);
+  transition: all 0.15s;
 }
+.user-pill:hover { border-color: var(--accent); }
 .user-pill.show { display: flex; }
 .user-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 30px; height: 30px; border-radius: 50%;
   background: var(--accent); color: white;
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700;
+  font-size: 12px; font-weight: 800;
 }
 
 /* 레벨 배지 */
@@ -146,1013 +152,600 @@ nav {
   display: inline-flex; align-items: center;
   padding: 2px 8px; border-radius: 100px;
   font-size: 10.5px; font-weight: 800;
-  letter-spacing: 0.04em; white-space: nowrap;
+  letter-spacing: 0.03em; white-space: nowrap;
 }
 .lv1 { background: #F1F5F9; color: #64748B; border: 1px solid #CBD5E1; }
 .lv2 { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
 .lv3 { background: #DCFCE7; color: #166534; border: 1px solid #86EFAC; }
 .lv4 { background: #EDE9FE; color: #5B21B6; border: 1px solid #C4B5FD; }
-.lv5 { background: linear-gradient(90deg,#FEF3C7,#FDE68A); color: #92400E; border: 1px solid #F59E0B; box-shadow: 0 0 8px rgba(245,158,11,0.3); }
+.lv5 { background: linear-gradient(90deg,#FEF3C7,#FDE68A); color: #92400E; border: 1px solid #F59E0B; }
 
-/* 회원정보 페이지 */
-.profile-wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px; }
-.profile-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 28px 24px; margin-bottom: 16px;
-}
-.profile-card-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 17px; margin-bottom: 20px; padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 8px;
-}
-.profile-user-row {
-  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
-}
-.profile-avatar-lg {
-  width: 60px; height: 60px; border-radius: 50%;
-  background: var(--accent); color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 700; flex-shrink: 0;
-}
-.profile-info-name { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
-.profile-stats {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 12px; margin-bottom: 20px;
-}
-.profile-stat-box {
-  background: var(--bg); border-radius: 12px;
-  padding: 14px 16px; text-align: center;
-  border: 1px solid var(--border);
-}
-.profile-stat-val {
-  font-family: 'DM Serif Display', serif;
-  font-size: 26px; color: var(--sim); margin-bottom: 2px;
-}
-.profile-stat-lbl { font-size: 12px; color: var(--ink-soft); }
-
-/* 레벨 진행 바 */
-.level-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 14px 0; border-bottom: 1px solid var(--border);
-}
-.level-row:last-child { border: none; }
-.level-row-badge { width: 56px; flex-shrink: 0; text-align: center; }
-.level-row-info { flex: 1; }
-.level-row-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
-.level-row-cond { font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; }
-.level-row-perm { font-size: 12px; color: var(--job); font-weight: 600; }
-.progress-bar-wrap {
-  background: var(--border); border-radius: 100px;
-  height: 6px; overflow: hidden; margin-top: 6px;
-}
-.progress-bar-fill {
-  height: 100%; border-radius: 100px;
-  background: linear-gradient(90deg, var(--sim), var(--comm));
-  transition: width 0.5s ease;
-}
-.level-locked { opacity: 0.45; }
-
-/* Hamburger */
+/* 햄버거 */
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   cursor: pointer; padding: 4px; border: none; background: none;
 }
 .hamburger span {
   display: block; width: 22px; height: 2px;
-  background: var(--ink); border-radius: 2px;
-  transition: all 0.2s;
+  background: var(--ink); border-radius: 2px; transition: all 0.2s;
 }
-
-/* Mobile menu */
 .mobile-menu {
   display: none; position: fixed;
-  inset: 58px 0 0 0; z-index: 150;
-  background: var(--bg);
-  padding: 20px;
-  flex-direction: column; gap: 8px;
+  inset: 62px 0 0 0; z-index: 150;
+  background: var(--surface);
+  padding: 16px;
+  flex-direction: column; gap: 6px;
   border-top: 1px solid var(--border);
   overflow-y: auto;
 }
 .mobile-menu.open { display: flex; }
 .mobile-nav-link {
-  display: block; padding: 13px 16px;
-  background: var(--surface); border-radius: var(--radius-sm);
-  font-size: 15px; font-weight: 500; color: var(--ink);
-  cursor: pointer; border: 1px solid var(--border);
-  text-align: left; transition: all 0.16s;
+  display: block; padding: 13px 18px;
+  background: var(--bg); border-radius: var(--radius-sm);
+  font-size: 14.5px; font-weight: 600; color: var(--ink);
+  cursor: pointer; border: 1.5px solid var(--border);
+  text-align: left; transition: all 0.15s;
 }
 .mobile-nav-link.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-.mobile-nav-link:hover { border-color: var(--ink-soft); }
+.mobile-nav-link:hover { border-color: var(--border-focus); }
 
-/* ════════════════════════════════
+/* ══════════════════════════
    PAGES
-════════════════════════════════ */
-.page { display: none; animation: fadeIn 0.22s ease; }
+══════════════════════════ */
+.page { display: none; animation: fadeIn 0.2s ease; }
 .page.active { display: block; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
 
-/* ════════════════════════════════
-   HOME
-════════════════════════════════ */
-/* ════════════════════════════════
-   HERO — 경복궁 배경
-════════════════════════════════ */
+/* ══════════════════════════
+   HERO
+══════════════════════════ */
 .hero-wrap {
-  position: relative;
-  overflow: hidden;
-  min-height: 560px;
+  position: relative; overflow: hidden;
+  min-height: 540px;
   display: flex; flex-direction: column;
+  background: #111827;
 }
 .hero-bg {
   position: absolute; inset: 0;
   background-image: url('https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1600&q=80');
   background-size: cover;
   background-position: center 55%;
-  background-repeat: no-repeat;
   z-index: 0;
-  filter: blur(3px) brightness(0.85);
+  filter: blur(2px) brightness(0.35);
   transform: scale(1.05);
 }
 .hero-bg::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(8, 12, 28, 0.72) 0%,
-    rgba(12, 20, 44, 0.65) 50%,
-    rgba(18, 8, 8, 0.58) 100%
-  );
+  background: linear-gradient(180deg, rgba(17,24,39,0.2) 0%, rgba(17,24,39,0.75) 100%);
 }
-/* 한국 전통 단청 느낌 상단 포인트 라인 */
 .hero-wrap::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0;
   height: 4px; z-index: 10;
-  background: linear-gradient(90deg, #C8392A 0%, #E8A020 25%, #2E7D32 50%, #1755A8 75%, #C8392A 100%);
+  background: linear-gradient(90deg, var(--accent) 0%, #FF8C57 100%);
 }
-
 .hero {
   position: relative; z-index: 1;
-  max-width: 820px; margin: 0 auto;
-  padding: 80px 24px 60px;
+  max-width: 800px; margin: 0 auto;
+  padding: 90px 28px 64px;
   text-align: center;
 }
 .hero-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.95);
-  border: 1px solid rgba(255,255,255,0.25);
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.2);
   backdrop-filter: blur(8px);
-  border-radius: 100px; padding: 6px 18px;
-  font-size: 12.5px; font-weight: 600;
-  margin-bottom: 26px; letter-spacing: 0.05em;
+  border-radius: 100px; padding: 5px 16px;
+  font-size: 12px; font-weight: 700;
+  margin-bottom: 24px; letter-spacing: 0.06em; text-transform: uppercase;
 }
 h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(34px, 6vw, 62px);
-  line-height: 1.1; letter-spacing: -0.02em;
-  margin-bottom: 18px;
-  color: #FFFFFF;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(32px, 5.5vw, 58px);
+  line-height: 1.1; letter-spacing: -0.03em;
+  margin-bottom: 18px; color: #FFFFFF; font-weight: 800;
 }
-h1 em { color: #FFB347; font-style: italic; }
+h1 em { color: var(--accent); font-style: normal; }
 .hero-sub {
-  font-size: clamp(15px, 2.5vw, 17px);
-  color: rgba(255,255,255,0.78);
-  max-width: 480px;
-  margin: 0 auto 36px; line-height: 1.65;
+  font-size: clamp(14px, 2vw, 16.5px);
+  color: rgba(255,255,255,0.7);
+  max-width: 460px; margin: 0 auto 36px; line-height: 1.7;
 }
 .hero-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .btn-hero-primary {
-  padding: 13px 28px; border-radius: 12px;
+  padding: 13px 30px; border-radius: 100px;
   background: var(--accent); color: white;
-  font-size: 14px; font-weight: 600;
+  font-size: 14px; font-weight: 700;
   border: none; cursor: pointer; transition: all 0.18s;
-  box-shadow: 0 4px 20px rgba(224,61,26,0.45);
+  box-shadow: 0 4px 20px rgba(255,62,108,0.4);
+  letter-spacing: -0.01em;
 }
-.btn-hero-primary:hover { background: #B8300F; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(224,61,26,0.55); }
+.btn-hero-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,62,108,0.45); }
 .btn-hero-secondary {
-  padding: 13px 28px; border-radius: 12px;
-  background: rgba(255,255,255,0.12);
+  padding: 13px 30px; border-radius: 100px;
+  background: rgba(255,255,255,0.1);
   backdrop-filter: blur(8px);
-  color: white;
-  font-size: 14px; font-weight: 600;
-  border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.18s;
+  color: white; font-size: 14px; font-weight: 600;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  cursor: pointer; transition: all 0.18s;
 }
-.btn-hero-secondary:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.5); }
+.btn-hero-secondary:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.4); }
 
-/* 스크롤 힌트 */
 .hero-scroll-hint {
   position: relative; z-index: 1;
   text-align: center; padding-bottom: 28px;
-  color: rgba(255,255,255,0.4); font-size: 12px;
+  color: rgba(255,255,255,0.3); font-size: 12px;
   animation: bounce 2s infinite;
 }
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
+/* 카테고리 카드 */
 .categories {
   position: relative; z-index: 1;
-  max-width: 920px; margin: 0 auto;
-  padding: 0 20px 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  /* 카테고리 카드를 히어로 위로 겹치게 */
-  margin-top: -32px;
-  padding-bottom: 48px;
+  max-width: 960px; margin: -36px auto 0;
+  padding: 0 24px 52px;
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
 }
 .cat-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 26px 22px;
-  cursor: pointer; transition: all 0.22s;
+  padding: 28px 24px;
+  cursor: pointer; transition: all 0.2s;
   position: relative; overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: var(--shadow);
 }
-.cat-card::after {
+.cat-card::before {
   content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 3px;
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
 }
-.cat-card.sim::after { background: var(--sim); }
-.cat-card.job::after { background: var(--job); }
-.cat-card.comm::after { background: var(--comm); }
-.cat-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.18); border-color: transparent; }
+.cat-card.sim::before { background: var(--sim); }
+.cat-card.job::before { background: var(--job); }
+.cat-card.comm::before { background: var(--comm); }
+.cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
 .cat-icon {
   width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; margin-bottom: 15px;
+  font-size: 20px; margin-bottom: 14px;
 }
-.cat-card.sim .cat-icon { background: var(--sim-soft); }
-.cat-card.job .cat-icon { background: var(--job-soft); }
-.cat-card.comm .cat-icon { background: var(--comm-soft); }
-.cat-title { font-family: 'DM Serif Display', serif; font-size: 18px; margin-bottom: 6px; }
-.cat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
-.cat-arrow { display: inline-flex; align-items: center; gap: 4px; margin-top: 14px; font-size: 13px; font-weight: 600; }
+.cat-card.sim .cat-icon { background: var(--sim-soft); color: var(--sim); }
+.cat-card.job .cat-icon { background: var(--job-soft); color: var(--job); }
+.cat-card.comm .cat-icon { background: var(--comm-soft); color: var(--comm); }
+.cat-title { font-size: 17px; font-weight: 800; margin-bottom: 6px; color: var(--ink); letter-spacing: -0.02em; }
+.cat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.cat-arrow { display: inline-flex; align-items: center; gap: 4px; margin-top: 14px; font-size: 13px; font-weight: 700; }
 .cat-card.sim .cat-arrow { color: var(--sim); }
 .cat-card.job .cat-arrow { color: var(--job); }
 .cat-card.comm .cat-arrow { color: var(--comm); }
 
 .trust-strip {
   background: var(--ink);
-  padding: 18px 24px;
+  padding: 16px 24px;
   display: flex; justify-content: center;
-  gap: 32px; flex-wrap: wrap;
-  font-size: 12.5px; color: rgba(255,255,255,0.55);
+  gap: 36px; flex-wrap: wrap;
+  font-size: 12.5px; color: rgba(255,255,255,0.45);
 }
-.trust-item { display: flex; align-items: center; gap: 7px; }
+.trust-item { display: flex; align-items: center; gap: 8px; }
 .trust-item strong { color: rgba(255,255,255,0.9); }
 
-/* ════════════════════════════════
+/* ══════════════════════════
    PAGE HEADER
-════════════════════════════════ */
+══════════════════════════ */
 .page-header {
   background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 28px 24px 24px;
+  border-bottom: 1.5px solid var(--border);
+  padding: 28px 28px 22px;
 }
-.breadcrumb {
-  font-size: 12px; color: var(--ink-light);
-  margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
-}
-.breadcrumb span { cursor: pointer; }
+.breadcrumb { font-size: 12px; color: var(--ink-light); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.breadcrumb span { cursor: pointer; transition: color 0.15s; }
 .breadcrumb span:hover { color: var(--accent); }
-.page-title { font-family: 'DM Serif Display', serif; font-size: 27px; margin-bottom: 4px; }
+.page-title { font-size: 26px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.03em; color: var(--ink); }
 .page-subtitle { font-size: 14px; color: var(--ink-soft); }
 
-/* ════════════════════════════════
+/* ══════════════════════════
    SIM CARDS
-════════════════════════════════ */
-.sim-content { max-width: 880px; margin: 0 auto; padding: 32px 20px; }
+══════════════════════════ */
+.sim-content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
 
 .carrier-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
 .carrier-tab {
-  padding: 7px 18px; border-radius: 100px;
+  padding: 8px 22px; border-radius: 100px;
   border: 1.5px solid var(--border);
-  font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.16s;
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
   background: var(--surface); color: var(--ink-soft);
+  letter-spacing: -0.01em;
 }
+.carrier-tab:hover { border-color: var(--sim); color: var(--sim); }
 .carrier-tab.active { border-color: var(--sim); color: var(--sim); background: var(--sim-soft); }
-.carrier-tab.soon { opacity: 0.45; cursor: not-allowed; }
+.carrier-tab.soon { opacity: 0.4; cursor: not-allowed; }
 
-.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 28px; }
-
+.plans-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
 .plan-card {
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 22px 18px;
+  padding: 24px 20px;
   position: relative; transition: all 0.2s;
   display: flex; flex-direction: column;
+  box-shadow: var(--shadow);
 }
-.plan-card:hover { box-shadow: var(--shadow); border-color: var(--sim); }
-.plan-card.popular { border-color: var(--sim); box-shadow: 0 0 0 3px rgba(23,85,168,0.1); }
+.plan-card:hover { box-shadow: var(--shadow-md); border-color: var(--sim); transform: translateY(-2px); }
+.plan-card.popular { border-color: var(--sim); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
 .popular-badge {
   position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
   background: var(--sim); color: white;
-  font-size: 10.5px; font-weight: 700;
-  padding: 3px 12px; border-radius: 100px;
-  white-space: nowrap; letter-spacing: 0.04em;
+  font-size: 10px; font-weight: 800;
+  padding: 3px 14px; border-radius: 100px;
+  white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase;
 }
-.plan-name { font-size: 11.5px; font-weight: 700; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
-.plan-price { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--ink); }
-.plan-price sup { font-size: 14px; vertical-align: super; }
-.plan-price sub { font-size: 12px; color: var(--ink-soft); }
-.plan-period { font-size: 11px; color: var(--ink-light); margin-bottom: 12px; }
+.plan-name { font-size: 11px; font-weight: 700; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
+.plan-price { font-size: 30px; font-weight: 800; color: var(--ink); letter-spacing: -0.03em; }
+.plan-price sup { font-size: 14px; vertical-align: super; font-weight: 700; }
+.plan-price sub { font-size: 12px; color: var(--ink-soft); font-weight: 500; }
+.plan-period { font-size: 11px; color: var(--ink-light); margin-bottom: 14px; }
 
-/* 요금 테이블 */
 .plan-price-table {
   background: var(--bg); border-radius: 10px;
   padding: 10px 12px; margin-bottom: 12px;
-  font-size: 12.5px;
+  font-size: 12.5px; border: 1px solid var(--border);
 }
 .plan-price-row {
   display: flex; justify-content: space-between; align-items: center;
   padding: 4px 0; border-bottom: 1px solid var(--border);
 }
 .plan-price-row:last-child { border: none; padding-top: 6px; margin-top: 2px; }
-.plan-price-row.final { font-weight: 700; font-size: 13.5px; }
+.plan-price-row.final { font-weight: 800; font-size: 13.5px; }
 .plan-price-row.final .price-val { color: var(--sim); font-size: 15px; }
 .plan-price-row .price-label { color: var(--ink-soft); }
-.plan-price-row .price-val { font-weight: 600; }
-.price-discount { color: #16a34a; font-weight: 600; }
+.plan-price-row .price-val { font-weight: 700; }
+.price-discount { color: var(--job); font-weight: 700; }
 
-/* 개통일 안내 박스 */
 .plan-open-guide {
   background: #FFFBEB; border: 1px solid #FDE68A;
-  border-radius: 9px; padding: 9px 12px; margin-bottom: 10px;
-  font-size: 12px;
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; font-size: 12px;
 }
-.plan-open-guide-title { font-weight: 700; color: #92400E; margin-bottom: 4px; font-size: 11.5px; }
-.plan-open-guide-row { color: #78350F; padding: 1px 0; line-height: 1.5; }
+.plan-open-guide-title { font-weight: 800; color: #92400E; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+.plan-open-guide-row { color: #78350F; padding: 1px 0; line-height: 1.55; }
 
-/* 주의사항 */
 .plan-notes {
   background: #FFF5F5; border: 1px solid #FECACA;
-  border-radius: 9px; padding: 9px 12px; margin-bottom: 12px;
-  font-size: 11.5px;
+  border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 11.5px;
 }
-.plan-notes-title { font-weight: 700; color: #991B1B; margin-bottom: 4px; }
+.plan-notes-title { font-weight: 800; color: #991B1B; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
 .plan-notes-item { color: #7F1D1D; padding: 1px 0; line-height: 1.5; }
 
 .plan-features { list-style: none; margin-bottom: 14px; }
 .plan-features li {
-  font-size: 12.5px; padding: 4px 0;
+  font-size: 12.5px; padding: 5px 0;
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 7px; color: var(--ink-soft);
+  display: flex; align-items: center; gap: 8px; color: var(--ink-soft);
 }
 .plan-features li:last-child { border: none; }
-.plan-features li::before { content: '✓'; color: var(--sim); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+.plan-features li::before { content: '✓'; color: var(--sim); font-weight: 800; font-size: 11px; flex-shrink: 0; }
 .btn-plan {
   display: block; width: 100%;
-  padding: 9px 0; border-radius: 10px;
-  text-align: center; font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.16s;
-  text-decoration: none; border: none;
-  margin-top: auto;
+  padding: 11px 0; border-radius: 10px;
+  text-align: center; font-size: 13.5px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+  text-decoration: none; border: none; margin-top: auto; letter-spacing: -0.01em;
 }
 .btn-plan-primary { background: var(--sim); color: white; }
-.btn-plan-primary:hover { background: #0E3A80; }
+.btn-plan-primary:hover { background: #1D4ED8; }
 .btn-plan-outline { background: var(--surface); color: var(--sim); border: 1.5px solid var(--sim); }
 .btn-plan-outline:hover { background: var(--sim-soft); }
 
-/* Kakao consultation box */
 .kakao-box {
-  background: var(--kakao);
-  border-radius: var(--radius);
-  padding: 24px 22px;
-  display: flex; align-items: center; gap: 20px;
+  background: var(--kakao); border-radius: var(--radius);
+  padding: 24px 22px; display: flex; align-items: center; gap: 20px;
   flex-wrap: wrap; margin-bottom: 24px;
+  box-shadow: var(--shadow);
 }
 .kakao-icon {
-  width: 56px; height: 56px; border-radius: 16px;
-  background: rgba(0,0,0,0.12);
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(0,0,0,0.1);
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px; flex-shrink: 0;
+  font-size: 26px; flex-shrink: 0;
 }
 .kakao-text { flex: 1; min-width: 180px; }
-.kakao-text h3 { font-size: 15px; font-weight: 700; color: var(--kakao-ink); margin-bottom: 3px; }
+.kakao-text h3 { font-size: 15px; font-weight: 800; color: var(--kakao-ink); margin-bottom: 3px; }
 .kakao-text p { font-size: 13px; color: rgba(59,30,8,0.7); line-height: 1.5; }
 .btn-kakao {
-  padding: 10px 22px; border-radius: 11px;
+  padding: 11px 22px; border-radius: 12px;
   background: var(--kakao-ink); color: var(--kakao);
-  font-size: 13.5px; font-weight: 700;
-  border: none; cursor: pointer; transition: all 0.16s;
-  white-space: nowrap; display: flex; align-items: center; gap: 8px;
-  text-decoration: none;
+  font-size: 13.5px; font-weight: 800;
+  border: none; cursor: pointer; transition: all 0.15s;
+  white-space: nowrap; display: flex; align-items: center; gap: 8px; text-decoration: none;
 }
 .btn-kakao:hover { background: #1e0f04; transform: translateY(-1px); }
-.kakao-channel-hint {
-  font-size: 11px; color: rgba(59,30,8,0.5);
-  margin-top: 6px; display: block;
-}
+.kakao-channel-hint { font-size: 11px; color: rgba(59,30,8,0.5); margin-top: 5px; display: block; }
 
 .sim-note {
   background: var(--sim-soft); border-radius: var(--radius);
-  border: 1px solid #C0CFF0;
+  border: 1.5px solid #BFDBFE;
   padding: 14px 18px; font-size: 13px; color: var(--ink-soft);
   display: flex; gap: 10px; align-items: flex-start; line-height: 1.55;
 }
 
-/* ════════════════════════════════
-   게시글 상세 + 댓글 + 대댓글
-════════════════════════════════ */
+/* ══════════════════════════
+   게시글 상세 + 댓글
+══════════════════════════ */
 .post-detail-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.55); z-index: 450;
+  background: rgba(0,0,0,0.5); z-index: 450;
   align-items: flex-start; justify-content: center;
   padding: 60px 20px 20px; overflow-y: auto;
 }
 .post-detail-overlay.open { display: flex; }
 .post-detail {
-  background: var(--surface); border-radius: 18px;
+  background: var(--surface); border-radius: 20px;
   width: 100%; max-width: 660px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  box-shadow: var(--shadow-lg);
   animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
   overflow: hidden; margin-bottom: 40px;
+  border: 1.5px solid var(--border);
 }
-.post-detail-header {
-  padding: 22px 24px 16px;
-  border-bottom: 1px solid var(--border);
-}
-.post-detail-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
-}
+@keyframes modalIn { from { opacity:0; transform:scale(0.96) translateY(8px); } to { opacity:1; transform:none; } }
+.post-detail-header { padding: 22px 24px 16px; border-bottom: 1px solid var(--border); }
+.post-detail-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
 .post-detail-meta-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.post-detail-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 20px; line-height: 1.3; margin-bottom: 10px;
-}
-.post-detail-foot {
-  display: flex; gap: 12px; font-size: 12.5px;
-  color: var(--ink-light); flex-wrap: wrap; align-items: center;
-}
+.post-detail-title { font-size: 20px; font-weight: 800; line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.02em; color: var(--ink); }
+.post-detail-foot { display: flex; gap: 12px; font-size: 12.5px; color: var(--ink-light); flex-wrap: wrap; align-items: center; }
 .post-detail-link {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12.5px; color: var(--sim);
-  text-decoration: none; padding: 3px 10px;
-  background: var(--sim-soft); border-radius: 100px;
-  border: 1px solid rgba(23,85,168,0.2);
-  transition: all 0.15s;
+  font-size: 12.5px; color: var(--sim); text-decoration: none;
+  padding: 3px 10px; background: var(--sim-soft); border-radius: 100px;
+  border: 1px solid #BFDBFE; transition: all 0.15s;
 }
 .post-detail-link:hover { background: var(--sim); color: white; }
-
-/* 마감 배지 */
 .badge-closed {
   display: inline-flex; align-items: center; gap: 4px;
   background: #FEE2E2; color: #991B1B;
-  border: 1px solid #FECACA;
-  font-size: 11px; font-weight: 700;
+  border: 1px solid #FECACA; font-size: 11px; font-weight: 700;
   padding: 3px 10px; border-radius: 100px;
 }
-.post-row.closed { opacity: 0.55; }
+.post-row.closed { opacity: 0.5; }
 .post-row.closed .post-row-title { text-decoration: line-through; color: var(--ink-light); }
-
 .post-detail-body {
-  padding: 18px 24px;
-  font-size: 14.5px; color: var(--ink-soft);
-  line-height: 1.7; border-bottom: 1px solid var(--border);
-  word-break: break-word;
+  padding: 18px 24px; font-size: 14.5px; color: var(--ink-soft);
+  line-height: 1.75; border-bottom: 1px solid var(--border); word-break: break-word;
 }
-
-/* 욕설 블러 */
-.blur-content {
-  filter: blur(5px);
-  user-select: none;
-  cursor: pointer;
-  transition: filter 0.2s;
-  position: relative;
-}
-.blur-content::after {
-  content: attr(data-blur-warning);
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 600; color: var(--ink-soft);
-  filter: none; backdrop-filter: blur(0px);
-  background: rgba(255,255,255,0.01);
-}
+.blur-content { filter: blur(5px); user-select: none; cursor: pointer; transition: filter 0.2s; }
 .blur-content.revealed { filter: none; }
-.blur-content.revealed::after { display: none; }
 
-/* 댓글 섹션 */
 .comments-section { padding: 18px 24px 4px; }
 .comments-title {
-  font-size: 13px; font-weight: 700;
-  color: var(--ink-soft); letter-spacing: 0.04em;
-  text-transform: uppercase; margin-bottom: 14px;
+  font-size: 11.5px; font-weight: 800; color: var(--ink-soft);
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 14px;
   display: flex; align-items: center; gap: 8px;
 }
-
-/* 댓글 아이템 */
-.comment-item {
-  display: flex; gap: 10px;
-  padding: 11px 0; border-bottom: 1px solid var(--border);
-}
+.comment-item { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .comment-item:last-child { border: none; }
 .comment-avatar {
-  width: 30px; height: 30px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 50%;
   background: var(--sim); color: white;
   display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px;
 }
 .comment-avatar.google { background: #4285F4; }
 .comment-avatar.facebook { background: #1877F2; }
 .comment-avatar.kakao { background: var(--kakao); color: var(--kakao-ink); }
-.comment-avatar.anon { background: var(--border); color: var(--ink-soft); }
+.comment-avatar.anon { background: var(--surface2); color: var(--ink-soft); }
 .comment-body { flex: 1; min-width: 0; }
-.comment-author { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.comment-author { font-size: 13px; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
 .comment-text { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; word-break: break-word; }
-.comment-actions {
-  display: flex; gap: 10px; margin-top: 5px; align-items: center;
-}
+.comment-actions { display: flex; gap: 10px; margin-top: 5px; align-items: center; }
 .comment-time { font-size: 11.5px; color: var(--ink-light); }
-.btn-reply-toggle {
-  font-size: 11.5px; color: var(--sim);
-  background: none; border: none; cursor: pointer;
-  padding: 0; font-weight: 600; transition: color 0.15s;
-}
-.btn-reply-toggle:hover { color: #0E3A80; }
-
-/* 대댓글 영역 */
-.replies-wrap {
-  margin-top: 10px; margin-left: 2px;
-  padding-left: 14px;
-  border-left: 2px solid var(--border);
-}
-.reply-item {
-  display: flex; gap: 8px;
-  padding: 8px 0; border-bottom: 1px solid var(--border);
-}
+.btn-reply-toggle { font-size: 11.5px; color: var(--sim); background: none; border: none; cursor: pointer; padding: 0; font-weight: 700; transition: color 0.15s; }
+.btn-reply-toggle:hover { color: #1D4ED8; }
+.replies-wrap { margin-top: 10px; padding-left: 14px; border-left: 2px solid var(--border); }
+.reply-item { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
 .reply-item:last-child { border: none; }
-.reply-avatar {
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--comm); color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; flex-shrink: 0;
-}
+.reply-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--comm); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; }
 .reply-avatar.google { background: #4285F4; }
 .reply-avatar.facebook { background: #1877F2; }
 .reply-avatar.kakao { background: var(--kakao); color: var(--kakao-ink); }
 .reply-body { flex: 1; }
-.reply-author { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.reply-author { font-size: 12px; font-weight: 700; margin-bottom: 2px; color: var(--ink); }
 .reply-text { font-size: 13px; color: var(--ink-soft); line-height: 1.5; word-break: break-word; }
 .reply-time { font-size: 11px; color: var(--ink-light); margin-top: 3px; }
-
-/* 대댓글 입력 */
-.reply-input-wrap {
-  display: flex; gap: 8px; margin-top: 10px; align-items: flex-end;
-}
-.reply-input {
-  flex: 1; padding: 8px 12px;
-  border: 1.5px solid var(--border); border-radius: 10px;
-  font-family: inherit; font-size: 13px; color: var(--ink);
-  background: var(--bg); outline: none;
-  transition: border 0.15s; resize: none;
-  min-height: 36px; max-height: 100px; line-height: 1.5;
-}
+.reply-input-wrap { display: flex; gap: 8px; margin-top: 10px; align-items: flex-end; }
+.reply-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 13px; color: var(--ink); background: var(--bg); outline: none; transition: border 0.15s; resize: none; min-height: 36px; max-height: 100px; line-height: 1.5; }
 .reply-input:focus { border-color: var(--comm); }
-.btn-reply-submit {
-  padding: 8px 14px; border-radius: 10px;
-  background: var(--comm); color: white;
-  font-size: 12px; font-weight: 600;
-  border: none; cursor: pointer; flex-shrink: 0;
-  transition: all 0.15s;
-}
-.btn-reply-submit:hover { background: #561E7B; }
-
-/* 댓글 입력 */
-.comment-input-wrap {
-  padding: 14px 24px 20px;
-  background: var(--bg); border-top: 1px solid var(--border);
-  display: flex; gap: 10px; align-items: flex-end;
-}
-.comment-input {
-  flex: 1; padding: 10px 14px;
-  border: 1.5px solid var(--border); border-radius: 12px;
-  font-family: inherit; font-size: 14px; color: var(--ink);
-  background: var(--surface); outline: none;
-  transition: border 0.16s; resize: none; min-height: 42px;
-  max-height: 120px; line-height: 1.5;
-}
+.btn-reply-submit { padding: 8px 14px; border-radius: 10px; background: var(--comm); color: white; font-size: 12px; font-weight: 700; border: none; cursor: pointer; flex-shrink: 0; transition: all 0.15s; }
+.btn-reply-submit:hover { background: #6D28D9; }
+.comment-input-wrap { padding: 14px 24px 20px; background: var(--bg); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
+.comment-input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 12px; font-family: inherit; font-size: 14px; color: var(--ink); background: var(--surface); outline: none; transition: border 0.15s; resize: none; min-height: 42px; max-height: 120px; line-height: 1.5; }
 .comment-input:focus { border-color: var(--sim); }
-.btn-comment-submit {
-  padding: 10px 18px; border-radius: 12px;
-  background: var(--sim); color: white;
-  font-size: 13px; font-weight: 600;
-  border: none; cursor: pointer; transition: all 0.16s;
-  white-space: nowrap; flex-shrink: 0;
-}
-.btn-comment-submit:hover { background: #0E3A80; }
-.btn-detail-close {
-  padding: 6px 10px; border-radius: 8px;
-  background: var(--bg); border: 1px solid var(--border);
-  color: var(--ink-soft); font-size: 13px;
-  cursor: pointer; transition: all 0.16s;
-}
+.btn-comment-submit { padding: 10px 18px; border-radius: 12px; background: var(--sim); color: white; font-size: 13px; font-weight: 700; border: none; cursor: pointer; transition: all 0.15s; white-space: nowrap; flex-shrink: 0; }
+.btn-comment-submit:hover { background: #1D4ED8; }
+.btn-detail-close { padding: 6px 12px; border-radius: 8px; background: var(--bg); border: 1.5px solid var(--border); color: var(--ink-soft); font-size: 13px; cursor: pointer; transition: all 0.15s; }
 .btn-detail-close:hover { background: var(--border); }
-.no-comments {
-  text-align: center; padding: 20px;
-  color: var(--ink-light); font-size: 13.5px;
-}
+.no-comments { text-align: center; padding: 24px; color: var(--ink-light); font-size: 13.5px; }
+.btn-close-post { padding: 5px 12px; border-radius: 8px; background: #FEF3E2; border: 1px solid #FDE68A; color: #B45309; font-size: 12px; font-weight: 700; cursor: pointer; }
+.btn-delete-post { padding: 5px 12px; border-radius: 8px; background: #FEE2E2; border: 1px solid #FECACA; color: #991B1B; font-size: 12px; font-weight: 700; cursor: pointer; }
 
-/* 마감/삭제 버튼 */
-.btn-close-post {
-  padding: 5px 12px; border-radius: 8px;
-  background: #FEF3E2; border: 1px solid #FDE68A;
-  color: #B45309; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.15s;
-}
-.btn-close-post:hover { background: #FDE68A; }
-.btn-delete-post {
-  padding: 5px 12px; border-radius: 8px;
-  background: #FEE2E2; border: 1px solid #FECACA;
-  color: #991B1B; font-size: 12px; font-weight: 600;
-  cursor: pointer; transition: all 0.15s;
-}
-.btn-delete-post:hover { background: #FECACA; }
-
-/* 구인/구직 탭 필터 */
+/* ══════════════════════════
+   게시판
+══════════════════════════ */
 .job-type-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-.job-type-tab {
-  padding: 6px 18px; border-radius: 100px;
-  font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.16s;
-  border: 1.5px solid var(--border);
-  background: var(--surface); color: var(--ink-soft);
-}
+.job-type-tab { padding: 7px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.15s; border: 1.5px solid var(--border); background: var(--surface); color: var(--ink-soft); }
 .job-type-tab.active.hiring { border-color: var(--job); color: var(--job); background: var(--job-soft); }
 .job-type-tab.active.seeking { border-color: var(--sim); color: var(--sim); background: var(--sim-soft); }
-.job-type-tab:not(.active):hover { border-color: var(--ink-soft); color: var(--ink); }
+.job-type-tab:not(.active):hover { border-color: var(--border-focus); color: var(--ink); }
 .tag-hiring { background: var(--job-soft); color: var(--job); }
 .tag-seeking { background: var(--sim-soft); color: var(--sim); }
-/* ════════════════════════════════
-   고급 검색
-════════════════════════════════ */
-.search-wrap {
-  background: var(--surface); border: 1.5px solid var(--border);
-  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px;
-}
-.search-main-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
-.search-main-input {
-  flex: 1; padding: 9px 14px;
-  border: 1.5px solid var(--border); border-radius: 10px;
-  font-family: inherit; font-size: 14px; color: var(--ink);
-  background: var(--bg); outline: none; transition: border 0.15s;
-}
-.search-main-input:focus { border-color: var(--sim); }
-.btn-search {
-  padding: 9px 18px; border-radius: 10px;
-  background: var(--sim); color: white;
-  font-size: 13.5px; font-weight: 600;
-  border: none; cursor: pointer; transition: all 0.15s; white-space: nowrap;
-}
-.btn-search:hover { background: #0E3A80; }
-.btn-search-clear {
-  padding: 9px 14px; border-radius: 10px;
-  background: var(--bg); color: var(--ink-soft);
-  font-size: 13px; font-weight: 600;
-  border: 1.5px solid var(--border); cursor: pointer; transition: all 0.15s;
-}
-.btn-search-clear:hover { border-color: var(--ink-soft); }
-.search-option-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.search-option-label { font-size: 11.5px; color: var(--ink-soft); font-weight: 600; margin-right: 2px; white-space: nowrap; }
-.search-opt {
-  padding: 4px 12px; border-radius: 100px;
-  font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
-  border: 1.5px solid var(--border); background: var(--surface); color: var(--ink-soft);
-}
-.search-opt.active { border-color: var(--sim); color: var(--sim); background: var(--sim-soft); }
-.search-result-info { font-size: 12.5px; color: var(--ink-light); margin-bottom: 12px; padding: 0 2px; }
-.search-highlight { background: #FEF9C3; color: #854D0E; border-radius: 3px; padding: 0 2px; font-weight: 600; }
 
-/* ════════════════════════════════
-   작성자 프로필 팝업
-════════════════════════════════ */
-.author-popup-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5); z-index: 500;
-  align-items: center; justify-content: center; padding: 20px;
-}
+.search-wrap { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.search-main-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.search-main-input { flex: 1; padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 14px; color: var(--ink); background: var(--bg); outline: none; transition: border 0.15s; }
+.search-main-input:focus { border-color: var(--sim); }
+.btn-search { padding: 9px 20px; border-radius: 10px; background: var(--sim); color: white; font-size: 13.5px; font-weight: 700; border: none; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.btn-search:hover { background: #1D4ED8; }
+.btn-search-clear { padding: 9px 14px; border-radius: 10px; background: var(--bg); color: var(--ink-soft); font-size: 13px; font-weight: 600; border: 1.5px solid var(--border); cursor: pointer; }
+.search-option-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.search-option-label { font-size: 11.5px; color: var(--ink-soft); font-weight: 700; margin-right: 2px; white-space: nowrap; }
+.search-opt { padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1.5px solid var(--border); background: var(--surface); color: var(--ink-soft); }
+.search-opt.active { border-color: var(--sim); color: var(--sim); background: var(--sim-soft); }
+.search-result-info { font-size: 12.5px; color: var(--ink-light); margin-bottom: 12px; }
+.search-highlight { background: #FEF9C3; color: #854D0E; border-radius: 3px; padding: 0 2px; font-weight: 700; }
+
+.author-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
 .author-popup-overlay.open { display: flex; }
-.author-popup {
-  background: var(--surface); border-radius: 18px;
-  width: 100%; max-width: 440px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-  animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden;
-}
-.author-popup-header {
-  padding: 22px 22px 16px;
-  background: linear-gradient(135deg, #1755A8 0%, #7535A2 100%);
-  color: white; position: relative;
-}
-.author-popup-avatar {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: 700; margin-bottom: 10px;
-  border: 2px solid rgba(255,255,255,0.3);
-}
-.author-popup-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-.author-popup-meta { font-size: 12.5px; opacity: 0.8; display: flex; gap: 14px; flex-wrap: wrap; }
-.btn-author-close {
-  position: absolute; top: 14px; right: 14px;
-  background: rgba(255,255,255,0.15); border: none;
-  color: white; width: 28px; height: 28px; border-radius: 50%;
-  cursor: pointer; font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-}
-.btn-author-close:hover { background: rgba(255,255,255,0.3); }
+.author-popup { background: var(--surface); border-radius: 20px; width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden; border: 1.5px solid var(--border); }
+.author-popup-header { padding: 22px 22px 16px; background: linear-gradient(135deg, var(--sim-soft) 0%, var(--comm-soft) 100%); border-bottom: 1px solid var(--border); position: relative; }
+.author-popup-avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; margin-bottom: 10px; border: 3px solid white; box-shadow: var(--shadow); }
+.author-popup-name { font-size: 18px; font-weight: 800; margin-bottom: 4px; color: var(--ink); letter-spacing: -0.02em; }
+.author-popup-meta { font-size: 12.5px; color: var(--ink-soft); display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-author-close { position: absolute; top: 14px; right: 14px; background: white; border: 1.5px solid var(--border); color: var(--ink-soft); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.btn-author-close:hover { border-color: var(--accent); color: var(--accent); }
 .author-popup-body { padding: 16px 22px 20px; }
-.author-posts-title { font-size: 12px; font-weight: 700; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px; }
-.author-post-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: all 0.15s;
-}
+.author-posts-title { font-size: 11px; font-weight: 800; color: var(--ink-light); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 12px; }
+.author-post-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.15s; }
 .author-post-item:last-child { border: none; }
 .author-post-item:hover .author-post-title { color: var(--sim); }
 .author-post-type { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
 .author-post-info { flex: 1; min-width: 0; }
-.author-post-title { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.15s; margin-bottom: 2px; }
+.author-post-title { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.15s; margin-bottom: 2px; color: var(--ink); }
 .author-post-date { font-size: 11.5px; color: var(--ink-light); }
-.author-no-posts { text-align: center; padding: 20px; color: var(--ink-light); font-size: 13.5px; }
+.author-no-posts { text-align: center; padding: 20px; color: var(--ink-light); }
 
-/* 내 게시글 목록 */
 .my-posts-list { display: flex; flex-direction: column; gap: 8px; }
-.my-post-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 10px;
-  cursor: pointer; transition: all 0.15s;
-}
+.my-post-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; }
 .my-post-item:hover { border-color: var(--sim); background: var(--sim-soft); }
 .my-post-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px; flex-shrink: 0; }
-.my-post-title { flex: 1; font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.my-post-title { flex: 1; font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
 .my-post-meta { font-size: 11.5px; color: var(--ink-light); white-space: nowrap; }
 
-.board-wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px; }
-
-.board-toolbar {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 22px; gap: 12px; flex-wrap: wrap;
-}
-.search-box {
-  flex: 1; min-width: 180px; max-width: 320px;
-  display: flex; align-items: center; gap: 8px;
-  background: var(--surface); border: 1.5px solid var(--border);
-  border-radius: 10px; padding: 8px 14px;
-}
-.search-box input {
-  border: none; background: none; outline: none;
-  font-family: inherit; font-size: 13.5px; color: var(--ink);
-  flex: 1;
-}
+.board-wrap { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+.board-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; gap: 12px; flex-wrap: wrap; }
+.search-box { flex: 1; min-width: 180px; max-width: 320px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 14px; }
+.search-box input { border: none; background: none; outline: none; font-family: inherit; font-size: 13.5px; color: var(--ink); flex: 1; }
 .search-box input::placeholder { color: var(--ink-light); }
+.btn-post-job { padding: 10px 22px; border-radius: 100px; background: var(--job); color: white; font-size: 13.5px; font-weight: 700; border: none; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.btn-post-job:hover { background: #047857; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(5,150,105,0.3); }
+.btn-new-post { padding: 10px 22px; border-radius: 100px; background: var(--accent); color: white; font-size: 13.5px; font-weight: 700; border: none; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.btn-new-post:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,62,108,0.3); }
 
-.btn-post-job {
-  padding: 9px 20px; border-radius: 10px;
-  background: var(--job); color: white;
-  font-size: 13.5px; font-weight: 600;
-  border: none; cursor: pointer; transition: all 0.16s;
-  white-space: nowrap;
-}
-.btn-post-job:hover { background: #0E5939; }
-
-.post-list { display: flex; flex-direction: column; gap: 9px; }
-.post-row {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 15px 18px;
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 12px;
-  cursor: pointer; transition: all 0.16s;
-}
-.post-row:hover { border-color: var(--job); box-shadow: var(--shadow); }
+.post-list { display: flex; flex-direction: column; gap: 8px; }
+.post-row { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; cursor: pointer; transition: all 0.18s; box-shadow: var(--shadow); }
+.post-row:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .post-row-body { flex: 1; min-width: 0; }
-.post-row-title { font-weight: 600; font-size: 14.5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.post-row-title { font-weight: 700; font-size: 14.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); letter-spacing: -0.01em; }
 .post-row-meta { font-size: 12px; color: var(--ink-light); }
-.post-tag {
-  padding: 3px 10px; border-radius: 100px;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.03em; flex-shrink: 0; white-space: nowrap;
-  align-self: flex-start; margin-top: 2px;
-}
-.tag-ft { background: #E5F4EC; color: #157A50; }
-.tag-pt { background: #FEF4E2; color: #B05500; }
+.post-tag { padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; flex-shrink: 0; white-space: nowrap; align-self: flex-start; margin-top: 2px; }
+.tag-ft { background: var(--job-soft); color: var(--job); }
+.tag-pt { background: #FEF3C7; color: #B45309; }
 .tag-remote { background: var(--sim-soft); color: var(--sim); }
 .tag-other { background: var(--comm-soft); color: var(--comm); }
 
-/* ════════════════════════════════
-   COMMUNITY
-════════════════════════════════ */
-.comm-filters {
-  display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 20px;
-}
-.filter-chip {
-  padding: 5px 13px; border-radius: 100px;
-  font-size: 12.5px; font-weight: 600;
-  cursor: pointer; transition: all 0.16s;
-  border: 1.5px solid var(--border);
-  background: var(--surface); color: var(--ink-soft);
-  white-space: nowrap;
-}
+.comm-filters { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 20px; }
+.filter-chip { padding: 6px 16px; border-radius: 100px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.15s; border: 1.5px solid var(--border); background: var(--surface); color: var(--ink-soft); }
+.filter-chip:hover { border-color: var(--border-focus); color: var(--ink); }
 .filter-chip.active { border-color: var(--comm); color: var(--comm); background: var(--comm-soft); }
 
-.comm-post {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px 18px;
-  margin-bottom: 9px; cursor: pointer; transition: all 0.16s;
-}
-.comm-post:hover { border-color: var(--comm); box-shadow: var(--shadow); }
-.comm-post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
-.comm-post-title { font-weight: 600; font-size: 14.5px; }
-.comm-post-body { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
-.comm-post-foot { display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--ink-light); }
-
-.btn-new-post {
-  padding: 9px 20px; border-radius: 10px;
-  background: var(--comm); color: white;
-  font-size: 13.5px; font-weight: 600;
-  border: none; cursor: pointer; transition: all 0.16s;
-  white-space: nowrap;
-}
-.btn-new-post:hover { background: #561E7B; }
-
-/* ════════════════════════════════
-   MODALS
-════════════════════════════════ */
-.overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 400; align-items: center; justify-content: center;
-  padding: 20px;
-}
-.overlay.open { display: flex; animation: overlayIn 0.18s ease; }
-@keyframes overlayIn { from { opacity:0; } to { opacity:1; } }
-
-.modal {
-  background: var(--surface); border-radius: 20px;
-  padding: 30px 28px; width: 100%; max-width: 480px;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
-  max-height: 90vh; overflow-y: auto;
-}
-@keyframes modalIn { from { transform:scale(0.93) translateY(10px); opacity:0; } to { transform:scale(1) translateY(0); opacity:1; } }
-
-.modal-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 22px; margin-bottom: 20px;
-}
-.form-group { margin-bottom: 14px; }
-.form-label {
-  display: block; font-size: 11.5px; font-weight: 700;
-  color: var(--ink-soft); margin-bottom: 5px;
-  letter-spacing: 0.05em; text-transform: uppercase;
-}
-.form-input, .form-select, .form-textarea {
-  width: 100%; padding: 10px 13px;
-  border: 1.5px solid var(--border); border-radius: 10px;
-  font-family: inherit; font-size: 14px;
-  background: var(--bg); color: var(--ink);
-  transition: border 0.16s; outline: none;
-}
-.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); background: var(--surface); }
-.form-textarea { resize: vertical; min-height: 80px; }
-.modal-actions { display: flex; gap: 10px; margin-top: 18px; }
-.btn-cancel {
-  flex: 1; padding: 10px; border-radius: 10px;
-  border: 1.5px solid var(--border); background: var(--surface);
-  font-weight: 600; font-size: 13.5px; cursor: pointer;
-  color: var(--ink-soft); transition: all 0.16s;
-}
-.btn-cancel:hover { border-color: var(--ink-soft); }
-.btn-submit {
-  flex: 2; padding: 10px; border-radius: 10px;
-  color: white; font-weight: 600; font-size: 13.5px;
-  cursor: pointer; border: none; transition: all 0.16s;
-}
+/* ══════════════════════════
+   모달 / 폼
+══════════════════════════ */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 400; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+.overlay.open { display: flex; }
+.modal { background: var(--surface); border-radius: 20px; padding: 28px 26px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: modalIn 0.22s ease; border: 1.5px solid var(--border); }
+.modal-title { font-size: 20px; font-weight: 800; margin-bottom: 22px; color: var(--ink); letter-spacing: -0.02em; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+.form-input, .form-textarea, .form-select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: inherit; font-size: 14px; color: var(--ink); background: var(--bg); outline: none; transition: border 0.15s; }
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--accent); background: white; }
+.form-textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn-submit { flex: 1; padding: 13px 0; border-radius: 100px; font-size: 14px; font-weight: 800; cursor: pointer; border: none; transition: all 0.15s; color: white; letter-spacing: -0.01em; }
 .btn-submit.job-color { background: var(--job); }
-.btn-submit.job-color:hover { background: #0E5939; }
-.btn-submit.comm-color { background: var(--comm); }
-.btn-submit.comm-color:hover { background: #561E7B; }
+.btn-submit.job-color:hover { background: #047857; }
+.btn-submit.comm-color { background: var(--accent); }
+.btn-submit.comm-color:hover { background: var(--accent-hover); }
+.btn-cancel { padding: 13px 20px; border-radius: 100px; background: var(--bg); color: var(--ink-soft); font-size: 14px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); transition: all 0.15s; }
+.btn-cancel:hover { border-color: var(--border-focus); color: var(--ink); }
 
-/* ════════════════════════════════
-   LOGIN MODAL
-════════════════════════════════ */
-.login-modal {
-  background: var(--surface); border-radius: 22px;
-  padding: 36px 30px; width: 100%; max-width: 400px;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
-  text-align: center;
-}
-.login-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 26px; margin-bottom: 6px;
-}
+.login-modal { background: var(--surface); border-radius: 24px; padding: 36px 30px; width: 100%; max-width: 400px; box-shadow: var(--shadow-lg); animation: modalIn 0.22s ease; border: 1.5px solid var(--border); text-align: center; }
+.login-logo { font-size: 26px; font-weight: 800; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.03em; }
 .login-logo span { color: var(--accent); }
-.login-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 28px; line-height: 1.5; }
-.login-divider {
-  display: flex; align-items: center; gap: 12px;
-  margin: 20px 0; color: var(--ink-light); font-size: 12.5px;
-}
-.login-divider::before, .login-divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--border);
-}
-
-.btn-social {
-  display: flex; align-items: center; gap: 12px;
-  width: 100%; padding: 11px 16px; border-radius: 12px;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  border: 1.5px solid var(--border); background: var(--surface);
-  color: var(--ink); transition: all 0.16s; margin-bottom: 10px;
-}
-.btn-social:hover { border-color: var(--ink-soft); box-shadow: var(--shadow); transform: translateY(-1px); }
+.login-sub { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 26px; line-height: 1.65; }
+.btn-social { width: 100%; display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-radius: 12px; background: var(--bg); border: 1.5px solid var(--border); cursor: pointer; margin-bottom: 10px; transition: all 0.15s; }
+.btn-social:hover { border-color: var(--border-focus); background: white; transform: translateY(-1px); box-shadow: var(--shadow); }
 .btn-social:last-child { margin-bottom: 0; }
-.btn-social.kakao { background: var(--kakao); border-color: var(--kakao); color: var(--kakao-ink); }
-.btn-social.kakao:hover { background: #EDD100; border-color: #EDD100; }
-.social-icon {
-  width: 24px; height: 24px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
-}
-.social-icon.google { background: #f1f1f1; }
-.social-icon.facebook { background: var(--fb); color: white; font-size: 14px; font-weight: 700; }
+.btn-social.kakao { background: var(--kakao); border-color: var(--kakao); }
+.btn-social.kakao:hover { background: #EDD100; }
+.social-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; flex-shrink: 0; background: white; }
+.social-icon.google { background: white; }
+.social-icon.facebook { background: #1877F2; color: white; }
 .social-icon.kakao-i { background: rgba(0,0,0,0.1); }
-.social-label { flex: 1; text-align: left; }
+.social-label { flex: 1; text-align: left; font-weight: 700; font-size: 14px; color: var(--ink); }
+.btn-social.kakao .social-label { color: var(--kakao-ink); }
 .login-footer { font-size: 11.5px; color: var(--ink-light); margin-top: 20px; line-height: 1.6; }
-.login-footer a { color: var(--ink-soft); }
+.login-footer a { color: var(--sim); text-decoration: none; }
 
-/* ════════════════════════════════
-   EMPTY STATE
-════════════════════════════════ */
-.empty { text-align: center; padding: 50px 20px; color: var(--ink-light); }
-.empty-icon { font-size: 38px; margin-bottom: 10px; }
-.empty p { font-size: 14px; }
+/* 프로필 */
+.profile-wrap { max-width: 680px; margin: 0 auto; padding: 32px 24px; }
+.profile-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px 24px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.profile-card-title { font-size: 17px; font-weight: 800; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; color: var(--ink); letter-spacing: -0.02em; }
+.profile-user-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.profile-avatar-lg { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0; }
+.profile-info-name { font-size: 18px; font-weight: 800; margin-bottom: 5px; color: var(--ink); letter-spacing: -0.02em; }
+.profile-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.profile-stat-box { background: var(--bg); border-radius: 12px; padding: 16px; text-align: center; border: 1.5px solid var(--border); }
+.profile-stat-val { font-size: 28px; font-weight: 800; color: var(--sim); margin-bottom: 2px; letter-spacing: -0.03em; }
+.profile-stat-lbl { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+.level-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.level-row:last-child { border: none; }
+.level-row-badge { width: 56px; flex-shrink: 0; text-align: center; }
+.level-row-info { flex: 1; }
+.level-row-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
+.level-row-cond { font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; }
+.level-row-perm { font-size: 12px; color: var(--job); font-weight: 700; }
+.progress-bar-wrap { background: var(--border); border-radius: 100px; height: 6px; overflow: hidden; margin-top: 6px; }
+.progress-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--sim), var(--comm)); transition: width 0.5s ease; }
+.level-locked { opacity: 0.4; }
 
-/* ════════════════════════════════
-   FOOTER
-════════════════════════════════ */
-footer {
-  background: var(--ink); color: rgba(255,255,255,0.45);
-  padding: 24px 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; flex-wrap: wrap; gap: 12px;
-}
+/* FOOTER */
+footer { background: var(--ink); color: rgba(255,255,255,0.4); padding: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; flex-wrap: wrap; gap: 12px; }
 footer strong { color: rgba(255,255,255,0.85); }
-.footer-links { display: flex; gap: 18px; }
-.footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.16s; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.15s; }
 .footer-links a:hover { color: white; }
 
-/* ════════════════════════════════
+/* ══════════════════════════
    RESPONSIVE
-════════════════════════════════ */
+══════════════════════════ */
 @media (max-width: 768px) {
   .nav-center { display: none; }
   .hamburger { display: flex; }
-  /* 모바일 nav-right 요소 크기 축소 */
-  .btn-login { padding: 5px 10px; font-size: 12px; }
-  .lang-btn { padding: 4px 7px; font-size: 11.5px; }
-  .user-pill { padding: 3px 8px 3px 4px; font-size: 12px; gap: 5px; }
-  .user-avatar { width: 20px; height: 20px; font-size: 10px; }
+  .btn-login { padding: 6px 14px; font-size: 12px; }
+  .lang-btn { padding: 5px 8px; font-size: 11.5px; }
+  .user-pill { padding: 3px 10px 3px 4px; font-size: 12px; gap: 5px; }
+  .user-avatar { width: 24px; height: 24px; font-size: 10px; }
   #user-level-badge { font-size: 9px; padding: 1px 6px; }
-  nav { padding: 0 12px; gap: 6px; }
-  .logo { font-size: 16px; }
-  .logo-dot { width: 6px; height: 6px; }
-
-  .hero-wrap { min-height: 460px; }
-  .hero { padding: 60px 20px 44px; }
+  nav { padding: 0 16px; gap: 8px; height: 56px; }
+  .logo { font-size: 17px; }
+  .hero-wrap { min-height: 480px; }
+  .hero { padding: 64px 20px 48px; }
   h1 { font-size: 32px; }
-
-  .categories { grid-template-columns: 1fr; padding: 0 16px 44px; gap: 12px; margin-top: -12px; }
-  .cat-card { padding: 20px 18px; }
-
+  .categories { grid-template-columns: 1fr; padding: 0 16px 44px; gap: 12px; margin-top: -16px; }
+  .cat-card { padding: 22px 20px; }
   .plans-grid { grid-template-columns: 1fr; }
-
   .trust-strip { gap: 18px; }
-
   .board-toolbar { flex-direction: column; align-items: stretch; }
   .search-box { max-width: 100%; }
   .btn-post-job, .btn-new-post { width: 100%; text-align: center; }
-
   .modal, .login-modal { padding: 24px 20px; border-radius: 18px; }
   .page-header { padding: 22px 16px 18px; }
   .sim-content, .board-wrap { padding: 24px 16px; }
-
   .kakao-box { flex-direction: column; gap: 14px; }
   .btn-kakao { width: 100%; justify-content: center; }
-
   footer { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
-
 @media (max-width: 420px) {
-  nav { padding: 0 14px; gap: 8px; }
+  nav { padding: 0 12px; gap: 6px; }
   h1 { font-size: 28px; }
 }
 </style>
@@ -1174,7 +767,7 @@ footer strong { color: rgba(255,255,255,0.85); }
   <div class="nav-right">
     <!-- Language -->
     <div class="lang-sel">
-      <button class="lang-btn" onclick="toggleLang()" id="lang-btn-label">🌐 EN</button>
+      <button class="lang-btn" onclick="toggleLang()" id="lang-btn-label">EN</button>
       <div class="lang-dropdown" id="lang-dropdown">
         <div class="lang-option selected" onclick="setLang('en')">🇺🇸 English</div>
         <div class="lang-option" onclick="setLang('ko')">🇰🇷 한국어</div>
@@ -1200,13 +793,13 @@ footer strong { color: rgba(255,255,255,0.85); }
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu">
-  <button class="mobile-nav-link active" id="mob-home" onclick="showPage('home');closeMobileMenu()" data-i18n="nav_home">🏠 Home</button>
-  <button class="mobile-nav-link" id="mob-sim" onclick="showPage('sim');closeMobileMenu()" data-i18n="nav_sim">📱 SIM Cards</button>
-  <button class="mobile-nav-link" id="mob-job" onclick="showPage('job');closeMobileMenu()" data-i18n="nav_job">💼 Job Board</button>
-  <button class="mobile-nav-link" id="mob-comm" onclick="showPage('comm');closeMobileMenu()" data-i18n="nav_comm">💬 Community</button>
+  <button class="mobile-nav-link active" id="mob-home" onclick="showPage('home');closeMobileMenu()" data-i18n="nav_home">Home</button>
+  <button class="mobile-nav-link" id="mob-sim" onclick="showPage('sim');closeMobileMenu()" data-i18n="nav_sim">SIM Cards</button>
+  <button class="mobile-nav-link" id="mob-job" onclick="showPage('job');closeMobileMenu()" data-i18n="nav_job">Job Board</button>
+  <button class="mobile-nav-link" id="mob-comm" onclick="showPage('comm');closeMobileMenu()" data-i18n="nav_comm">Community</button>
   <div style="height:1px;background:var(--border);margin:4px 0;"></div>
-  <button class="mobile-nav-link" onclick="openModal('login-overlay');closeMobileMenu()" id="mob-login" data-i18n="nav_login">🔐 Login / Sign Up</button>
-  <button class="mobile-nav-link" onclick="showPage('profile');closeMobileMenu()" id="mob-profile" data-i18n="mob_profile">👤 내 프로필</button>
+  <button class="mobile-nav-link" onclick="openModal('login-overlay');closeMobileMenu()" id="mob-login" data-i18n="nav_login">Login / Sign Up</button>
+  <button class="mobile-nav-link" onclick="showPage('profile');closeMobileMenu()" id="mob-profile" data-i18n="mob_profile">내 프로필</button>
 </div>
 
 <!-- ════ HOME ════ -->
@@ -1217,7 +810,7 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="hero-bg"></div>
 
     <div class="hero">
-      <div class="hero-badge">🇰🇷 <span data-i18n="hero_badge">For Foreigners in Korea</span></div>
+      <div class="hero-badge"><span data-i18n="hero_badge">For Foreigners in Korea</span></div>
       <h1 data-i18n="hero_h1_html">Start your life in Korea<br><em>the easy way</em></h1>
       <p class="hero-sub" data-i18n="hero_sub">Everything you need to get settled — SIM cards, jobs, and a community of people who've been there too.</p>
       <div class="hero-cta">
@@ -1232,19 +825,19 @@ footer strong { color: rgba(255,255,255,0.85); }
 
   <div class="categories">
     <div class="cat-card sim" onclick="showPage('sim')">
-      <div class="cat-icon">📱</div>
+      <div class="cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
       <div class="cat-title" data-i18n="cat_sim_title">SIM Cards</div>
       <div class="cat-desc" data-i18n="cat_sim_desc">Korean mobile plans for foreigners. SK Telecom postpaid — online sign-up in minutes.</div>
       <div class="cat-arrow" data-i18n="cat_sim_cta">Browse plans →</div>
     </div>
     <div class="cat-card job" onclick="showPage('job')">
-      <div class="cat-icon">💼</div>
+      <div class="cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
       <div class="cat-title" data-i18n="cat_job_title">Job Board</div>
       <div class="cat-desc" data-i18n="cat_job_desc">Find work or post a job. From teaching to startups — the community is hiring.</div>
       <div class="cat-arrow" data-i18n="cat_job_cta">See listings →</div>
     </div>
     <div class="cat-card comm" onclick="showPage('comm')">
-      <div class="cat-icon">💬</div>
+      <div class="cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
       <div class="cat-title" data-i18n="cat_comm_title">Community</div>
       <div class="cat-desc" data-i18n="cat_comm_desc">Ask questions, share tips, find housing, buy & sell. Your Korea life bulletin board.</div>
       <div class="cat-arrow" data-i18n="cat_comm_cta">Join conversation →</div>
@@ -1252,10 +845,10 @@ footer strong { color: rgba(255,255,255,0.85); }
   </div>
 
   <div class="trust-strip">
-    <div class="trust-item">📡 <strong>SK Telecom</strong> <span data-i18n="trust_sk">Official Plans</span></div>
-    <div class="trust-item">🌍 <strong>4</strong> <span data-i18n="trust_lang">Languages</span></div>
-    <div class="trust-item">🆓 <span data-i18n="trust_free">Free to post & browse</span></div>
-    <div class="trust-item">💬 <span data-i18n="trust_kakao">KakaoTalk Support</span></div>
+    <div class="trust-item"><strong>SK Telecom</strong> <span data-i18n="trust_sk">Official Plans</span></div>
+    <div class="trust-item"><strong>4</strong> <span data-i18n="trust_lang">Languages</span></div>
+    <div class="trust-item"><span data-i18n="trust_free">Free to post & browse</span></div>
+    <div class="trust-item"><span data-i18n="trust_kakao">KakaoTalk Support</span></div>
   </div>
 </div>
 
@@ -1265,39 +858,38 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="breadcrumb">
       <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_sim">SIM Cards</span>
     </div>
-    <div class="page-title">📱 <span data-i18n="nav_sim">SIM Cards</span></div>
+    <div class="page-title"><span data-i18n="nav_sim">SIM Cards</span></div>
     <div class="page-subtitle" data-i18n="sim_subtitle">Official SK Telecom postpaid plans — sign up online, no store visit needed.</div>
   </div>
 
   <div class="sim-content">
     <!-- KakaoTalk Consultation -->
     <div class="kakao-box">
-      <div class="kakao-icon">💬</div>
+      <div class="kakao-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.542 1.542 4.788 3.894 6.18L5 20l4.19-2.3A11.3 11.3 0 0 0 12 18c5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/></svg></div>
       <div class="kakao-text">
         <h3 data-i18n="kakao_title">Need help choosing a plan?</h3>
         <p data-i18n="kakao_desc">Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.</p>
         <span class="kakao-channel-hint" data-i18n="kakao_hint">Mon–Fri 9AM–6PM KST · Usually replies within 1 hour</span>
       </div>
       <a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" class="btn-kakao" id="kakao-consult-btn">
-        <span>💬</span>
         <span data-i18n="kakao_btn">KakaoTalk Consultation</span>
       </a>
     </div>
 
     <!-- Carrier tabs -->
     <div class="carrier-tabs">
-      <div class="carrier-tab active" id="main-tab-sk" onclick="switchMainCarrier('SK Telecom')">📡 SK Telecom</div>
-      <div class="carrier-tab" id="main-tab-kt" onclick="switchMainCarrier('KT')">📡 KT</div>
-      <div class="carrier-tab" id="main-tab-lg" onclick="switchMainCarrier('LG U+')">📡 LG U+</div>
+      <div class="carrier-tab active" id="main-tab-sk" onclick="switchMainCarrier('SK Telecom')">SK Telecom</div>
+      <div class="carrier-tab" id="main-tab-kt" onclick="switchMainCarrier('KT')">KT</div>
+      <div class="carrier-tab" id="main-tab-lg" onclick="switchMainCarrier('LG U+')">LG U+</div>
     </div>
     <div id="carrier-hidden-notice" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:20px;">
-      <span data-i18n="carrier_notice">🔧 준비 중입니다. 곧 서비스 예정이에요!</span>
+      <span data-i18n="carrier_notice">준비 중입니다. 곧 서비스 예정이에요!</span>
     </div>
 
     <div class="plans-grid" id="plans-grid"></div>
 
     <div class="sim-note">
-      <span style="font-size:18px;flex-shrink:0;">ℹ️</span>
+      <span style="flex-shrink:0;color:var(--sim);font-weight:700;font-size:16px;">i</span>
       <span data-i18n="sim_note">모든 요금제는 후불제 계약입니다. 공식신청서 신청 → 외국인등록증(ARC) + PASS 인증 필수입니다.</span>
     </div>
   </div>
@@ -1309,7 +901,7 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="breadcrumb">
       <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_job">Job Board</span>
     </div>
-    <div class="page-title">💼 <span data-i18n="nav_job">Job Board</span></div>
+    <div class="page-title"><span data-i18n="nav_job">Job Board</span></div>
     <div class="page-subtitle" data-i18n="job_subtitle">Post a job or find your next opportunity in Korea.</div>
   </div>
   <div class="board-wrap">
@@ -1336,8 +928,8 @@ footer strong { color: rgba(255,255,255,0.85); }
     <!-- 구인/구직 탭 -->
     <div class="job-type-tabs" style="margin-top:16px;">
       <div class="job-type-tab active hiring" data-jobtype="all" onclick="filterJobType('all')" data-i18n="tab_all">전체</div>
-      <div class="job-type-tab" data-jobtype="hiring" onclick="filterJobType('hiring')" data-i18n="tab_hiring">🏢 구인</div>
-      <div class="job-type-tab" data-jobtype="seeking" onclick="filterJobType('seeking')" data-i18n="tab_seeking">🙋 구직</div>
+      <div class="job-type-tab" data-jobtype="hiring" onclick="filterJobType('hiring')" data-i18n="tab_hiring">구인</div>
+      <div class="job-type-tab" data-jobtype="seeking" onclick="filterJobType('seeking')" data-i18n="tab_seeking">구직</div>
     </div>
     <div id="job-search-result-info" class="search-result-info" style="display:none;"></div>
     <div class="post-list" id="job-list"></div>
@@ -1350,7 +942,7 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="breadcrumb">
       <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_comm">Community</span>
     </div>
-    <div class="page-title">💬 <span data-i18n="nav_comm">Community</span></div>
+    <div class="page-title"><span data-i18n="nav_comm">Community</span></div>
     <div class="page-subtitle" data-i18n="comm_subtitle">Questions, tips, housing, buy & sell — all welcome.</div>
   </div>
   <div class="board-wrap">
@@ -1373,12 +965,12 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="board-toolbar" style="margin-bottom:12px;">
       <div class="comm-filters" id="comm-filter-row">
         <div class="filter-chip active" data-tag="all" onclick="filterComm('all')" data-filter-key="filter_all">All</div>
-        <div class="filter-chip" data-tag="question" onclick="filterComm('question')" data-filter-key="filter_q">❓ Question</div>
-        <div class="filter-chip" data-tag="housing" onclick="filterComm('housing')" data-filter-key="filter_h">🏠 Housing</div>
-        <div class="filter-chip" data-tag="tip" onclick="filterComm('tip')" data-filter-key="filter_t">💡 Tip</div>
-        <div class="filter-chip" data-tag="sell" onclick="filterComm('sell')" data-filter-key="filter_s">🛍️ Buy/Sell</div>
-        <div class="filter-chip" data-tag="social" onclick="filterComm('social')" data-filter-key="filter_so">🤝 Social</div>
-        <div class="filter-chip" data-tag="daily" onclick="filterComm('daily')" data-filter-key="filter_daily">☀️ Daily</div>
+        <div class="filter-chip" data-tag="question" onclick="filterComm('question')" data-filter-key="filter_q">Question</div>
+        <div class="filter-chip" data-tag="housing" onclick="filterComm('housing')" data-filter-key="filter_h">Housing</div>
+        <div class="filter-chip" data-tag="tip" onclick="filterComm('tip')" data-filter-key="filter_t">Tip</div>
+        <div class="filter-chip" data-tag="sell" onclick="filterComm('sell')" data-filter-key="filter_s">Buy/Sell</div>
+        <div class="filter-chip" data-tag="social" onclick="filterComm('social')" data-filter-key="filter_so">Social</div>
+        <div class="filter-chip" data-tag="daily" onclick="filterComm('daily')" data-filter-key="filter_daily">Daily</div>
       </div>
       <button class="btn-new-post" onclick="requireLogin('comm-modal')" data-i18n="btn_new_post">+ New Post</button>
     </div>
@@ -1398,7 +990,7 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 기본 정보 -->
     <div class="profile-card">
-      <div class="profile-card-title">👤 계정 정보</div>
+      <div class="profile-card-title">계정 정보</div>
       <div class="profile-user-row">
         <div class="profile-avatar-lg" id="profile-avatar-lg">?</div>
         <div>
@@ -1410,36 +1002,36 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="profile-stats">
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-points">0</div>
-          <div class="profile-stat-lbl" data-i18n="profile_points">💎 포인트</div>
+          <div class="profile-stat-lbl" data-i18n="profile_points">포인트</div>
         </div>
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-attendance">0</div>
-          <div class="profile-stat-lbl" data-i18n="profile_attendance">📅 출석 횟수</div>
+          <div class="profile-stat-lbl" data-i18n="profile_attendance">출석 횟수</div>
         </div>
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-posts">0</div>
-          <div class="profile-stat-lbl" data-i18n="profile_posts_count">📝 작성 게시글</div>
+          <div class="profile-stat-lbl" data-i18n="profile_posts_count">작성 게시글</div>
         </div>
       </div>
       <div id="profile-points-info" style="background:var(--accent-soft);border:1px solid #F3BEAF;border-radius:10px;padding:12px 16px;font-size:13px;color:var(--ink-soft);" data-i18n-html="profile_points_info">
-        💡 <strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt
+        <strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt
       </div>
     </div>
 
     <!-- 로그아웃 버튼 -->
     <div style="text-align:right;margin-bottom:16px;">
-      <button onclick="logoutUser()" data-i18n="btn_logout" style="padding:8px 18px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft);">⏻ 로그아웃</button>
+      <button onclick="logoutUser()" data-i18n="btn_logout" style="padding:8px 18px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft);">로그아웃</button>
     </div>
 
     <!-- 레벨 등급 안내 -->
     <div class="profile-card">
-      <div class="profile-card-title" data-i18n="profile_level_guide">🏆 레벨 등급 안내</div>
+      <div class="profile-card-title" data-i18n="profile_level_guide">레벨 등급 안내</div>
       <div id="level-guide-list"></div>
     </div>
 
     <!-- 내 게시글 -->
     <div class="profile-card" style="margin-top:16px;">
-      <div class="profile-card-title" data-i18n="profile_my_posts">📝 내가 작성한 게시글</div>
+      <div class="profile-card-title" data-i18n="profile_my_posts">내가 작성한 게시글</div>
       <div id="my-posts-list"></div>
     </div>
 
@@ -1469,7 +1061,7 @@ footer strong { color: rgba(255,255,255,0.85); }
     <p class="login-sub" data-i18n="login_sub">Sign in to post jobs, ask questions, and connect with the community.</p>
 
     <button class="btn-social kakao" onclick="mockLogin('kakao')">
-      <div class="social-icon kakao-i">💬</div>
+      <div class="social-icon kakao-i">K</div>
       <span class="social-label" data-i18n="login_kakao">Continue with KakaoTalk</span>
     </button>
     <button class="btn-social" onclick="mockLogin('google')">
@@ -1500,12 +1092,12 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div style="display:flex;gap:10px;margin-top:4px;">
         <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;" id="label-hiring">
           <input type="radio" name="job-post-type" value="hiring" id="jpt-hiring" checked style="accent-color:var(--job);">
-          <span style="font-weight:600;font-size:14px;" data-i18n="job_hiring">🏢 구인</span>
+          <span style="font-weight:600;font-size:14px;" data-i18n="job_hiring">구인</span>
           <span style="font-size:12px;color:var(--ink-soft);" data-i18n="job_hiring_desc">일자리 제공</span>
         </label>
         <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;" id="label-seeking">
           <input type="radio" name="job-post-type" value="seeking" id="jpt-seeking" style="accent-color:var(--sim);">
-          <span style="font-weight:600;font-size:14px;" data-i18n="job_seeking">🙋 구직</span>
+          <span style="font-weight:600;font-size:14px;" data-i18n="job_seeking">구직</span>
           <span style="font-size:12px;color:var(--ink-soft);" data-i18n="job_seeking_desc">일자리 찾기</span>
         </label>
       </div>
@@ -1552,12 +1144,12 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="form-group">
       <label class="form-label" data-i18n="field_category">Category</label>
       <select class="form-select" id="c-cat">
-        <option value="question" data-opt-key="cat_question">❓ Question</option>
-        <option value="tip" data-opt-key="cat_tip">💡 Tip</option>
-        <option value="housing" data-opt-key="cat_housing">🏠 Housing</option>
-        <option value="sell" data-opt-key="cat_sell">🛍️ Buy/Sell</option>
-        <option value="social" data-opt-key="cat_social">🤝 Social</option>
-        <option value="daily" data-opt-key="cat_daily">☀️ Daily</option>
+        <option value="question" data-opt-key="cat_question">Question</option>
+        <option value="tip" data-opt-key="cat_tip">Tip</option>
+        <option value="housing" data-opt-key="cat_housing">Housing</option>
+        <option value="sell" data-opt-key="cat_sell">Buy/Sell</option>
+        <option value="social" data-opt-key="cat_social">Social</option>
+        <option value="daily" data-opt-key="cat_daily">Daily</option>
       </select>
     </div>
     <div class="form-group">
@@ -1582,11 +1174,11 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="post-detail-meta">
         <div class="post-detail-meta-left">
           <span id="detail-badge" class="post-tag" style="font-size:12px;"></span>
-          <span id="detail-closed-badge" class="badge-closed" style="display:none;">🔒 마감</span>
+          <span id="detail-closed-badge" class="badge-closed" style="display:none;">마감</span>
         </div>
         <div style="display:flex;gap:6px;align-items:center;">
-          <button class="btn-close-post" id="btn-close-post" onclick="toggleClosePost()" style="display:none;" data-i18n="btn_close_post">🔒 마감</button>
-          <button class="btn-delete-post" id="btn-delete-post" onclick="deletePost()" style="display:none;" data-i18n="btn_delete_post">🗑️ 삭제</button>
+          <button class="btn-close-post" id="btn-close-post" onclick="toggleClosePost()" style="display:none;" data-i18n="btn_close_post">마감</button>
+          <button class="btn-delete-post" id="btn-delete-post" onclick="deletePost()" style="display:none;" data-i18n="btn_delete_post">삭제</button>
           <button class="btn-detail-close" onclick="closeDetail()">✕</button>
         </div>
       </div>
@@ -1620,7 +1212,7 @@ footer strong { color: rgba(255,255,255,0.85); }
 
 <!-- FOOTER -->
 <footer>
-  <div>© 2025 <strong>KoreaStarter</strong> — Making Korea life easier for everyone 🇰🇷</div>
+  <div>© 2025 <strong>KoreaStarter</strong> — Making Korea life easier for everyone</div>
   <div class="footer-links">
     <a href="#" data-i18n="footer_about">About</a>
     <a href="#" data-i18n="footer_contact">Contact</a>
@@ -1656,14 +1248,14 @@ const LANGS = {
     sim_subtitle:'Official SK Telecom postpaid plans — sign up online, no store visit needed.',
     kakao_title:'Need help choosing a plan?', kakao_desc:'Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.', kakao_hint:'Mon–Fri 9AM–6PM KST · Usually replies within 1 hour', kakao_btn:'KakaoTalk Consultation',
     coming_soon:'Coming Soon',
-    carrier_notice:'🔧 This carrier is coming soon. Service will be available shortly!',
+    carrier_notice:'This carrier is coming soon. Service will be available shortly!',
     sim_note:'All plans are postpaid contracts. Official application form required → ARC (Alien Registration Card) + PASS authentication required.',
     job_subtitle:'Post a job or find your next opportunity in Korea.',
     search_jobs:'Search jobs…',
     btn_post_job:'+ Post a Job',
     comm_subtitle:'Questions, tips, housing, buy & sell — all welcome.',
     filter_all:'All', filter_q:'Question', filter_h:'Housing', filter_t:'Tip', filter_s:'Buy/Sell', filter_so:'Social', filter_daily:'Daily',
-    filter_all_chip:'All', filter_q_chip:'❓ Question', filter_h_chip:'🏠 Housing', filter_t_chip:'💡 Tip', filter_s_chip:'🛍️ Buy/Sell', filter_so_chip:'🤝 Social', filter_daily_chip:'☀️ Daily',
+    filter_all_chip:'All', filter_q_chip:'Question', filter_h_chip:'Housing', filter_t_chip:'Tip', filter_s_chip:'Buy/Sell', filter_so_chip:'Social', filter_daily_chip:'Daily',
     btn_new_post:'+ New Post',
     login_sub:'Sign in to post jobs, ask questions, and connect with the community.',
     login_kakao:'Continue with KakaoTalk', login_google:'Continue with Google', login_fb:'Continue with Facebook',
@@ -1675,31 +1267,31 @@ const LANGS = {
     footer_about:'About', footer_contact:'Contact', footer_privacy:'Privacy',
     login_required:'Please log in to post.',
     logout_confirm:'Log out?',
-    plan_popular:'⭐ MOST POPULAR',
+    plan_popular:'MOST POPULAR',
     plan_apply:'Apply on SK Telecom →',
     plan_postpaid:'Postpaid · VAT incl.',
     // 게시글 폼
-    job_post_type_label:'Post Type', job_hiring:'🏢 Hiring', job_hiring_desc:'Offering a job', job_seeking:'🙋 Seeking', job_seeking_desc:'Looking for work',
+    job_post_type_label:'Post Type', job_hiring:'Hiring', job_hiring_desc:'Offering a job', job_seeking:'Seeking', job_seeking_desc:'Looking for work',
     link_optional:'Link (optional)',
     // 탭 필터
-    tab_all:'All', tab_hiring:'🏢 Hiring', tab_seeking:'🙋 Seeking',
+    tab_all:'All', tab_hiring:'Hiring', tab_seeking:'Seeking',
     // 검색
     search_placeholder:'Enter search term...', search_scope_label:'Search:', search_all_fields:'Title+Body', search_title_only:'Title only', search_author:'Author', search_comment:'Comment text', search_comment_author:'Comment author',
     search_result:'🔍 "{q}" — {n} result(s)',
     no_results:'No results found.', no_posts:'No posts yet.',
     // 상세보기
-    detail_closed:'🔒 Closed', btn_close_post:'🔒 Close', btn_reopen_post:'✅ Reopen', btn_delete_post:'🗑️ Delete', link_view:'View Link',
+    detail_closed:'Closed', btn_close_post:'Close', btn_reopen_post:'Reopen', btn_delete_post:'Delete', link_view:'View Link',
     confirm_delete:'Delete this post?',
     // 댓글
     comment_placeholder:'Add a comment... (Enter to post)', comment_placeholder_login:'Please log in to comment.', comment_submit:'Post', reply_btn:'↩ Reply', reply_placeholder:'Add a reply... (Enter to post)', reply_submit:'Post',
-    no_comments:'Be the first to comment 💬',
+    no_comments:'Be the first to comment',
     comments_count:'{n} comment(s)',
     // 프로필
     profile_title:'My Profile', profile_subtitle:'Check your level, points, and attendance.',
-    profile_account:'Account Info', profile_points:'💎 Points', profile_attendance:'📅 Attendance', profile_posts_count:'📝 Posts Written',
+    profile_account:'Account Info', profile_points:'Points', profile_attendance:'Attendance', profile_posts_count:'Posts Written',
     profile_points_info:'💡 How to earn points: Login = 1pt/day · Post = 1pt',
-    btn_logout:'⏻ Logout',
-    profile_level_guide:'🏆 Level Guide', profile_my_posts:'📝 My Posts',
+    btn_logout:'Logout',
+    profile_level_guide:'Level Guide', profile_my_posts:'My Posts',
     profile_no_posts:'No posts written yet.',
     level_current:'← Current',
     level_instant:'Achieved immediately on signup',
@@ -1716,7 +1308,7 @@ const LANGS = {
     // 날짜
     time_just_now:'Just now',
     // 커뮤니티 카테고리 옵션
-    cat_question:'❓ Question', cat_tip:'💡 Tip', cat_housing:'🏠 Housing', cat_sell:'🛍️ Buy/Sell', cat_social:'🤝 Social', cat_daily:'☀️ Daily',
+    cat_question:'Question', cat_tip:'Tip', cat_housing:'Housing', cat_sell:'Buy/Sell', cat_social:'Social', cat_daily:'Daily',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'Full-time', jtype_parttime:'Part-time', jtype_remote:'Remote', jtype_other:'Other',
   },
@@ -1734,14 +1326,14 @@ const LANGS = {
     sim_subtitle:'SK텔레콤 공식 후불제 요금제 — 온라인 가입, 매장 방문 불필요.',
     kakao_title:'요금제 선택에 도움이 필요하신가요?', kakao_desc:'카카오톡으로 상담하세요 — 영어, 한국어, 중국어, 베트남어 지원.', kakao_hint:'월~금 오전 9시~오후 6시 · 보통 1시간 이내 답변', kakao_btn:'카카오톡 상담',
     coming_soon:'준비 중',
-    carrier_notice:'🔧 준비 중입니다. 곧 서비스 예정이에요!',
+    carrier_notice:'준비 중입니다. 곧 서비스 예정이에요!',
     sim_note:'모든 요금제는 후불제 계약입니다. 공식신청서 신청 → 외국인등록증(ARC) + PASS 인증 필수입니다.',
     job_subtitle:'구인 공고를 올리거나 일자리를 찾아보세요.',
     search_jobs:'공고 검색…',
     btn_post_job:'+ 공고 올리기',
     comm_subtitle:'질문, 팁, 집 구하기, 중고거래 — 모두 환영합니다.',
     filter_all:'전체', filter_q:'질문', filter_h:'주거', filter_t:'팁', filter_s:'중고거래', filter_so:'소셜', filter_daily:'일상',
-    filter_all_chip:'전체', filter_q_chip:'❓ 질문', filter_h_chip:'🏠 주거', filter_t_chip:'💡 팁', filter_s_chip:'🛍️ 중고거래', filter_so_chip:'🤝 소셜', filter_daily_chip:'☀️ 일상',
+    filter_all_chip:'전체', filter_q_chip:'질문', filter_h_chip:'주거', filter_t_chip:'팁', filter_s_chip:'중고거래', filter_so_chip:'소셜', filter_daily_chip:'일상',
     btn_new_post:'+ 글쓰기',
     login_sub:'로그인하여 공고를 올리고, 질문하고, 커뮤니티에 참여하세요.',
     login_kakao:'카카오톡으로 계속하기', login_google:'Google로 계속하기', login_fb:'Facebook으로 계속하기',
@@ -1753,31 +1345,31 @@ const LANGS = {
     footer_about:'소개', footer_contact:'문의', footer_privacy:'개인정보',
     login_required:'게시하려면 로그인이 필요합니다.',
     logout_confirm:'로그아웃 하시겠어요?',
-    plan_popular:'⭐ 인기 요금제',
+    plan_popular:'인기 요금제',
     plan_apply:'SK텔레콤 공식 사이트에서 가입 →',
     plan_postpaid:'후불제 · VAT 포함',
     // 게시글 폼
-    job_post_type_label:'게시글 분류', job_hiring:'🏢 구인', job_hiring_desc:'일자리 제공', job_seeking:'🙋 구직', job_seeking_desc:'일자리 찾기',
+    job_post_type_label:'게시글 분류', job_hiring:'구인', job_hiring_desc:'일자리 제공', job_seeking:'구직', job_seeking_desc:'일자리 찾기',
     link_optional:'링크 (선택)',
     // 탭 필터
-    tab_all:'전체', tab_hiring:'🏢 구인', tab_seeking:'🙋 구직',
+    tab_all:'전체', tab_hiring:'구인', tab_seeking:'구직',
     // 검색
     search_placeholder:'검색어를 입력하세요...', search_scope_label:'검색 범위:', search_all_fields:'제목+본문', search_title_only:'제목만', search_author:'작성자', search_comment:'댓글 내용', search_comment_author:'댓글 작성자',
     search_result:'🔍 "{q}" 검색 결과 {n}건',
     no_results:'검색 결과가 없습니다.', no_posts:'게시글이 없습니다.',
     // 상세보기
-    detail_closed:'🔒 마감', btn_close_post:'🔒 마감', btn_reopen_post:'✅ 마감 취소', btn_delete_post:'🗑️ 삭제', link_view:'링크 보기',
+    detail_closed:'마감', btn_close_post:'마감', btn_reopen_post:'마감 취소', btn_delete_post:'삭제', link_view:'링크 보기',
     confirm_delete:'이 게시글을 삭제할까요?',
     // 댓글
     comment_placeholder:'댓글을 입력하세요... (Enter로 게시)', comment_placeholder_login:'댓글을 달려면 로그인하세요.', comment_submit:'게시', reply_btn:'↩ 대댓글', reply_placeholder:'대댓글 입력... (Enter로 게시)', reply_submit:'게시',
-    no_comments:'첫 번째 댓글을 남겨보세요 💬',
+    no_comments:'첫 번째 댓글을 남겨보세요',
     comments_count:'댓글 {n}개',
     // 프로필
     profile_title:'내 프로필', profile_subtitle:'레벨, 포인트, 출석 현황을 확인하세요.',
-    profile_account:'계정 정보', profile_points:'💎 포인트', profile_attendance:'📅 출석 횟수', profile_posts_count:'📝 작성 게시글',
-    profile_points_info:'💡 <strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt',
-    btn_logout:'⏻ 로그아웃',
-    profile_level_guide:'🏆 레벨 등급 안내', profile_my_posts:'📝 내가 작성한 게시글',
+    profile_account:'계정 정보', profile_points:'포인트', profile_attendance:'출석 횟수', profile_posts_count:'작성 게시글',
+    profile_points_info:'<strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt',
+    btn_logout:'로그아웃',
+    profile_level_guide:'레벨 등급 안내', profile_my_posts:'내가 작성한 게시글',
     profile_no_posts:'아직 작성한 게시글이 없습니다.',
     level_current:'← 현재',
     level_instant:'가입 즉시 달성',
@@ -1794,9 +1386,9 @@ const LANGS = {
     // 날짜
     time_just_now:'방금 전',
     // 모바일 메뉴
-    mob_profile:'👤 내 프로필',
+    mob_profile:'내 프로필',
     // 커뮤니티 카테고리 옵션
-    cat_question:'❓ 질문', cat_tip:'💡 팁', cat_housing:'🏠 주거', cat_sell:'🛍️ 중고거래', cat_social:'🤝 소셜', cat_daily:'☀️ 일상',
+    cat_question:'질문', cat_tip:'팁', cat_housing:'주거', cat_sell:'중고거래', cat_social:'소셜', cat_daily:'일상',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'정규직', jtype_parttime:'파트타임', jtype_remote:'재택근무', jtype_other:'기타',
   },
@@ -1814,14 +1406,14 @@ const LANGS = {
     sim_subtitle:'SK电讯官方后付费套餐 — 在线办理，无需到店。',
     kakao_title:'需要帮助选择套餐？', kakao_desc:'通过KakaoTalk与我们联系 — 支持英语、韩语、中文和越南语。', kakao_hint:'周一至周五 上午9点~下午6点(KST) · 通常1小时内回复', kakao_btn:'KakaoTalk咨询',
     coming_soon:'即将推出',
-    carrier_notice:'🔧 正在准备中，即将开放服务！',
+    carrier_notice:'正在准备中，即将开放服务！',
     sim_note:'所有套餐均为后付费合约。需填写官方申请表 → 外国人登记证(ARC) + PASS认证必须。',
     job_subtitle:'发布招聘或在韩国寻找工作机会。',
     search_jobs:'搜索职位…',
     btn_post_job:'+ 发布招聘',
     comm_subtitle:'提问、技巧分享、找房、二手交易 — 欢迎所有内容。',
     filter_all:'全部', filter_q:'提问', filter_h:'住房', filter_t:'技巧', filter_s:'买卖', filter_so:'社交', filter_daily:'日常',
-    filter_all_chip:'全部', filter_q_chip:'❓ 提问', filter_h_chip:'🏠 住房', filter_t_chip:'💡 技巧', filter_s_chip:'🛍️ 买卖', filter_so_chip:'🤝 社交', filter_daily_chip:'☀️ 日常',
+    filter_all_chip:'全部', filter_q_chip:'提问', filter_h_chip:'住房', filter_t_chip:'技巧', filter_s_chip:'买卖', filter_so_chip:'社交', filter_daily_chip:'日常',
     btn_new_post:'+ 发帖',
     login_sub:'登录后发布招聘、提问并加入社区互动。',
     login_kakao:'通过KakaoTalk继续', login_google:'通过Google继续', login_fb:'通过Facebook继续',
@@ -1833,16 +1425,16 @@ const LANGS = {
     footer_about:'关于我们', footer_contact:'联系我们', footer_privacy:'隐私政策',
     login_required:'请先登录再发帖。',
     logout_confirm:'确定要退出登录吗？',
-    plan_popular:'⭐ 最受欢迎',
+    plan_popular:'最受欢迎',
     plan_apply:'在SK电讯官网申请 →',
     plan_postpaid:'后付费 · 含税',
-    job_post_type_label:'帖子类型', job_hiring:'🏢 招聘', job_hiring_desc:'提供职位', job_seeking:'🙋 求职', job_seeking_desc:'寻找工作',
+    job_post_type_label:'帖子类型', job_hiring:'招聘', job_hiring_desc:'提供职位', job_seeking:'求职', job_seeking_desc:'寻找工作',
     link_optional:'链接（可选）',
-    tab_all:'全部', tab_hiring:'🏢 招聘', tab_seeking:'🙋 求职',
+    tab_all:'全部', tab_hiring:'招聘', tab_seeking:'求职',
     search_placeholder:'请输入搜索关键词...', search_scope_label:'搜索范围:', search_all_fields:'标题+内容', search_title_only:'仅标题', search_author:'作者', search_comment:'评论内容', search_comment_author:'评论作者',
     search_result:'🔍 "{q}" 搜索结果 {n}条',
     no_results:'未找到相关结果。', no_posts:'暂无帖子。',
-    detail_closed:'🔒 已结束', btn_close_post:'🔒 结束招聘', btn_reopen_post:'✅ 重新开放', btn_delete_post:'🗑️ 删除', link_view:'查看链接',
+    detail_closed:'已结束', btn_close_post:'结束招聘', btn_reopen_post:'重新开放', btn_delete_post:'删除', link_view:'查看链接',
     confirm_delete:'确定删除此帖子吗？',
     comment_placeholder:'添加评论... (Enter发布)', comment_placeholder_login:'请登录后发表评论。', comment_submit:'发布', reply_btn:'↩ 回复', reply_placeholder:'添加回复... (Enter发布)', reply_submit:'发布',
     no_comments:'来发表第一条评论吧 💬',
@@ -1865,7 +1457,7 @@ const LANGS = {
     time_just_now:'刚刚',
     mob_profile:'👤 我的主页',
     // 커뮤니티 카테고리 옵션
-    cat_question:'❓ 提问', cat_tip:'💡 技巧', cat_housing:'🏠 住房', cat_sell:'🛍️ 买卖', cat_social:'🤝 社交', cat_daily:'☀️ 日常',
+    cat_question:'提问', cat_tip:'技巧', cat_housing:'住房', cat_sell:'买卖', cat_social:'社交', cat_daily:'日常',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'全职', jtype_parttime:'兼职', jtype_remote:'远程', jtype_other:'其他',
   },
@@ -1890,7 +1482,7 @@ const LANGS = {
     btn_post_job:'+ Đăng tuyển dụng',
     comm_subtitle:'Câu hỏi, mẹo hay, tìm nhà, mua bán — tất cả đều được chào đón.',
     filter_all:'Tất cả', filter_q:'Câu hỏi', filter_h:'Nhà ở', filter_t:'Mẹo hay', filter_s:'Mua/Bán', filter_so:'Xã hội', filter_daily:'Hàng ngày',
-    filter_all_chip:'Tất cả', filter_q_chip:'❓ Câu hỏi', filter_h_chip:'🏠 Nhà ở', filter_t_chip:'💡 Mẹo hay', filter_s_chip:'🛍️ Mua/Bán', filter_so_chip:'🤝 Xã hội', filter_daily_chip:'☀️ Hàng ngày',
+    filter_all_chip:'Tất cả', filter_q_chip:'Câu hỏi', filter_h_chip:'Nhà ở', filter_t_chip:'Mẹo hay', filter_s_chip:'Mua/Bán', filter_so_chip:'Xã hội', filter_daily_chip:'Hàng ngày',
     btn_new_post:'+ Bài viết mới',
     login_sub:'Đăng nhập để đăng việc làm, đặt câu hỏi và kết nối với cộng đồng.',
     login_kakao:'Tiếp tục với KakaoTalk', login_google:'Tiếp tục với Google', login_fb:'Tiếp tục với Facebook',
@@ -1902,16 +1494,16 @@ const LANGS = {
     footer_about:'Giới thiệu', footer_contact:'Liên hệ', footer_privacy:'Bảo mật',
     login_required:'Vui lòng đăng nhập để đăng bài.',
     logout_confirm:'Đăng xuất?',
-    plan_popular:'⭐ PHỔ BIẾN NHẤT',
+    plan_popular:'PHỔ BIẾN NHẤT',
     plan_apply:'Đăng ký trên SK Telecom →',
     plan_postpaid:'Trả sau · Đã gồm VAT',
-    job_post_type_label:'Loại bài đăng', job_hiring:'🏢 Tuyển dụng', job_hiring_desc:'Cung cấp việc làm', job_seeking:'🙋 Tìm việc', job_seeking_desc:'Tìm kiếm việc làm',
+    job_post_type_label:'Loại bài đăng', job_hiring:'Tuyển dụng', job_hiring_desc:'Cung cấp việc làm', job_seeking:'Tìm việc', job_seeking_desc:'Tìm kiếm việc làm',
     link_optional:'Liên kết (tùy chọn)',
-    tab_all:'Tất cả', tab_hiring:'🏢 Tuyển dụng', tab_seeking:'🙋 Tìm việc',
+    tab_all:'Tất cả', tab_hiring:'Tuyển dụng', tab_seeking:'Tìm việc',
     search_placeholder:'Nhập từ khóa tìm kiếm...', search_scope_label:'Phạm vi:', search_all_fields:'Tiêu đề+Nội dung', search_title_only:'Chỉ tiêu đề', search_author:'Tác giả', search_comment:'Nội dung bình luận', search_comment_author:'Tác giả bình luận',
     search_result:'🔍 "{q}" — {n} kết quả',
     no_results:'Không tìm thấy kết quả.', no_posts:'Chưa có bài viết.',
-    detail_closed:'🔒 Đã đóng', btn_close_post:'🔒 Đóng tuyển dụng', btn_reopen_post:'✅ Mở lại', btn_delete_post:'🗑️ Xóa', link_view:'Xem liên kết',
+    detail_closed:'Đã đóng', btn_close_post:'Đóng tuyển dụng', btn_reopen_post:'Mở lại', btn_delete_post:'Xóa', link_view:'Xem liên kết',
     confirm_delete:'Xóa bài viết này?',
     comment_placeholder:'Thêm bình luận... (Enter để đăng)', comment_placeholder_login:'Vui lòng đăng nhập để bình luận.', comment_submit:'Đăng', reply_btn:'↩ Trả lời', reply_placeholder:'Thêm trả lời... (Enter để đăng)', reply_submit:'Đăng',
     no_comments:'Hãy là người bình luận đầu tiên 💬',
@@ -1932,9 +1524,9 @@ const LANGS = {
     alert_lv2_required:'Đăng tuyển dụng yêu cầu Lv.2 trở lên.\nĐiểm hiện tại: {p}pt (cần 10pt)',
     blur_warning:'⚠️ Nội dung không phù hợp — nhấp để xem',
     time_just_now:'Vừa xong',
-    mob_profile:'👤 Hồ sơ của tôi',
+    mob_profile:'Hồ sơ của tôi',
     // 커뮤니티 카테고리 옵션
-    cat_question:'❓ Câu hỏi', cat_tip:'💡 Mẹo hay', cat_housing:'🏠 Nhà ở', cat_sell:'🛍️ Mua/Bán', cat_social:'🤝 Xã hội', cat_daily:'☀️ Hàng ngày',
+    cat_question:'Câu hỏi', cat_tip:'Mẹo hay', cat_housing:'Nhà ở', cat_sell:'Mua/Bán', cat_social:'Xã hội', cat_daily:'Hàng ngày',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'Toàn thời gian', jtype_parttime:'Bán thời gian', jtype_remote:'Làm từ xa', jtype_other:'Khác',
   }
@@ -2277,7 +1869,7 @@ function renderPlans() {
     after21:  {ko:'21일 이후 개통',en:'Activated from 21st',zh:'21日后开通',vi:'Kích hoạt từ ngày 21'},
     notes:    {ko:'⚠️ 약정 주의사항',en:'⚠️ Contract Notes',zh:'⚠️ 合约注意事项',vi:'⚠️ Lưu ý hợp đồng'},
     postpaid: {ko:'후불제 · VAT 포함',en:'Postpaid · VAT incl.',zh:'后付费 · 含税',vi:'Trả sau · Đã gồm VAT'},
-    popular:  {ko:'⭐ 인기 요금제',en:'⭐ MOST POPULAR',zh:'⭐ 最受欢迎',vi:'⭐ PHỔ BIẾN NHẤT'},
+    popular:  {ko:'인기 요금제',en:'MOST POPULAR',zh:'最受欢迎',vi:'PHỔ BIẾN NHẤT'},
   };
   const APPLY_LABEL = {
     'SK Telecom':{ko:'SK텔레콤 공식 사이트에서 가입 →',en:'Apply on SK Telecom →',zh:'在SK电讯官网申请 →',vi:'Đăng ký SK Telecom →'},
