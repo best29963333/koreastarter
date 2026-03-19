@@ -266,20 +266,22 @@ nav {
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1548115184-bc6544d06a58?w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1600&q=80');
   background-size: cover;
-  background-position: center 40%;
+  background-position: center 55%;
   background-repeat: no-repeat;
   z-index: 0;
+  filter: blur(3px) brightness(0.85);
+  transform: scale(1.05);
 }
 .hero-bg::after {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(10, 16, 35, 0.78) 0%,
-    rgba(15, 24, 50, 0.70) 50%,
-    rgba(20, 10, 10, 0.65) 100%
+    rgba(8, 12, 28, 0.72) 0%,
+    rgba(12, 20, 44, 0.65) 50%,
+    rgba(18, 8, 8, 0.58) 100%
   );
 }
 /* 한국 전통 단청 느낌 상단 포인트 라인 */
@@ -1329,7 +1331,7 @@ footer strong { color: rgba(255,255,255,0.85); }
     </div>
     <div class="board-toolbar" style="margin-bottom:0;">
       <div></div>
-      <button class="btn-post-job" onclick="requireLogin('job-modal')">+ 글쓰기</button>
+      <button class="btn-post-job" onclick="requireLogin('job-modal')" data-i18n="btn_post_job">+ 글쓰기</button>
     </div>
     <!-- 구인/구직 탭 -->
     <div class="job-type-tabs" style="margin-top:16px;">
@@ -1515,10 +1517,10 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="form-group">
       <label class="form-label" data-i18n="field_type">근무형태</label>
       <select class="form-select" id="j-type">
-        <option value="Full-time">Full-time</option>
-        <option value="Part-time">Part-time</option>
-        <option value="Remote">Remote</option>
-        <option value="Other">Other</option>
+        <option value="Full-time" data-opt-key="jtype_fulltime">Full-time</option>
+        <option value="Part-time" data-opt-key="jtype_parttime">Part-time</option>
+        <option value="Remote" data-opt-key="jtype_remote">Remote</option>
+        <option value="Other" data-opt-key="jtype_other">Other</option>
       </select>
     </div>
     <div class="form-group">
@@ -1550,12 +1552,12 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="form-group">
       <label class="form-label" data-i18n="field_category">Category</label>
       <select class="form-select" id="c-cat">
-        <option value="question">❓ Question</option>
-        <option value="tip">💡 Tip</option>
-        <option value="housing">🏠 Housing</option>
-        <option value="sell">🛍️ Buy/Sell</option>
-        <option value="social">🤝 Social</option>
-        <option value="daily">☀️ Daily</option>
+        <option value="question" data-opt-key="cat_question">❓ Question</option>
+        <option value="tip" data-opt-key="cat_tip">💡 Tip</option>
+        <option value="housing" data-opt-key="cat_housing">🏠 Housing</option>
+        <option value="sell" data-opt-key="cat_sell">🛍️ Buy/Sell</option>
+        <option value="social" data-opt-key="cat_social">🤝 Social</option>
+        <option value="daily" data-opt-key="cat_daily">☀️ Daily</option>
       </select>
     </div>
     <div class="form-group">
@@ -1713,6 +1715,10 @@ const LANGS = {
     blur_warning:'⚠️ Inappropriate content — click to view',
     // 날짜
     time_just_now:'Just now',
+    // 커뮤니티 카테고리 옵션
+    cat_question:'❓ Question', cat_tip:'💡 Tip', cat_housing:'🏠 Housing', cat_sell:'🛍️ Buy/Sell', cat_social:'🤝 Social', cat_daily:'☀️ Daily',
+    // 구인구직 근무형태 옵션
+    jtype_fulltime:'Full-time', jtype_parttime:'Part-time', jtype_remote:'Remote', jtype_other:'Other',
   },
   ko: {
     flag: '🇰🇷', label: '한국어',
@@ -1763,7 +1769,7 @@ const LANGS = {
     detail_closed:'🔒 마감', btn_close_post:'🔒 마감', btn_reopen_post:'✅ 마감 취소', btn_delete_post:'🗑️ 삭제', link_view:'링크 보기',
     confirm_delete:'이 게시글을 삭제할까요?',
     // 댓글
-    comment_placeholder:'댓글을 입력하세요... (Enter로 게시)', comment_placeholder_login:'댓글을 달려면 로그인하세요.', comment_submit:'게시', reply_btn:t('reply_btn'), reply_placeholder:t('reply_placeholder'), reply_submit:'게시',
+    comment_placeholder:'댓글을 입력하세요... (Enter로 게시)', comment_placeholder_login:'댓글을 달려면 로그인하세요.', comment_submit:'게시', reply_btn:'↩ 대댓글', reply_placeholder:'대댓글 입력... (Enter로 게시)', reply_submit:'게시',
     no_comments:'첫 번째 댓글을 남겨보세요 💬',
     comments_count:'댓글 {n}개',
     // 프로필
@@ -1789,6 +1795,10 @@ const LANGS = {
     time_just_now:'방금 전',
     // 모바일 메뉴
     mob_profile:'👤 내 프로필',
+    // 커뮤니티 카테고리 옵션
+    cat_question:'❓ 질문', cat_tip:'💡 팁', cat_housing:'🏠 주거', cat_sell:'🛍️ 중고거래', cat_social:'🤝 소셜', cat_daily:'☀️ 일상',
+    // 구인구직 근무형태 옵션
+    jtype_fulltime:'정규직', jtype_parttime:'파트타임', jtype_remote:'재택근무', jtype_other:'기타',
   },
   zh: {
     flag: '🇨🇳', label: '中文',
@@ -1854,6 +1864,10 @@ const LANGS = {
     blur_warning:'⚠️ 不当内容 — 点击查看',
     time_just_now:'刚刚',
     mob_profile:'👤 我的主页',
+    // 커뮤니티 카테고리 옵션
+    cat_question:'❓ 提问', cat_tip:'💡 技巧', cat_housing:'🏠 住房', cat_sell:'🛍️ 买卖', cat_social:'🤝 社交', cat_daily:'☀️ 日常',
+    // 구인구직 근무형태 옵션
+    jtype_fulltime:'全职', jtype_parttime:'兼职', jtype_remote:'远程', jtype_other:'其他',
   },
   vi: {
     flag: '🇻🇳', label: 'VI',
@@ -1919,6 +1933,10 @@ const LANGS = {
     blur_warning:'⚠️ Nội dung không phù hợp — nhấp để xem',
     time_just_now:'Vừa xong',
     mob_profile:'👤 Hồ sơ của tôi',
+    // 커뮤니티 카테고리 옵션
+    cat_question:'❓ Câu hỏi', cat_tip:'💡 Mẹo hay', cat_housing:'🏠 Nhà ở', cat_sell:'🛍️ Mua/Bán', cat_social:'🤝 Xã hội', cat_daily:'☀️ Hàng ngày',
+    // 구인구직 근무형태 옵션
+    jtype_fulltime:'Toàn thời gian', jtype_parttime:'Bán thời gian', jtype_remote:'Làm từ xa', jtype_other:'Khác',
   }
 };
 
@@ -1944,6 +1962,11 @@ function applyLang() {
   document.querySelectorAll('[data-filter-key]').forEach(el => {
     const val = t(el.getAttribute('data-filter-key') + '_chip');
     if (val) el.textContent = val;
+  });
+  // select option 다국어 업데이트 (커뮤니티 카테고리, 구인구직 근무형태)
+  document.querySelectorAll('option[data-opt-key]').forEach(opt => {
+    const val = t(opt.getAttribute('data-opt-key'));
+    if (val) opt.textContent = val;
   });
   // 댓글 입력창 placeholder (로그인 여부 반영)
   const ci = document.getElementById('comment-input');
