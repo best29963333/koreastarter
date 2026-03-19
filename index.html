@@ -1114,8 +1114,15 @@ footer strong { color: rgba(255,255,255,0.85); }
 @media (max-width: 768px) {
   .nav-center { display: none; }
   .hamburger { display: flex; }
-  .btn-login { padding: 6px 12px; font-size: 12.5px; }
-  .lang-btn { padding: 5px 8px; font-size: 12px; }
+  /* 모바일 nav-right 요소 크기 축소 */
+  .btn-login { padding: 5px 10px; font-size: 12px; }
+  .lang-btn { padding: 4px 7px; font-size: 11.5px; }
+  .user-pill { padding: 3px 8px 3px 4px; font-size: 12px; gap: 5px; }
+  .user-avatar { width: 20px; height: 20px; font-size: 10px; }
+  #user-level-badge { font-size: 9px; padding: 1px 6px; }
+  nav { padding: 0 12px; gap: 6px; }
+  .logo { font-size: 16px; }
+  .logo-dot { width: 6px; height: 6px; }
 
   .hero-wrap { min-height: 460px; }
   .hero { padding: 60px 20px 44px; }
@@ -1282,14 +1289,14 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="carrier-tab" id="main-tab-lg" onclick="switchMainCarrier('LG U+')">📡 LG U+</div>
     </div>
     <div id="carrier-hidden-notice" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:20px;">
-      🔧 준비 중입니다. 곧 서비스 예정이에요!
+      <span data-i18n="carrier_notice">🔧 준비 중입니다. 곧 서비스 예정이에요!</span>
     </div>
 
     <div class="plans-grid" id="plans-grid"></div>
 
     <div class="sim-note">
       <span style="font-size:18px;flex-shrink:0;">ℹ️</span>
-      <span data-i18n="sim_note">All plans are postpaid (후불) contracts with SK Telecom. ARC (Alien Registration Card) + PASS authentication required.</span>
+      <span data-i18n="sim_note">모든 요금제는 후불제 계약입니다. 공식신청서 신청 → 외국인등록증(ARC) + PASS 인증 필수입니다.</span>
     </div>
   </div>
 </div>
@@ -1638,7 +1645,8 @@ const LANGS = {
     sim_subtitle:'Official SK Telecom postpaid plans — sign up online, no store visit needed.',
     kakao_title:'Need help choosing a plan?', kakao_desc:'Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.', kakao_hint:'Mon–Fri 9AM–6PM KST · Usually replies within 1 hour', kakao_btn:'KakaoTalk Consultation',
     coming_soon:'Coming Soon',
-    sim_note:'All plans are postpaid (후불) contracts with SK Telecom. You\'ll need a valid ARC or passport + visa. Links go to SK Telecom\'s official website.',
+    carrier_notice:'🔧 This carrier is coming soon. Service will be available shortly!',
+    sim_note:'All plans are postpaid contracts. Official application form required → ARC (Alien Registration Card) + PASS authentication required.',
     job_subtitle:'Post a job or find your next opportunity in Korea.',
     search_jobs:'Search jobs…',
     btn_post_job:'+ Post a Job',
@@ -1673,7 +1681,8 @@ const LANGS = {
     sim_subtitle:'SK텔레콤 공식 후불제 요금제 — 온라인 가입, 매장 방문 불필요.',
     kakao_title:'요금제 선택에 도움이 필요하신가요?', kakao_desc:'카카오톡으로 상담하세요 — 영어, 한국어, 중국어, 베트남어 지원.', kakao_hint:'월~금 오전 9시~오후 6시 · 보통 1시간 이내 답변', kakao_btn:'카카오톡 상담',
     coming_soon:'준비 중',
-    sim_note:'모든 요금제는 SK텔레콤 후불제 계약입니다. 외국인등록증(ARC) + PASS 인증 필수입니다.',
+    carrier_notice:'🔧 준비 중입니다. 곧 서비스 예정이에요!',
+    sim_note:'모든 요금제는 후불제 계약입니다. 공식신청서 신청 → 외국인등록증(ARC) + PASS 인증 필수입니다.',
     job_subtitle:'구인 공고를 올리거나 일자리를 찾아보세요.',
     search_jobs:'공고 검색…',
     btn_post_job:'+ 공고 올리기',
@@ -1708,7 +1717,8 @@ const LANGS = {
     sim_subtitle:'SK电讯官方后付费套餐 — 在线办理，无需到店。',
     kakao_title:'需要帮助选择套餐？', kakao_desc:'通过KakaoTalk与我们联系 — 支持英语、韩语、中文和越南语。', kakao_hint:'周一至周五 上午9点~下午6点(KST) · 通常1小时内回复', kakao_btn:'KakaoTalk咨询',
     coming_soon:'即将推出',
-    sim_note:'所有套餐均为SK电讯后付费合约。需要有效的外国人登记证(ARC)或护照+签证。',
+    carrier_notice:'🔧 正在准备中，即将开放服务！',
+    sim_note:'所有套餐均为后付费合约。需填写官方申请表 → 外国人登记证(ARC) + PASS认证必须。',
     job_subtitle:'发布招聘或在韩国寻找工作机会。',
     search_jobs:'搜索职位…',
     btn_post_job:'+ 发布招聘',
@@ -1743,7 +1753,8 @@ const LANGS = {
     sim_subtitle:'Gói cước trả sau chính hãng SK Telecom — đăng ký online, không cần đến cửa hàng.',
     kakao_title:'Cần giúp đỡ chọn gói cước?', kakao_desc:'Nhắn tin qua KakaoTalk — chúng tôi hỗ trợ tiếng Anh, Hàn, Trung và Việt.', kakao_hint:'Thứ 2–6 9AM–6PM KST · Thường phản hồi trong 1 giờ', kakao_btn:'Tư vấn KakaoTalk',
     coming_soon:'Sắp ra mắt',
-    sim_note:'Tất cả các gói đều là hợp đồng trả sau với SK Telecom. Cần ARC hợp lệ hoặc hộ chiếu + visa.',
+    carrier_notice:'🔧 Đang chuẩn bị. Dịch vụ sẽ sớm ra mắt!',
+    sim_note:'Tất cả các gói là hợp đồng trả sau. Điền đơn chính thức → ARC + xác thực PASS là bắt buộc.',
     job_subtitle:'Đăng tuyển dụng hoặc tìm cơ hội việc làm tại Hàn Quốc.',
     search_jobs:'Tìm kiếm việc làm…',
     btn_post_job:'+ Đăng tuyển dụng',
@@ -2523,17 +2534,19 @@ function deletePost() {
 
 function renderComments(comments) {
   const list = document.getElementById('comments-list');
-  const total = comments.reduce((acc,c) => acc + 1 + (c.replies||[]).length, 0);
-  document.getElementById('comments-count-label').textContent = '댓글 ' + total + '개';
-  if (!comments.length) {
+  const countLabel = document.getElementById('comments-count-label');
+  if (!list) return; // 상세보기가 열리지 않은 상태
+  const total = (comments||[]).reduce((acc,c) => acc + 1 + (c.replies||[]).length, 0);
+  if (countLabel) countLabel.textContent = '댓글 ' + total + '개';
+  if (!comments || !comments.length) {
     list.innerHTML = '<div class="no-comments">첫 번째 댓글을 남겨보세요 💬</div>';
     return;
   }
   const pc = { google:'google', facebook:'facebook', kakao:'kakao' };
   list.innerHTML = comments.map((c, ci) => {
-    const cBlur = hasBadWord(c.text);
+    const cBlur = hasBadWord(c.text||'');
     const repliesHTML = (c.replies||[]).map(r => {
-      const rBlur = hasBadWord(r.text);
+      const rBlur = hasBadWord(r.text||'');
       return '<div class="reply-item">' +
         '<div class="reply-avatar '+(pc[r.provider]||'anon')+'">'+(r.author||'?')[0].toUpperCase()+'</div>' +
         '<div class="reply-body">' +
@@ -2601,6 +2614,31 @@ function submitComment() {
 /* ═══════════════════════════════════════
    INIT
 ═══════════════════════════════════════ */
+// 어드민에서 저장한 통신사 노출 설정 불러오기
+function loadCarrierVisibilityFromStorage() {
+  try {
+    const saved = localStorage.getItem('ks_carrier_visibility');
+    if (saved) Object.assign(carrierVisibility, JSON.parse(saved));
+  } catch(e) {}
+}
+
+// 어드민에서 저장한 SIM 안내 문구 불러오기
+function loadSimNoteFromStorage() {
+  try {
+    const saved = localStorage.getItem('ks_sim_note');
+    if (!saved) return;
+    const notes = JSON.parse(saved);
+    // LANGS 객체의 sim_note 덮어쓰기
+    if (notes.ko && LANGS.ko) LANGS.ko.sim_note = notes.ko;
+    if (notes.en && LANGS.en) LANGS.en.sim_note = notes.en;
+    if (notes.zh && LANGS.zh) LANGS.zh.sim_note = notes.zh;
+    if (notes.vi && LANGS.vi) LANGS.vi.sim_note = notes.vi;
+  } catch(e) {}
+}
+
+loadCarrierVisibilityFromStorage();
+loadSimNoteFromStorage();
+
 applyLang();
 renderPlans();
 renderJobs();
