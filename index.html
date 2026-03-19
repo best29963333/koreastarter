@@ -2233,6 +2233,25 @@ function renderPlans() {
   const grid = document.getElementById('plans-grid');
   const notice = document.getElementById('carrier-hidden-notice');
   if (!grid) return;
+
+  // 탭 버튼 표시/숨김 업데이트
+  const tabMap = { 'SK Telecom': 'sk', 'KT': 'kt', 'LG U+': 'lg' };
+  Object.entries(tabMap).forEach(([carrier, key]) => {
+    const el = document.getElementById('main-tab-' + key);
+    if (el) el.style.display = carrierVisibility[carrier] ? '' : 'none';
+  });
+
+  // 현재 선택된 통신사가 비노출이면 첫 번째 노출 통신사로 자동 전환
+  if (!carrierVisibility[currentMainCarrier]) {
+    const firstVisible = Object.keys(carrierVisibility).find(c => carrierVisibility[c]);
+    if (firstVisible) {
+      currentMainCarrier = firstVisible;
+      Object.entries(tabMap).forEach(([c, key]) => {
+        const el = document.getElementById('main-tab-' + key);
+        if (el) el.classList.toggle('active', c === firstVisible);
+      });
+    }
+  }
   const isVisible = carrierVisibility[currentMainCarrier];
   const plans = ALL_PLANS.filter(p => p.carrier === currentMainCarrier);
   const feats = PLAN_FEATURES[currentLang] || PLAN_FEATURES.en;
