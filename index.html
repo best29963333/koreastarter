@@ -563,7 +563,7 @@ h1 em { color: #FFB347; font-style: italic; }
 ════════════════════════════════ */
 .post-detail-overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.55); z-index: 300;
+  background: rgba(0,0,0,0.55); z-index: 450;
   align-items: flex-start; justify-content: center;
   padding: 60px 20px 20px; overflow-y: auto;
 }
@@ -629,7 +629,7 @@ h1 em { color: #FFB347; font-style: italic; }
   position: relative;
 }
 .blur-content::after {
-  content: '⚠️ 부적절한 내용 — 클릭하여 보기';
+  content: attr(data-blur-warning);
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 600; color: var(--ink-soft);
@@ -1204,7 +1204,7 @@ footer strong { color: rgba(255,255,255,0.85); }
   <button class="mobile-nav-link" id="mob-comm" onclick="showPage('comm');closeMobileMenu()" data-i18n="nav_comm">💬 Community</button>
   <div style="height:1px;background:var(--border);margin:4px 0;"></div>
   <button class="mobile-nav-link" onclick="openModal('login-overlay');closeMobileMenu()" id="mob-login" data-i18n="nav_login">🔐 Login / Sign Up</button>
-  <button class="mobile-nav-link" onclick="showPage('profile');closeMobileMenu()" id="mob-profile">👤 내 프로필</button>
+  <button class="mobile-nav-link" onclick="showPage('profile');closeMobileMenu()" id="mob-profile" data-i18n="mob_profile">👤 내 프로필</button>
 </div>
 
 <!-- ════ HOME ════ -->
@@ -1314,17 +1314,17 @@ footer strong { color: rgba(255,255,255,0.85); }
     <!-- 고급 검색 -->
     <div class="search-wrap">
       <div class="search-main-row">
-        <input class="search-main-input" id="job-search-input" type="text" placeholder="검색어를 입력하세요...">
-        <button class="btn-search" onclick="doJobSearch()">🔍 검색</button>
+        <input class="search-main-input" id="job-search-input" type="text" data-i18n-placeholder="search_placeholder">
+        <button class="btn-search" onclick="doJobSearch()">🔍 <span data-i18n="search_scope_label">검색</span></button>
         <button class="btn-search-clear" onclick="clearJobSearch()">✕</button>
       </div>
       <div class="search-option-row">
-        <span class="search-option-label">검색 범위:</span>
-        <div class="search-opt active" data-sopt="all" onclick="setJobSearchOpt('all')">제목+본문</div>
-        <div class="search-opt" data-sopt="title" onclick="setJobSearchOpt('title')">제목만</div>
-        <div class="search-opt" data-sopt="author" onclick="setJobSearchOpt('author')">작성자</div>
-        <div class="search-opt" data-sopt="comment" onclick="setJobSearchOpt('comment')">댓글 내용</div>
-        <div class="search-opt" data-sopt="comment_author" onclick="setJobSearchOpt('comment_author')">댓글 작성자</div>
+        <span class="search-option-label" data-i18n="search_scope_label">검색 범위:</span>
+        <div class="search-opt active" data-sopt="all" onclick="setJobSearchOpt('all')" data-i18n="search_all_fields">제목+본문</div>
+        <div class="search-opt" data-sopt="title" onclick="setJobSearchOpt('title')" data-i18n="search_title_only">제목만</div>
+        <div class="search-opt" data-sopt="author" onclick="setJobSearchOpt('author')" data-i18n="search_author">작성자</div>
+        <div class="search-opt" data-sopt="comment" onclick="setJobSearchOpt('comment')" data-i18n="search_comment">댓글 내용</div>
+        <div class="search-opt" data-sopt="comment_author" onclick="setJobSearchOpt('comment_author')" data-i18n="search_comment_author">댓글 작성자</div>
       </div>
     </div>
     <div class="board-toolbar" style="margin-bottom:0;">
@@ -1333,9 +1333,9 @@ footer strong { color: rgba(255,255,255,0.85); }
     </div>
     <!-- 구인/구직 탭 -->
     <div class="job-type-tabs" style="margin-top:16px;">
-      <div class="job-type-tab active hiring" data-jobtype="all" onclick="filterJobType('all')">전체</div>
-      <div class="job-type-tab" data-jobtype="hiring" onclick="filterJobType('hiring')">🏢 구인</div>
-      <div class="job-type-tab" data-jobtype="seeking" onclick="filterJobType('seeking')">🙋 구직</div>
+      <div class="job-type-tab active hiring" data-jobtype="all" onclick="filterJobType('all')" data-i18n="tab_all">전체</div>
+      <div class="job-type-tab" data-jobtype="hiring" onclick="filterJobType('hiring')" data-i18n="tab_hiring">🏢 구인</div>
+      <div class="job-type-tab" data-jobtype="seeking" onclick="filterJobType('seeking')" data-i18n="tab_seeking">🙋 구직</div>
     </div>
     <div id="job-search-result-info" class="search-result-info" style="display:none;"></div>
     <div class="post-list" id="job-list"></div>
@@ -1355,28 +1355,28 @@ footer strong { color: rgba(255,255,255,0.85); }
     <!-- 고급 검색 -->
     <div class="search-wrap">
       <div class="search-main-row">
-        <input class="search-main-input" id="comm-search-input" type="text" placeholder="검색어를 입력하세요...">
-        <button class="btn-search" onclick="doCommSearch()">🔍 검색</button>
+        <input class="search-main-input" id="comm-search-input" type="text" data-i18n-placeholder="search_placeholder">
+        <button class="btn-search" onclick="doCommSearch()">🔍 <span data-i18n="search_scope_label">검색</span></button>
         <button class="btn-search-clear" onclick="clearCommSearch()">✕</button>
       </div>
       <div class="search-option-row">
-        <span class="search-option-label">검색 범위:</span>
-        <div class="search-opt active" data-sopt="all" onclick="setCommSearchOpt('all')">제목+본문</div>
-        <div class="search-opt" data-sopt="title" onclick="setCommSearchOpt('title')">제목만</div>
-        <div class="search-opt" data-sopt="author" onclick="setCommSearchOpt('author')">작성자</div>
-        <div class="search-opt" data-sopt="comment" onclick="setCommSearchOpt('comment')">댓글 내용</div>
-        <div class="search-opt" data-sopt="comment_author" onclick="setCommSearchOpt('comment_author')">댓글 작성자</div>
+        <span class="search-option-label" data-i18n="search_scope_label">검색 범위:</span>
+        <div class="search-opt active" data-sopt="all" onclick="setCommSearchOpt('all')" data-i18n="search_all_fields">제목+본문</div>
+        <div class="search-opt" data-sopt="title" onclick="setCommSearchOpt('title')" data-i18n="search_title_only">제목만</div>
+        <div class="search-opt" data-sopt="author" onclick="setCommSearchOpt('author')" data-i18n="search_author">작성자</div>
+        <div class="search-opt" data-sopt="comment" onclick="setCommSearchOpt('comment')" data-i18n="search_comment">댓글 내용</div>
+        <div class="search-opt" data-sopt="comment_author" onclick="setCommSearchOpt('comment_author')" data-i18n="search_comment_author">댓글 작성자</div>
       </div>
     </div>
     <div class="board-toolbar" style="margin-bottom:12px;">
       <div class="comm-filters" id="comm-filter-row">
-        <div class="filter-chip active" data-tag="all" onclick="filterComm('all')" data-i18n="filter_all">All</div>
-        <div class="filter-chip" data-tag="question" onclick="filterComm('question')">❓ <span data-i18n="filter_q">Question</span></div>
-        <div class="filter-chip" data-tag="housing" onclick="filterComm('housing')">🏠 <span data-i18n="filter_h">Housing</span></div>
-        <div class="filter-chip" data-tag="tip" onclick="filterComm('tip')">💡 <span data-i18n="filter_t">Tip</span></div>
-        <div class="filter-chip" data-tag="sell" onclick="filterComm('sell')">🛍️ <span data-i18n="filter_s">Buy/Sell</span></div>
-        <div class="filter-chip" data-tag="social" onclick="filterComm('social')">🤝 <span data-i18n="filter_so">Social</span></div>
-        <div class="filter-chip" data-tag="daily" onclick="filterComm('daily')">☀️ <span data-i18n="filter_daily">Daily</span></div>
+        <div class="filter-chip active" data-tag="all" onclick="filterComm('all')" data-filter-key="filter_all">All</div>
+        <div class="filter-chip" data-tag="question" onclick="filterComm('question')" data-filter-key="filter_q">❓ Question</div>
+        <div class="filter-chip" data-tag="housing" onclick="filterComm('housing')" data-filter-key="filter_h">🏠 Housing</div>
+        <div class="filter-chip" data-tag="tip" onclick="filterComm('tip')" data-filter-key="filter_t">💡 Tip</div>
+        <div class="filter-chip" data-tag="sell" onclick="filterComm('sell')" data-filter-key="filter_s">🛍️ Buy/Sell</div>
+        <div class="filter-chip" data-tag="social" onclick="filterComm('social')" data-filter-key="filter_so">🤝 Social</div>
+        <div class="filter-chip" data-tag="daily" onclick="filterComm('daily')" data-filter-key="filter_daily">☀️ Daily</div>
       </div>
       <button class="btn-new-post" onclick="requireLogin('comm-modal')" data-i18n="btn_new_post">+ New Post</button>
     </div>
@@ -1389,8 +1389,8 @@ footer strong { color: rgba(255,255,255,0.85); }
 <div class="page" id="page-profile">
   <div class="page-header">
     <div class="breadcrumb"><span onclick="showPage('home')">Home</span> › <span>My Profile</span></div>
-    <div class="page-title">👤 내 프로필</div>
-    <div class="page-subtitle">레벨, 포인트, 출석 현황을 확인하세요.</div>
+    <div class="page-title">👤 <span data-i18n="profile_title">내 프로필</span></div>
+    <div class="page-subtitle" data-i18n="profile_subtitle">레벨, 포인트, 출석 현황을 확인하세요.</div>
   </div>
   <div class="profile-wrap">
 
@@ -1408,36 +1408,36 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="profile-stats">
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-points">0</div>
-          <div class="profile-stat-lbl">💎 포인트</div>
+          <div class="profile-stat-lbl" data-i18n="profile_points">💎 포인트</div>
         </div>
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-attendance">0</div>
-          <div class="profile-stat-lbl">📅 출석 횟수</div>
+          <div class="profile-stat-lbl" data-i18n="profile_attendance">📅 출석 횟수</div>
         </div>
         <div class="profile-stat-box">
           <div class="profile-stat-val" id="stat-posts">0</div>
-          <div class="profile-stat-lbl">📝 작성 게시글</div>
+          <div class="profile-stat-lbl" data-i18n="profile_posts_count">📝 작성 게시글</div>
         </div>
       </div>
-      <div style="background:var(--accent-soft);border:1px solid #F3BEAF;border-radius:10px;padding:12px 16px;font-size:13px;color:var(--ink-soft);">
+      <div id="profile-points-info" style="background:var(--accent-soft);border:1px solid #F3BEAF;border-radius:10px;padding:12px 16px;font-size:13px;color:var(--ink-soft);" data-i18n-html="profile_points_info">
         💡 <strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt
       </div>
     </div>
 
     <!-- 로그아웃 버튼 -->
     <div style="text-align:right;margin-bottom:16px;">
-      <button onclick="logoutUser()" style="padding:8px 18px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft);">⏻ 로그아웃</button>
+      <button onclick="logoutUser()" data-i18n="btn_logout" style="padding:8px 18px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft);">⏻ 로그아웃</button>
     </div>
 
     <!-- 레벨 등급 안내 -->
     <div class="profile-card">
-      <div class="profile-card-title">🏆 레벨 등급 안내</div>
+      <div class="profile-card-title" data-i18n="profile_level_guide">🏆 레벨 등급 안내</div>
       <div id="level-guide-list"></div>
     </div>
 
     <!-- 내 게시글 -->
     <div class="profile-card" style="margin-top:16px;">
-      <div class="profile-card-title">📝 내가 작성한 게시글</div>
+      <div class="profile-card-title" data-i18n="profile_my_posts">📝 내가 작성한 게시글</div>
       <div id="my-posts-list"></div>
     </div>
 
@@ -1454,7 +1454,7 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="author-popup-meta" id="ap-meta"></div>
     </div>
     <div class="author-popup-body">
-      <div class="author-posts-title">최근 게시글 (최대 5개)</div>
+      <div class="author-posts-title" data-i18n="author_recent_posts">최근 게시글 (최대 5개)</div>
       <div id="ap-posts-list"></div>
     </div>
   </div>
@@ -1494,17 +1494,17 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div class="modal-title" data-i18n="modal_post_job">글쓰기</div>
     <!-- 구인 / 구직 선택 -->
     <div class="form-group" style="margin-bottom:16px;">
-      <label class="form-label">게시글 분류</label>
+      <label class="form-label" data-i18n="job_post_type_label">게시글 분류</label>
       <div style="display:flex;gap:10px;margin-top:4px;">
         <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;" id="label-hiring">
           <input type="radio" name="job-post-type" value="hiring" id="jpt-hiring" checked style="accent-color:var(--job);">
-          <span style="font-weight:600;font-size:14px;">🏢 구인</span>
-          <span style="font-size:12px;color:var(--ink-soft);">일자리 제공</span>
+          <span style="font-weight:600;font-size:14px;" data-i18n="job_hiring">🏢 구인</span>
+          <span style="font-size:12px;color:var(--ink-soft);" data-i18n="job_hiring_desc">일자리 제공</span>
         </label>
         <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;" id="label-seeking">
           <input type="radio" name="job-post-type" value="seeking" id="jpt-seeking" style="accent-color:var(--sim);">
-          <span style="font-weight:600;font-size:14px;">🙋 구직</span>
-          <span style="font-size:12px;color:var(--ink-soft);">일자리 찾기</span>
+          <span style="font-weight:600;font-size:14px;" data-i18n="job_seeking">🙋 구직</span>
+          <span style="font-size:12px;color:var(--ink-soft);" data-i18n="job_seeking_desc">일자리 찾기</span>
         </label>
       </div>
     </div>
@@ -1530,11 +1530,10 @@ footer strong { color: rgba(255,255,255,0.85); }
       <textarea class="form-textarea" id="j-desc"></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">링크 (선택)</label>
+      <label class="form-label" data-i18n="link_optional">링크 (선택)</label>
       <input class="form-input" id="j-link" type="url" placeholder="https://example.com">
     </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('job-modal')" data-i18n="btn_cancel">취소</button>
       <button class="btn-submit job-color" onclick="submitJob()" data-i18n="btn_post_job">게시</button>
     </div>
   </div>
@@ -1564,7 +1563,7 @@ footer strong { color: rgba(255,255,255,0.85); }
       <textarea class="form-textarea" id="c-body"></textarea>
     </div>
     <div class="form-group">
-      <label class="form-label">링크 (선택)</label>
+      <label class="form-label" data-i18n="link_optional">링크 (선택)</label>
       <input class="form-input" id="c-link" type="url" placeholder="https://example.com">
     </div>
     <div class="modal-actions">
@@ -1584,15 +1583,15 @@ footer strong { color: rgba(255,255,255,0.85); }
           <span id="detail-closed-badge" class="badge-closed" style="display:none;">🔒 마감</span>
         </div>
         <div style="display:flex;gap:6px;align-items:center;">
-          <button class="btn-close-post" id="btn-close-post" onclick="toggleClosePost()" style="display:none;">🔒 마감</button>
-          <button class="btn-delete-post" id="btn-delete-post" onclick="deletePost()" style="display:none;">🗑️ 삭제</button>
+          <button class="btn-close-post" id="btn-close-post" onclick="toggleClosePost()" style="display:none;" data-i18n="btn_close_post">🔒 마감</button>
+          <button class="btn-delete-post" id="btn-delete-post" onclick="deletePost()" style="display:none;" data-i18n="btn_delete_post">🗑️ 삭제</button>
           <button class="btn-detail-close" onclick="closeDetail()">✕</button>
         </div>
       </div>
       <div class="post-detail-title" id="detail-title"></div>
       <div class="post-detail-foot" id="detail-foot"></div>
       <div id="detail-link-wrap" style="margin-top:8px;display:none;">
-        <a id="detail-link" href="#" target="_blank" class="post-detail-link">🔗 <span id="detail-link-text">링크 보기</span></a>
+        <a id="detail-link" href="#" target="_blank" class="post-detail-link">🔗 <span id="detail-link-text" data-i18n="link_view">링크 보기</span></a>
       </div>
     </div>
     <div class="post-detail-body" id="detail-body"></div>
@@ -1608,10 +1607,11 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 댓글 입력 -->
     <div class="comment-input-wrap">
-      <textarea class="comment-input" id="comment-input" placeholder="댓글을 입력하세요..." rows="1"
+      <textarea class="comment-input" id="comment-input" rows="1"
+        data-i18n-placeholder="comment_placeholder"
         oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment();}"></textarea>
-      <button class="btn-comment-submit" onclick="submitComment()">게시</button>
+      <button class="btn-comment-submit" onclick="submitComment()" data-i18n="comment_submit">게시</button>
     </div>
   </div>
 </div>
@@ -1627,6 +1627,15 @@ footer strong { color: rgba(255,255,255,0.85); }
 </footer>
 
 <script>
+/* ═══════════════════════════════════════
+   욕설 필터
+═══════════════════════════════════════ */
+const BAD_WORDS = ['씨발','시발','병신','개새끼','미친놈','fuck','shit','asshole','bitch','bastard'];
+function hasBadWord(text) {
+  const lower = (text || '').toLowerCase();
+  return BAD_WORDS.some(w => lower.includes(w));
+}
+
 /* ═══════════════════════════════════════
    i18n
 ═══════════════════════════════════════ */
@@ -1652,6 +1661,7 @@ const LANGS = {
     btn_post_job:'+ Post a Job',
     comm_subtitle:'Questions, tips, housing, buy & sell — all welcome.',
     filter_all:'All', filter_q:'Question', filter_h:'Housing', filter_t:'Tip', filter_s:'Buy/Sell', filter_so:'Social', filter_daily:'Daily',
+    filter_all_chip:'All', filter_q_chip:'❓ Question', filter_h_chip:'🏠 Housing', filter_t_chip:'💡 Tip', filter_s_chip:'🛍️ Buy/Sell', filter_so_chip:'🤝 Social', filter_daily_chip:'☀️ Daily',
     btn_new_post:'+ New Post',
     login_sub:'Sign in to post jobs, ask questions, and connect with the community.',
     login_kakao:'Continue with KakaoTalk', login_google:'Continue with Google', login_fb:'Continue with Facebook',
@@ -1666,6 +1676,43 @@ const LANGS = {
     plan_popular:'⭐ MOST POPULAR',
     plan_apply:'Apply on SK Telecom →',
     plan_postpaid:'Postpaid · VAT incl.',
+    // 게시글 폼
+    job_post_type_label:'Post Type', job_hiring:'🏢 Hiring', job_hiring_desc:'Offering a job', job_seeking:'🙋 Seeking', job_seeking_desc:'Looking for work',
+    link_optional:'Link (optional)',
+    // 탭 필터
+    tab_all:'All', tab_hiring:'🏢 Hiring', tab_seeking:'🙋 Seeking',
+    // 검색
+    search_placeholder:'Enter search term...', search_scope_label:'Search:', search_all_fields:'Title+Body', search_title_only:'Title only', search_author:'Author', search_comment:'Comment text', search_comment_author:'Comment author',
+    search_result:'🔍 "{q}" — {n} result(s)',
+    no_results:'No results found.', no_posts:'No posts yet.',
+    // 상세보기
+    detail_closed:'🔒 Closed', btn_close_post:'🔒 Close', btn_reopen_post:'✅ Reopen', btn_delete_post:'🗑️ Delete', link_view:'View Link',
+    confirm_delete:'Delete this post?',
+    // 댓글
+    comment_placeholder:'Add a comment... (Enter to post)', comment_placeholder_login:'Please log in to comment.', comment_submit:'Post', reply_btn:'↩ Reply', reply_placeholder:'Add a reply... (Enter to post)', reply_submit:'Post',
+    no_comments:'Be the first to comment 💬',
+    comments_count:'{n} comment(s)',
+    // 프로필
+    profile_title:'My Profile', profile_subtitle:'Check your level, points, and attendance.',
+    profile_account:'Account Info', profile_points:'💎 Points', profile_attendance:'📅 Attendance', profile_posts_count:'📝 Posts Written',
+    profile_points_info:'💡 How to earn points: Login = 1pt/day · Post = 1pt',
+    btn_logout:'⏻ Logout',
+    profile_level_guide:'🏆 Level Guide', profile_my_posts:'📝 My Posts',
+    profile_no_posts:'No posts written yet.',
+    level_current:'← Current',
+    level_instant:'Achieved immediately on signup',
+    level_condition:'Condition:',
+    level_attendance_pts:'attendance {a} + {p}pt',
+    level_pts_only:'{p}pt',
+    // 작성자 팝업
+    author_recent_posts:'Recent Posts (up to 5)',
+    author_no_posts:'No posts yet.',
+    // 알림
+    alert_lv2_required:'Job posting requires Lv.2 or above.\nCurrent points: {p}pt (10pt needed)',
+    // 블러
+    blur_warning:'⚠️ Inappropriate content — click to view',
+    // 날짜
+    time_just_now:'Just now',
   },
   ko: {
     flag: '🇰🇷', label: '한국어',
@@ -1688,6 +1735,7 @@ const LANGS = {
     btn_post_job:'+ 공고 올리기',
     comm_subtitle:'질문, 팁, 집 구하기, 중고거래 — 모두 환영합니다.',
     filter_all:'전체', filter_q:'질문', filter_h:'주거', filter_t:'팁', filter_s:'중고거래', filter_so:'소셜', filter_daily:'일상',
+    filter_all_chip:'전체', filter_q_chip:'❓ 질문', filter_h_chip:'🏠 주거', filter_t_chip:'💡 팁', filter_s_chip:'🛍️ 중고거래', filter_so_chip:'🤝 소셜', filter_daily_chip:'☀️ 일상',
     btn_new_post:'+ 글쓰기',
     login_sub:'로그인하여 공고를 올리고, 질문하고, 커뮤니티에 참여하세요.',
     login_kakao:'카카오톡으로 계속하기', login_google:'Google로 계속하기', login_fb:'Facebook으로 계속하기',
@@ -1702,6 +1750,45 @@ const LANGS = {
     plan_popular:'⭐ 인기 요금제',
     plan_apply:'SK텔레콤 공식 사이트에서 가입 →',
     plan_postpaid:'후불제 · VAT 포함',
+    // 게시글 폼
+    job_post_type_label:'게시글 분류', job_hiring:'🏢 구인', job_hiring_desc:'일자리 제공', job_seeking:'🙋 구직', job_seeking_desc:'일자리 찾기',
+    link_optional:'링크 (선택)',
+    // 탭 필터
+    tab_all:'전체', tab_hiring:'🏢 구인', tab_seeking:'🙋 구직',
+    // 검색
+    search_placeholder:'검색어를 입력하세요...', search_scope_label:'검색 범위:', search_all_fields:'제목+본문', search_title_only:'제목만', search_author:'작성자', search_comment:'댓글 내용', search_comment_author:'댓글 작성자',
+    search_result:'🔍 "{q}" 검색 결과 {n}건',
+    no_results:'검색 결과가 없습니다.', no_posts:'게시글이 없습니다.',
+    // 상세보기
+    detail_closed:'🔒 마감', btn_close_post:'🔒 마감', btn_reopen_post:'✅ 마감 취소', btn_delete_post:'🗑️ 삭제', link_view:'링크 보기',
+    confirm_delete:'이 게시글을 삭제할까요?',
+    // 댓글
+    comment_placeholder:'댓글을 입력하세요... (Enter로 게시)', comment_placeholder_login:'댓글을 달려면 로그인하세요.', comment_submit:'게시', reply_btn:t('reply_btn'), reply_placeholder:t('reply_placeholder'), reply_submit:'게시',
+    no_comments:'첫 번째 댓글을 남겨보세요 💬',
+    comments_count:'댓글 {n}개',
+    // 프로필
+    profile_title:'내 프로필', profile_subtitle:'레벨, 포인트, 출석 현황을 확인하세요.',
+    profile_account:'계정 정보', profile_points:'💎 포인트', profile_attendance:'📅 출석 횟수', profile_posts_count:'📝 작성 게시글',
+    profile_points_info:'💡 <strong>포인트 적립 방법:</strong> 로그인 시 1pt (하루 1회) · 게시글 작성 시 1pt',
+    btn_logout:'⏻ 로그아웃',
+    profile_level_guide:'🏆 레벨 등급 안내', profile_my_posts:'📝 내가 작성한 게시글',
+    profile_no_posts:'아직 작성한 게시글이 없습니다.',
+    level_current:'← 현재',
+    level_instant:'가입 즉시 달성',
+    level_condition:'달성 조건:',
+    level_attendance_pts:'출석 {a}회 + {p}pt',
+    level_pts_only:'{p}pt',
+    // 작성자 팝업
+    author_recent_posts:'최근 게시글 (최대 5개)',
+    author_no_posts:'아직 작성한 게시글이 없습니다.',
+    // 알림
+    alert_lv2_required:'구인구직 글쓰기는 Lv.2 이상부터 가능합니다.\n현재 포인트: {p}pt (10pt 필요)',
+    // 블러
+    blur_warning:'⚠️ 부적절한 내용 — 클릭하여 보기',
+    // 날짜
+    time_just_now:'방금 전',
+    // 모바일 메뉴
+    mob_profile:'👤 내 프로필',
   },
   zh: {
     flag: '🇨🇳', label: '中文',
@@ -1724,6 +1811,7 @@ const LANGS = {
     btn_post_job:'+ 发布招聘',
     comm_subtitle:'提问、技巧分享、找房、二手交易 — 欢迎所有内容。',
     filter_all:'全部', filter_q:'提问', filter_h:'住房', filter_t:'技巧', filter_s:'买卖', filter_so:'社交', filter_daily:'日常',
+    filter_all_chip:'全部', filter_q_chip:'❓ 提问', filter_h_chip:'🏠 住房', filter_t_chip:'💡 技巧', filter_s_chip:'🛍️ 买卖', filter_so_chip:'🤝 社交', filter_daily_chip:'☀️ 日常',
     btn_new_post:'+ 发帖',
     login_sub:'登录后发布招聘、提问并加入社区互动。',
     login_kakao:'通过KakaoTalk继续', login_google:'通过Google继续', login_fb:'通过Facebook继续',
@@ -1738,6 +1826,34 @@ const LANGS = {
     plan_popular:'⭐ 最受欢迎',
     plan_apply:'在SK电讯官网申请 →',
     plan_postpaid:'后付费 · 含税',
+    job_post_type_label:'帖子类型', job_hiring:'🏢 招聘', job_hiring_desc:'提供职位', job_seeking:'🙋 求职', job_seeking_desc:'寻找工作',
+    link_optional:'链接（可选）',
+    tab_all:'全部', tab_hiring:'🏢 招聘', tab_seeking:'🙋 求职',
+    search_placeholder:'请输入搜索关键词...', search_scope_label:'搜索范围:', search_all_fields:'标题+内容', search_title_only:'仅标题', search_author:'作者', search_comment:'评论内容', search_comment_author:'评论作者',
+    search_result:'🔍 "{q}" 搜索结果 {n}条',
+    no_results:'未找到相关结果。', no_posts:'暂无帖子。',
+    detail_closed:'🔒 已结束', btn_close_post:'🔒 结束招聘', btn_reopen_post:'✅ 重新开放', btn_delete_post:'🗑️ 删除', link_view:'查看链接',
+    confirm_delete:'确定删除此帖子吗？',
+    comment_placeholder:'添加评论... (Enter发布)', comment_placeholder_login:'请登录后发表评论。', comment_submit:'发布', reply_btn:'↩ 回复', reply_placeholder:'添加回复... (Enter发布)', reply_submit:'发布',
+    no_comments:'来发表第一条评论吧 💬',
+    comments_count:'{n}条评论',
+    profile_title:'我的主页', profile_subtitle:'查看等级、积分和签到情况。',
+    profile_account:'账户信息', profile_points:'💎 积分', profile_attendance:'📅 签到次数', profile_posts_count:'📝 发帖数',
+    profile_points_info:'💡 <strong>积分获取方式：</strong>登录 1pt/天 · 发帖 1pt',
+    btn_logout:'⏻ 退出登录',
+    profile_level_guide:'🏆 等级说明', profile_my_posts:'📝 我发布的帖子',
+    profile_no_posts:'暂无发布的帖子。',
+    level_current:'← 当前',
+    level_instant:'注册后立即获得',
+    level_condition:'达成条件:',
+    level_attendance_pts:'签到{a}次 + {p}积分',
+    level_pts_only:'{p}积分',
+    author_recent_posts:'最近帖子（最多5条）',
+    author_no_posts:'暂无发布的帖子。',
+    alert_lv2_required:'发布招聘需要Lv.2或以上。\n当前积分: {p}pt（需要10pt）',
+    blur_warning:'⚠️ 不当内容 — 点击查看',
+    time_just_now:'刚刚',
+    mob_profile:'👤 我的主页',
   },
   vi: {
     flag: '🇻🇳', label: 'VI',
@@ -1760,6 +1876,7 @@ const LANGS = {
     btn_post_job:'+ Đăng tuyển dụng',
     comm_subtitle:'Câu hỏi, mẹo hay, tìm nhà, mua bán — tất cả đều được chào đón.',
     filter_all:'Tất cả', filter_q:'Câu hỏi', filter_h:'Nhà ở', filter_t:'Mẹo hay', filter_s:'Mua/Bán', filter_so:'Xã hội', filter_daily:'Hàng ngày',
+    filter_all_chip:'Tất cả', filter_q_chip:'❓ Câu hỏi', filter_h_chip:'🏠 Nhà ở', filter_t_chip:'💡 Mẹo hay', filter_s_chip:'🛍️ Mua/Bán', filter_so_chip:'🤝 Xã hội', filter_daily_chip:'☀️ Hàng ngày',
     btn_new_post:'+ Bài viết mới',
     login_sub:'Đăng nhập để đăng việc làm, đặt câu hỏi và kết nối với cộng đồng.',
     login_kakao:'Tiếp tục với KakaoTalk', login_google:'Tiếp tục với Google', login_fb:'Tiếp tục với Facebook',
@@ -1774,6 +1891,34 @@ const LANGS = {
     plan_popular:'⭐ PHỔ BIẾN NHẤT',
     plan_apply:'Đăng ký trên SK Telecom →',
     plan_postpaid:'Trả sau · Đã gồm VAT',
+    job_post_type_label:'Loại bài đăng', job_hiring:'🏢 Tuyển dụng', job_hiring_desc:'Cung cấp việc làm', job_seeking:'🙋 Tìm việc', job_seeking_desc:'Tìm kiếm việc làm',
+    link_optional:'Liên kết (tùy chọn)',
+    tab_all:'Tất cả', tab_hiring:'🏢 Tuyển dụng', tab_seeking:'🙋 Tìm việc',
+    search_placeholder:'Nhập từ khóa tìm kiếm...', search_scope_label:'Phạm vi:', search_all_fields:'Tiêu đề+Nội dung', search_title_only:'Chỉ tiêu đề', search_author:'Tác giả', search_comment:'Nội dung bình luận', search_comment_author:'Tác giả bình luận',
+    search_result:'🔍 "{q}" — {n} kết quả',
+    no_results:'Không tìm thấy kết quả.', no_posts:'Chưa có bài viết.',
+    detail_closed:'🔒 Đã đóng', btn_close_post:'🔒 Đóng tuyển dụng', btn_reopen_post:'✅ Mở lại', btn_delete_post:'🗑️ Xóa', link_view:'Xem liên kết',
+    confirm_delete:'Xóa bài viết này?',
+    comment_placeholder:'Thêm bình luận... (Enter để đăng)', comment_placeholder_login:'Vui lòng đăng nhập để bình luận.', comment_submit:'Đăng', reply_btn:'↩ Trả lời', reply_placeholder:'Thêm trả lời... (Enter để đăng)', reply_submit:'Đăng',
+    no_comments:'Hãy là người bình luận đầu tiên 💬',
+    comments_count:'{n} bình luận',
+    profile_title:'Hồ sơ của tôi', profile_subtitle:'Kiểm tra cấp độ, điểm và điểm danh.',
+    profile_account:'Thông tin tài khoản', profile_points:'💎 Điểm', profile_attendance:'📅 Số lần điểm danh', profile_posts_count:'📝 Bài viết đã đăng',
+    profile_points_info:'💡 <strong>Cách kiếm điểm:</strong> Đăng nhập = 1pt/ngày · Đăng bài = 1pt',
+    btn_logout:'⏻ Đăng xuất',
+    profile_level_guide:'🏆 Hướng dẫn cấp độ', profile_my_posts:'📝 Bài viết của tôi',
+    profile_no_posts:'Chưa có bài viết nào.',
+    level_current:'← Hiện tại',
+    level_instant:'Đạt ngay khi đăng ký',
+    level_condition:'Điều kiện:',
+    level_attendance_pts:'Điểm danh {a} lần + {p}pt',
+    level_pts_only:'{p}pt',
+    author_recent_posts:'Bài viết gần đây (tối đa 5)',
+    author_no_posts:'Chưa có bài viết.',
+    alert_lv2_required:'Đăng tuyển dụng yêu cầu Lv.2 trở lên.\nĐiểm hiện tại: {p}pt (cần 10pt)',
+    blur_warning:'⚠️ Nội dung không phù hợp — nhấp để xem',
+    time_just_now:'Vừa xong',
+    mob_profile:'👤 Hồ sơ của tôi',
   }
 };
 
@@ -1787,17 +1932,27 @@ function applyLang() {
     if (key === 'hero_h1_html') { el.innerHTML = t(key); return; }
     el.textContent = t(key);
   });
+  // innerHTML 지원 (bold 태그 포함)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const val = t(el.getAttribute('data-i18n-html'));
+    if (val) el.innerHTML = val;
+  });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
   });
-  document.getElementById('lang-btn-label').textContent = `${LANGS[currentLang].flag} ${LANGS[currentLang].label}`;
+  // 커뮤니티 필터칩 이모지 포함 다국어 업데이트
+  document.querySelectorAll('[data-filter-key]').forEach(el => {
+    const val = t(el.getAttribute('data-filter-key') + '_chip');
+    if (val) el.textContent = val;
+  });
+  // 댓글 입력창 placeholder (로그인 여부 반영)
+  const ci = document.getElementById('comment-input');
+  if (ci) ci.placeholder = currentUser ? t('comment_placeholder') : t('comment_placeholder_login');
 
-  // update lang options
+  document.getElementById('lang-btn-label').textContent = `${LANGS[currentLang].flag} ${LANGS[currentLang].label}`;
   document.querySelectorAll('.lang-option').forEach(el => {
     el.classList.toggle('selected', el.getAttribute('onclick').includes(`'${currentLang}'`));
   });
-
-  // re-render dynamic content
   renderPlans();
   renderJobs();
   renderComm();
@@ -1919,7 +2074,7 @@ function requireLogin(modalId) {
     const ud = currentUser.data;
     const lv = calcLevel(ud.points, ud.attendance);
     if (lv < 2) {
-      alert('구인구직 글쓰기는 Lv.2 이상부터 가능합니다.\n현재 포인트: ' + ud.points + 'pt (10pt 필요)');
+      alert(t('alert_lv2_required').replace('{p}', ud.points));
       return;
     }
   }
@@ -1959,13 +2114,13 @@ function renderProfile() {
     const isCurrent = lv === l.lv;
     const prog = isCurrent ? getLevelProgress(ud.points, ud.attendance, lv) : (achieved ? 100 : 0);
     const condText = l.lv === 1
-      ? '가입 즉시 달성'
-      : (l.attendReq > 0 ? '출석 '+l.attendReq+'회 + 포인트 '+l.pointReq+'pt' : '포인트 '+l.pointReq+'pt');
+      ? t('level_instant')
+      : (l.attendReq > 0 ? t('level_attendance_pts').replace('{a}',l.attendReq).replace('{p}',l.pointReq) : t('level_pts_only').replace('{p}',l.pointReq));
     return '<div class="level-row' + (achieved?'':' level-locked') + '">' +
       '<div class="level-row-badge"><span class="level-badge ' + l.cls + '" style="font-size:13px;">' + l.icon + ' Lv.' + l.lv + '</span></div>' +
       '<div class="level-row-info">' +
-        '<div class="level-row-name">' + l.name + (isCurrent ? ' <span style="color:var(--accent);font-size:11px;">← 현재</span>' : '') + '</div>' +
-        '<div class="level-row-cond">달성 조건: ' + condText + '</div>' +
+        '<div class="level-row-name">' + l.name + (isCurrent ? ' <span style="color:var(--accent);font-size:11px;">'+t('level_current')+'</span>' : '') + '</div>' +
+        '<div class="level-row-cond">'+t('level_condition')+' ' + condText + '</div>' +
         '<div class="level-row-perm">✅ ' + l.perm + '</div>' +
         '<div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:'+prog+'%"></div></div>' +
       '</div></div>';
@@ -2221,11 +2376,11 @@ function renderJobs() {
   const infoEl = document.getElementById('job-search-result-info');
   if (q && infoEl) {
     infoEl.style.display = 'block';
-    infoEl.innerHTML = '🔍 "<strong>' + q + '</strong>" 검색 결과 ' + filtered.length + '건';
+    infoEl.innerHTML = t('search_result').replace('{q}',q).replace('{n}',filtered.length);
   } else if (infoEl) { infoEl.style.display = 'none'; }
 
   if (!filtered.length) {
-    list.innerHTML = '<div class="empty"><div class="empty-icon">💼</div><p>' + (q?'검색 결과가 없습니다.':'게시글이 없습니다.') + '</p></div>';
+    list.innerHTML = '<div class="empty"><div class="empty-icon">💼</div><p>' + (q?t('no_results'):t('no_posts')) + '</p></div>';
     return;
   }
   list.innerHTML = filtered.map(j => {
@@ -2234,7 +2389,7 @@ function renderJobs() {
       '<div class="post-row-body">' +
         '<div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;flex-wrap:wrap;">' +
           '<span class="post-tag '+(j.jobPostType==='hiring'?'tag-hiring':'tag-seeking')+'" style="font-size:11px;">'+(j.jobPostType==='hiring'?'🏢 구인':'🙋 구직')+'</span>' +
-          (j.closed?'<span class="badge-closed">🔒 마감</span>':'') +
+          (j.closed?t('detail_closed')?'<span class="badge-closed">'+t('detail_closed')+'</span>':'':'') +
           '<span class="post-row-title" style="margin:0;">'+titleHL+'</span>' +
         '</div>' +
         '<div class="post-row-meta">'+(j.location?j.location+' · ':'')+j.date+
@@ -2257,11 +2412,11 @@ function renderComm() {
   const infoEl = document.getElementById('comm-search-result-info');
   if (q && infoEl) {
     infoEl.style.display = 'block';
-    infoEl.innerHTML = '🔍 "<strong>' + q + '</strong>" 검색 결과 ' + filtered.length + '건';
+    infoEl.innerHTML = t('search_result').replace('{q}',q).replace('{n}',filtered.length);
   } else if (infoEl) { infoEl.style.display = 'none'; }
 
   if (!filtered.length) {
-    list.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><p>'+(q?'검색 결과가 없습니다.':'No posts yet.')+'</p></div>';
+    list.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><p>'+(q?t('no_results'):t('no_posts'))+'</p></div>';
     return;
   }
   list.innerHTML = filtered.map(p => {
@@ -2295,7 +2450,7 @@ function submitJob() {
     location: document.getElementById('j-location').value || '',
     desc: document.getElementById('j-desc').value,
     link: document.getElementById('j-link').value.trim(),
-    date: 'Just now', closed: false, comments: [], author: name,
+    date: t('time_just_now'), closed: false, comments: [], author: name,
   });
   ['j-title','j-location','j-desc','j-link'].forEach(id => document.getElementById(id).value='');
   closeModal('job-modal');
@@ -2331,7 +2486,7 @@ function submitComm() {
     body: document.getElementById('c-body').value,
     link: document.getElementById('c-link').value.trim(),
     category: document.getElementById('c-cat').value,
-    name, date: 'Just now', comments: [],
+    name, date: t('time_just_now'), comments: [],
   });
   ['c-title','c-body','c-link'].forEach(id => document.getElementById(id).value='');
   closeModal('comm-modal');
@@ -2371,7 +2526,7 @@ function openAuthorPopup(authorName) {
 
   const postsEl = document.getElementById('ap-posts-list');
   if (!allPosts.length) {
-    postsEl.innerHTML = '<div class="author-no-posts">아직 작성한 게시글이 없습니다.</div>';
+    postsEl.innerHTML = '<div class="author-no-posts">'+t('author_no_posts')+'</div>';
   } else {
     postsEl.innerHTML = allPosts.map(p =>
       '<div class="author-post-item" onclick="closeAuthorPopup();openDetail(\''+p.type+'\','+p.id+')">' +
@@ -2410,7 +2565,7 @@ function renderMyPosts() {
   const all = [...myJobs, ...myComm];
 
   if (!all.length) {
-    container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--ink-light);font-size:13.5px;">아직 작성한 게시글이 없습니다.</div>';
+    container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--ink-light);font-size:13.5px;">'+t('profile_no_posts')+'</div>';
     return;
   }
   container.innerHTML = '<div class="my-posts-list">' +
@@ -2464,8 +2619,7 @@ function openDetail(type, id) {
   const btnDel = document.getElementById('btn-delete-post');
   btnClose.style.display = (type==='job' && isOwner && !post.closed) ? 'inline-block' : 'none';
   btnDel.style.display = isOwner ? 'inline-block' : 'none';
-  if (post.closed) btnClose.textContent = '✅ 마감 취소';
-  else btnClose.textContent = '🔒 마감';
+  btnClose.textContent = post.closed ? t('btn_reopen_post') : t('btn_close_post');
 
   document.getElementById('detail-title').textContent = post.title;
 
@@ -2500,7 +2654,7 @@ function openDetail(type, id) {
 
   const input = document.getElementById('comment-input');
   input.value = ''; input.style.height = 'auto';
-  input.placeholder = currentUser ? '댓글을 입력하세요... (Enter로 게시)' : '댓글을 달려면 로그인하세요.';
+  input.placeholder = currentUser ? t('comment_placeholder') : t('comment_placeholder_login');
 
   document.getElementById('post-detail-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -2519,13 +2673,13 @@ function handleDetailOverlayClick(e) {
 function toggleClosePost() {
   const post = getPost(); if (!post) return;
   post.closed = !post.closed;
-  document.getElementById('btn-close-post').textContent = post.closed ? '✅ 마감 취소' : '🔒 마감';
+  document.getElementById('btn-close-post').textContent = post.closed ? t('btn_reopen_post') : t('btn_close_post');
   document.getElementById('detail-closed-badge').style.display = post.closed ? 'inline-flex' : 'none';
   renderJobs();
 }
 
 function deletePost() {
-  if (!confirm('이 게시글을 삭제할까요?')) return;
+  if (!confirm(t('confirm_delete'))) return;
   if (detailType === 'job') jobPosts = jobPosts.filter(j => j.id !== detailId);
   else commPosts = commPosts.filter(p => p.id !== detailId);
   closeDetail();
@@ -2537,9 +2691,9 @@ function renderComments(comments) {
   const countLabel = document.getElementById('comments-count-label');
   if (!list) return; // 상세보기가 열리지 않은 상태
   const total = (comments||[]).reduce((acc,c) => acc + 1 + (c.replies||[]).length, 0);
-  if (countLabel) countLabel.textContent = '댓글 ' + total + '개';
+  if (countLabel) countLabel.textContent = t('comments_count').replace('{n}', total);
   if (!comments || !comments.length) {
-    list.innerHTML = '<div class="no-comments">첫 번째 댓글을 남겨보세요 💬</div>';
+    list.innerHTML = '<div class="no-comments">'+t('no_comments')+'</div>';
     return;
   }
   const pc = { google:'google', facebook:'facebook', kakao:'kakao' };
@@ -2578,38 +2732,68 @@ function renderComments(comments) {
 function toggleReplyBox(ci) {
   const box = document.getElementById('reply-input-'+ci);
   const wrap = document.getElementById('replies-'+ci);
+  if (!box) return;
   const open = box.style.display !== 'none';
   box.style.display = open ? 'none' : 'flex';
   if (wrap) wrap.style.display = 'block';
-  if (!open) box.querySelector('textarea').focus();
+  if (!open) {
+    const ta = box.querySelector('textarea');
+    if (ta) ta.focus();
+  }
 }
 
 function submitReply(ci) {
   if (!currentUser) { openModal('login-overlay'); return; }
   const box = document.getElementById('reply-input-'+ci);
+  if (!box) return;
   const ta = box.querySelector('textarea');
-  const text = ta.value.trim(); if (!text) return;
-  const post = getPost(); if (!post || !post.comments[ci]) return;
+  const text = (ta ? ta.value : '').trim();
+  if (!text) return;
+  const post = getPost();
+  if (!post || !post.comments[ci]) return;
   if (!post.comments[ci].replies) post.comments[ci].replies = [];
-  post.comments[ci].replies.push({ id:Date.now(), author:currentUser.name, provider:currentUser.provider, text, time:'Just now' });
+  post.comments[ci].replies.push({
+    id: Date.now(),
+    author: currentUser.name,
+    provider: currentUser.provider,
+    text: text,
+    time: t('time_just_now'),
+  });
+  // 입력창 초기화
+  if (ta) { ta.value = ''; ta.style.height = 'auto'; }
+  // 댓글 목록만 재렌더 (detail overlay 유지)
   renderComments(post.comments);
-  if (detailType==='job') renderJobs(); else renderComm();
+  // 게시판 댓글 수 뱃지만 업데이트
+  if (detailType === 'job') renderJobs(); else renderComm();
 }
 
 function submitComment() {
   if (!currentUser) { openModal('login-overlay'); return; }
   const input = document.getElementById('comment-input');
-  const text = input.value.trim(); if (!text) return;
-  const post = getPost(); if (!post) return;
-  post.comments.push({ id:Date.now(), author:currentUser.name, provider:currentUser.provider, text, time:'Just now', replies:[] });
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const post = getPost();
+  if (!post) return;
+  post.comments.push({
+    id: Date.now(),
+    author: currentUser.name,
+    provider: currentUser.provider,
+    text: text,
+    time: t('time_just_now'),
+    replies: [],
+  });
   renderComments(post.comments);
-  input.value = ''; input.style.height = 'auto';
-  if (detailType==='job') renderJobs(); else renderComm();
+  input.value = '';
+  input.style.height = 'auto';
+  // 게시판 댓글 수 뱃지만 업데이트
+  if (detailType === 'job') renderJobs(); else renderComm();
   setTimeout(() => {
     const s = document.querySelector('.comments-section');
-    if (s) s.scrollIntoView({ behavior:'smooth', block:'end' });
+    if (s) s.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, 100);
 }
+
 
 /* ═══════════════════════════════════════
    INIT
