@@ -1024,26 +1024,26 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 중요 안내 -->
     <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:12.5px;line-height:1.7;color:#92400E;">
-      <div style="font-weight:800;font-size:13px;margin-bottom:6px;color:#C2410C;" data-i18n="order_important_title">중요 안내</div>
-      <div data-i18n-html="order_important_desc">택배 수령 시 유심카드와 함께 <strong>인쇄물이 동봉</strong>됩니다.<br>인쇄물을 절대 버리지 마세요! 인쇄물에 개통 QR코드와 주문번호가 있습니다.<br>인쇄물 분실/훼손 시 카카오톡으로 성함 + 개통번호를 알려주시면 수동으로 처리해드립니다.</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:6px;color:#C2410C;" data-i18n="order_important_title">Important Notice</div>
+      <div data-i18n-html="order_important_desc">A <strong>printed guide</strong> will be included with your SIM card. Do NOT throw it away! It contains the activation QR code and your order number. If lost or damaged, contact us via KakaoTalk with your name and phone number.</div>
     </div>
 
     <!-- 가입 유형 선택 -->
     <div class="form-group">
-      <label class="form-label" data-i18n="field_signup_type">가입 유형</label>
+      <label class="form-label" data-i18n="field_signup_type">Signup Type</label>
       <div style="display:flex;gap:10px;">
         <label id="label-new-signup" style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--sim);border-radius:10px;cursor:pointer;background:var(--sim-soft);transition:all 0.15s;">
           <input type="radio" name="signup-type" value="new" id="st-new" checked style="accent-color:var(--sim);">
           <div>
-            <div style="font-weight:700;font-size:13.5px;color:var(--sim);" data-i18n="signup_new">신규가입</div>
-            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_new_desc">새 번호 개통</div>
+            <div style="font-weight:700;font-size:13.5px;color:var(--sim);" data-i18n="signup_new">New Number</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_new_desc">Get a new number</div>
           </div>
         </label>
         <label id="label-mnp" style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;">
           <input type="radio" name="signup-type" value="mnp" id="st-mnp" style="accent-color:var(--sim);">
           <div>
-            <div style="font-weight:700;font-size:13.5px;color:var(--ink);" data-i18n="signup_mnp">번호이동</div>
-            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_mnp_desc">기존 번호 유지</div>
+            <div style="font-weight:700;font-size:13.5px;color:var(--ink);" data-i18n="signup_mnp">Number Transfer</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_mnp_desc">Keep existing number</div>
           </div>
         </label>
       </div>
@@ -1052,18 +1052,18 @@ footer strong { color: rgba(255,255,255,0.85); }
     <!-- 신규가입 섹션 -->
     <div id="section-new-signup">
       <div class="form-group">
-        <label class="form-label" data-i18n="field_wish_number">희망 번호 뒷 4자리</label>
+        <label class="form-label" data-i18n="field_wish_number">Preferred Last 4 Digits</label>
         <div class="form-row">
           <div>
-            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_1st">1순위</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_1st">1st Choice</div>
             <input class="form-input" id="ord-wish1" type="text" maxlength="4" placeholder="예) 1234" style="letter-spacing:0.1em;">
           </div>
           <div>
-            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_2nd">2순위</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_2nd">2nd Choice</div>
             <input class="form-input" id="ord-wish2" type="text" maxlength="4" placeholder="예) 5678" style="letter-spacing:0.1em;">
           </div>
         </div>
-        <div style="font-size:11.5px;color:var(--ink-light);margin-top:5px;" data-i18n="wish_number_notice">희망 번호는 가능한 경우에만 반영되며 보장되지 않습니다.</div>
+        <div style="font-size:11.5px;color:var(--ink-light);margin-top:5px;" data-i18n="wish_number_notice">Preferred numbers are not guaranteed.</div>
       </div>
     </div>
 
@@ -1107,7 +1107,13 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 배송 주소 -->
     <div class="form-group">
-      <label class="form-label" data-i18n="field_address">배송 주소</label>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+        <label class="form-label" style="margin-bottom:0;" data-i18n="field_address">Delivery Address</label>
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;border:1.5px solid #DC2626;background:#FEF2F2;white-space:nowrap;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;flex-shrink:0;"></span>
+          <span style="font-size:11.5px;font-weight:700;color:#DC2626;" data-i18n="address_warning_badge">Enter exact address!</span>
+        </div>
+      </div>
       <div style="display:flex;gap:8px;margin-bottom:8px;">
         <input class="form-input" id="ord-postcode" type="text" style="width:110px;flex-shrink:0;" readonly data-i18n-placeholder="placeholder_postcode">
         <button type="button" onclick="openModal('address-help-overlay')" style="display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:10px;background:var(--sim);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">
@@ -1127,9 +1133,9 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 개인정보 안내 -->
     <div class="form-notice" style="margin-bottom:0;">
-      <strong data-i18n="order_form_notice_title">개인정보 안내:</strong>
-      <span data-i18n="order_form_notice_desc"> 입력하신 개인정보는 유심 신청 처리 목적으로만 사용되며 제3자에게 제공되지 않습니다.</span>
-      <span data-i18n="order_form_notice_address"> 고객님의 소중한 상품이 길을 잃지 않도록 상세 주소를 정확히 입력해 주세요.</span>
+      <strong data-i18n="order_form_notice_title">Privacy Notice:</strong>
+      <span data-i18n="order_form_notice_desc"> Your personal information is used solely for SIM card processing and will not be shared with third parties.</span>
+      <span data-i18n="order_form_notice_address" style="display:none;"></span>
     </div>
 
     <div class="modal-actions" style="margin-top:16px;">
@@ -1651,7 +1657,7 @@ const LANGS = {
     activation_form_title:'Activation Request', activation_form_sub:'Please enter your details and SIM information. We\'ll process your activation within 1 business day.',
     activation_form_notice_title:'Important:', activation_form_notice_desc:'The name you enter must match exactly with your official application form and ARC.',
     field_full_name:'Full Name', field_phone:'Contact Number', field_emergency:'Emergency Contact', field_arc:'Alien Registration No.', field_address:'Delivery Address', field_iccid:'SIM Serial Number (ICCID)', field_plan:'Selected Plan', field_memo:'Additional Notes (optional)',
-    placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
+    address_warning_badge:'Enter exact address!', placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
     btn_apply_plan:'Apply for this plan', btn_submit_order:'Official Application Form', btn_submit_activation:'Submit Request', btn_address_help:'Address Help', btn_confirm:'Confirm', address_help_title:'How to Find Your Address', address_help_tip_title:'Using Naver / Kakao Map', address_help_tip_desc:'You can search in English and a Korean address will appear. Select the Korean address shown in the results!', address_help_img_placeholder:'Guide image coming soon', address_help_format_title:'Address Format Example:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Please include building name, unit number)',
     order_required_fields:'Please fill in all required fields (Name, Contact, ARC, Address).',
     order_success_msg:'Your application has been submitted! We\'ll contact you within 1 business day.',
@@ -1789,7 +1795,7 @@ const LANGS = {
     activation_form_title:'개통 요청', activation_form_sub:'성함과 유심 정보를 입력해주세요. 요청 후 1영업일 이내에 개통을 처리해드립니다.',
     activation_form_notice_title:'주의사항:', activation_form_notice_desc:'입력하시는 성함은 공식 신청서 및 외국인등록증(ARC)과 정확히 일치해야 합니다.',
     field_full_name:'성함', field_phone:'연락처', field_emergency:'비상연락처', field_arc:'외국인등록번호', field_address:'배송 주소', field_iccid:'유심 일련번호 (ICCID)', field_plan:'선택 요금제', field_memo:'추가 요청사항 (선택)',
-    placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
+    address_warning_badge:'상세 주소 정확히 입력!', placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
     btn_apply_plan:'이 요금제 신청하기', btn_submit_order:'공식 신청서 작성하기', btn_submit_activation:'개통 요청 제출', btn_address_help:'주소 찾기 도움말', btn_confirm:'확인', address_help_title:'주소 찾는 방법', address_help_tip_title:'네이버 / 카카오 지도 활용하기', address_help_tip_desc:'영어로 검색해도 한글 주소가 나옵니다. 검색된 한글 주소를 선택하세요!', address_help_img_placeholder:'안내 이미지 준비 중', address_help_format_title:'주소 형식 예시:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (건물명, 동/호수 포함)',
     order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 연락처, 외국인등록번호, 주소).',
     order_success_msg:'신청이 완료되었습니다! 1영업일 이내에 연락드리겠습니다.',
@@ -1880,12 +1886,43 @@ const LANGS = {
     activation_form_title:'开通申请', activation_form_sub:'请输入您的姓名和SIM卡信息，我们将在1个工作日内处理。',
     activation_form_notice_title:'注意事项：', activation_form_notice_desc:'输入的姓名必须与官方申请表及外国人登录证（ARC）完全一致。',
     field_full_name:'姓名', field_phone:'联系电话', field_emergency:'紧急联系人', field_arc:'外国人登录号', field_address:'收货地址', field_iccid:'SIM卡序列号 (ICCID)', field_plan:'选择套餐', field_memo:'备注（选填）',
-    placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
+    address_warning_badge:'请填写详细地址!', placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
     btn_apply_plan:'申请此套餐', btn_submit_order:'填写官方申请表', btn_submit_activation:'提交开通申请', btn_address_help:'地址查询帮助', btn_confirm:'确认', address_help_title:'如何查找地址', address_help_tip_title:'使用Naver / Kakao地图', address_help_tip_desc:'用英文搜索也会显示韩文地址。请选择搜索结果中显示的韩文地址！', address_help_img_placeholder:'指南图片即将上线', address_help_format_title:'地址格式示例：', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (请包含建筑名称和门牌号)',
-    order_required_fields:'请填写所有必填项（姓名、联系方式、外国人登录号、地址）。',
-    order_success_msg:'申请已提交！我们将在1个工作日内与您联系。',
-    activation_required_fields:'请填写姓名和SIM卡序列号。',
-    activation_success_msg:'开通申请已收到！我们将在1个工作日内处理。',
+
+    order_important_title:'重要提示', order_important_desc:'收到快递时，SIM卡中会附上<strong>印刷指南</strong>。请勿丢弃！其中包含开通二维码和订单号。如遗失或损坏，请通过KakaoTalk发送您的姓名和电话号码。',
+    field_signup_type:'申请类型', signup_new:'新号码', signup_new_desc:'开通新号码', signup_mnp:'号码转网', signup_mnp_desc:'保留现有号码',
+    field_wish_number:'希望号码后4位', wish_number_1st:'第1选择', wish_number_2nd:'第2选择', wish_number_notice:'希望号码仅供参考，不保证可用。',
+    field_current_carrier:'现有运营商', field_mnp_number:'转网号码', select_carrier:'选择运营商',
+    field_email:'电子邮件', field_tracking:'快递单号',
+    order_complete_title:'申请已完成！', order_complete_desc:'订单号已发送至您的邮箱。',
+    order_number_label:'订单号',
+    order_complete_notice_title:'请保存您的订单号！', order_complete_notice_desc:'收货后申请开通时需要订单号，请查收确认邮件。',
+    order_required_fields:'请填写所有必填项（姓名、外国人登录号、邮箱、地址）。',
+    order_invalid_email:'请输入有效的电子邮件地址。',
+    order_mnp_required:'请选择现有运营商并输入转网号码。',
+    order_duplicate_mnp:'该号码已有进行中的申请。订单号：{n}',
+    order_wait_required:'请在{m}分钟后重新申请。',
+    order_daily_limit:'同一邮箱每天最多申请3次。',
+    activate_lookup_title:'通过订单号申请开通', activate_lookup_desc:'扫描印刷指南上的二维码，或在下方输入订单号。',
+    activate_lost_title:'遗失了印刷指南？', activate_lost_desc:'请通过KakaoTalk发送姓名和电话号码，我们将手动处理。',
+    placeholder_order_number:'例) KS-20260321-0042',
+    btn_lookup:'查询', btn_request_activation:'申请开通', btn_cancel_order:'取消订单',
+    lookup_enter_order_number:'请输入订单号。',
+    lookup_not_found_title:'未找到订单', lookup_not_found_desc:'请确认订单号。如需帮助，请通过KakaoTalk联系我们。',
+    status_msg_pending:'您的申请已收到，正在处理中。',
+    status_msg_processing:'正在准备SIM卡，请稍候。',
+    status_msg_shipped:'SIM卡正在配送中，收货后请申请开通。',
+    status_msg_mismatch:'您的信息有问题，请通过KakaoTalk联系我们。',
+    status_msg_requested:'开通申请已收到，将在1个工作日内完成。',
+    status_msg_completed:'开通完成！祝您在韩国生活愉快！',
+    status_msg_cancelled:'该订单已取消。',
+    cancel_not_available:'发货后无法自动取消，如需帮助请联系KakaoTalk。',
+    activation_complete_msg:'开通完成！感谢您的使用。',
+    activation_not_ready:'发货完成后才能申请开通。',
+    activation_request_success:'开通申请已提交！将在1个工作日内处理。',
+    confirm_cancel_order:'确定要取消此订单吗？',
+    cancel_success_msg:'订单已取消。',
+    order_important_title_badge:'重要提示', promo_badge_label:'LIMITED', promo_badge_text:'外国人专属特别优惠进行中',
   },
   vi: {
     flag: '🇻🇳', label: 'VI',
@@ -1971,12 +2008,42 @@ const LANGS = {
     activation_form_title:'Yêu cầu kích hoạt', activation_form_sub:'Vui lòng nhập thông tin của bạn. Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
     activation_form_notice_title:'Lưu ý quan trọng:', activation_form_notice_desc:'Tên bạn nhập phải khớp chính xác với biểu mẫu đăng ký và thẻ ARC.',
     field_full_name:'Họ và tên', field_phone:'Số điện thoại', field_emergency:'Liên hệ khẩn cấp', field_arc:'Số đăng ký người nước ngoài', field_address:'Địa chỉ giao hàng', field_iccid:'Số sê-ri SIM (ICCID)', field_plan:'Gói đã chọn', field_memo:'Ghi chú thêm (tùy chọn)',
-    placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
+    address_warning_badge:'Nhập địa chỉ chính xác!', placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
     btn_apply_plan:'Đăng ký gói này', btn_submit_order:'Điền biểu mẫu chính thức', btn_submit_activation:'Gửi yêu cầu kích hoạt', btn_address_help:'Hướng dẫn tìm địa chỉ', btn_confirm:'Xác nhận', address_help_title:'Cách tìm địa chỉ', address_help_tip_title:'Dùng Naver / Kakao Map', address_help_tip_desc:'Tìm kiếm bằng tiếng Anh vẫn ra địa chỉ tiếng Hàn. Hãy chọn địa chỉ tiếng Hàn xuất hiện trong kết quả!', address_help_img_placeholder:'Ảnh hướng dẫn sắp có', address_help_format_title:'Ví dụ định dạng địa chỉ:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Vui lòng ghi rõ tên tòa nhà, số phòng)',
-    order_required_fields:'Vui lòng điền đầy đủ thông tin bắt buộc (Họ tên, SĐT, Số ARC, Địa chỉ).',
-    order_success_msg:'Đơn đăng ký đã được gửi! Chúng tôi sẽ liên hệ trong vòng 1 ngày làm việc.',
-    activation_required_fields:'Vui lòng điền họ tên và số sê-ri SIM.',
-    activation_success_msg:'Yêu cầu kích hoạt đã được tiếp nhận! Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
+
+    order_important_title:'Lưu ý quan trọng', order_important_desc:'Khi nhận hàng, SIM card sẽ được gửi kèm <strong>tờ hướng dẫn</strong>. Đừng vứt đi! Trong đó có mã QR kích hoạt và số đơn hàng. Nếu mất hoặc hỏng, hãy gửi tên và số điện thoại qua KakaoTalk.',
+    field_signup_type:'Loại đăng ký', signup_new:'Số mới', signup_new_desc:'Kích hoạt số mới', signup_mnp:'Chuyển mạng', signup_mnp_desc:'Giữ số hiện tại',
+    field_wish_number:'4 số cuối mong muốn', wish_number_1st:'Lựa chọn 1', wish_number_2nd:'Lựa chọn 2', wish_number_notice:'Số mong muốn không được đảm bảo.',
+    field_current_carrier:'Nhà mạng hiện tại', field_mnp_number:'Số cần chuyển', select_carrier:'Chọn nhà mạng',
+    field_email:'Địa chỉ email', field_tracking:'Mã vận đơn',
+    order_complete_title:'Đăng ký hoàn tất!', order_complete_desc:'Số đơn hàng đã được gửi đến email của bạn.',
+    order_number_label:'Số đơn hàng',
+    order_complete_notice_title:'Hãy lưu số đơn hàng!', order_complete_notice_desc:'Bạn cần số đơn hàng để yêu cầu kích hoạt sau khi nhận SIM.',
+    order_required_fields:'Vui lòng điền đầy đủ thông tin bắt buộc (Họ tên, Số ARC, Email, Địa chỉ).',
+    order_invalid_email:'Vui lòng nhập địa chỉ email hợp lệ.',
+    order_mnp_required:'Vui lòng chọn nhà mạng hiện tại và nhập số cần chuyển.',
+    order_duplicate_mnp:'Đã có đơn hàng đang xử lý cho số này. Đơn hàng: {n}',
+    order_wait_required:'Vui lòng chờ {m} phút trước khi đăng ký lại.',
+    order_daily_limit:'Tối đa 3 đơn hàng mỗi ngày cho cùng một email.',
+    activate_lookup_title:'Yêu cầu kích hoạt bằng số đơn hàng', activate_lookup_desc:'Quét mã QR trên tờ hướng dẫn hoặc nhập số đơn hàng bên dưới.',
+    activate_lost_title:'Mất tờ hướng dẫn?', activate_lost_desc:'Gửi tên và số điện thoại qua KakaoTalk, chúng tôi sẽ xử lý thủ công.',
+    placeholder_order_number:'VD) KS-20260321-0042',
+    btn_lookup:'Tra cứu', btn_request_activation:'Yêu cầu kích hoạt', btn_cancel_order:'Hủy đơn hàng',
+    lookup_enter_order_number:'Vui lòng nhập số đơn hàng.',
+    lookup_not_found_title:'Không tìm thấy đơn hàng', lookup_not_found_desc:'Vui lòng kiểm tra lại số đơn hàng. Nếu cần hỗ trợ, liên hệ qua KakaoTalk.',
+    status_msg_pending:'Đơn hàng đã được tiếp nhận, đang xử lý.',
+    status_msg_processing:'Đang chuẩn bị SIM card, vui lòng chờ.',
+    status_msg_shipped:'SIM đang được giao. Yêu cầu kích hoạt sau khi nhận.',
+    status_msg_mismatch:'Thông tin có vấn đề, vui lòng liên hệ qua KakaoTalk.',
+    status_msg_requested:'Yêu cầu kích hoạt đã nhận, sẽ hoàn tất trong 1 ngày làm việc.',
+    status_msg_completed:'Kích hoạt hoàn tất! Chúc bạn sống vui tại Hàn Quốc!',
+    status_msg_cancelled:'Đơn hàng này đã bị hủy.',
+    cancel_not_available:'Không thể tự động hủy sau khi giao hàng. Liên hệ KakaoTalk nếu cần.',
+    activation_complete_msg:'Kích hoạt hoàn tất! Cảm ơn bạn.',
+    activation_not_ready:'Chỉ có thể yêu cầu kích hoạt sau khi giao hàng.',
+    activation_request_success:'Yêu cầu kích hoạt đã gửi! Sẽ xử lý trong 1 ngày làm việc.',
+    confirm_cancel_order:'Bạn có chắc muốn hủy đơn hàng này không?',
+    cancel_success_msg:'Đơn hàng đã được hủy.',
   }
 };
 
