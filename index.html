@@ -1111,7 +1111,7 @@ footer strong { color: rgba(255,255,255,0.85); }
         <label class="form-label" style="margin-bottom:0;" data-i18n="field_address">Delivery Address</label>
         <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;border:1.5px solid #DC2626;background:#FEF2F2;white-space:nowrap;">
           <span style="width:7px;height:7px;border-radius:50%;background:#DC2626;flex-shrink:0;"></span>
-          <span style="font-size:11.5px;font-weight:700;color:#DC2626;" data-i18n="address_warning_badge">Enter exact address!</span>
+          <span style="font-size:11.5px;font-weight:700;color:#DC2626;" data-i18n="address_warning_badge">! Delivery address must be accurate</span>
         </div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:8px;">
@@ -1657,7 +1657,7 @@ const LANGS = {
     activation_form_title:'Activation Request', activation_form_sub:'Please enter your details and SIM information. We\'ll process your activation within 1 business day.',
     activation_form_notice_title:'Important:', activation_form_notice_desc:'The name you enter must match exactly with your official application form and ARC.',
     field_full_name:'Full Name', field_phone:'Contact Number', field_emergency:'Emergency Contact', field_arc:'Alien Registration No.', field_address:'Delivery Address', field_iccid:'SIM Serial Number (ICCID)', field_plan:'Selected Plan', field_memo:'Additional Notes (optional)',
-    address_warning_badge:'Enter exact address!', placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
+    address_warning_badge:'! Delivery address must be accurate', placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
     btn_apply_plan:'Apply for this plan', btn_submit_order:'Official Application Form', btn_submit_activation:'Submit Request', btn_address_help:'Address Help', btn_confirm:'Confirm', address_help_title:'How to Find Your Address', address_help_tip_title:'Using Naver / Kakao Map', address_help_tip_desc:'You can search in English and a Korean address will appear. Select the Korean address shown in the results!', address_help_img_placeholder:'Guide image coming soon', address_help_format_title:'Address Format Example:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Please include building name, unit number)',
     order_required_fields:'Please fill in all required fields (Name, Contact, ARC, Address).',
     order_success_msg:'Your application has been submitted! We\'ll contact you within 1 business day.',
@@ -1795,7 +1795,7 @@ const LANGS = {
     activation_form_title:'개통 요청', activation_form_sub:'성함과 유심 정보를 입력해주세요. 요청 후 1영업일 이내에 개통을 처리해드립니다.',
     activation_form_notice_title:'주의사항:', activation_form_notice_desc:'입력하시는 성함은 공식 신청서 및 외국인등록증(ARC)과 정확히 일치해야 합니다.',
     field_full_name:'성함', field_phone:'연락처', field_emergency:'비상연락처', field_arc:'외국인등록번호', field_address:'배송 주소', field_iccid:'유심 일련번호 (ICCID)', field_plan:'선택 요금제', field_memo:'추가 요청사항 (선택)',
-    address_warning_badge:'상세 주소 정확히 입력!', placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
+    address_warning_badge:'! 배송 주소 정확히 입력', placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
     btn_apply_plan:'이 요금제 신청하기', btn_submit_order:'공식 신청서 작성하기', btn_submit_activation:'개통 요청 제출', btn_address_help:'주소 찾기 도움말', btn_confirm:'확인', address_help_title:'주소 찾는 방법', address_help_tip_title:'네이버 / 카카오 지도 활용하기', address_help_tip_desc:'영어로 검색해도 한글 주소가 나옵니다. 검색된 한글 주소를 선택하세요!', address_help_img_placeholder:'안내 이미지 준비 중', address_help_format_title:'주소 형식 예시:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (건물명, 동/호수 포함)',
     order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 연락처, 외국인등록번호, 주소).',
     order_success_msg:'신청이 완료되었습니다! 1영업일 이내에 연락드리겠습니다.',
@@ -1886,7 +1886,7 @@ const LANGS = {
     activation_form_title:'开通申请', activation_form_sub:'请输入您的姓名和SIM卡信息，我们将在1个工作日内处理。',
     activation_form_notice_title:'注意事项：', activation_form_notice_desc:'输入的姓名必须与官方申请表及外国人登录证（ARC）完全一致。',
     field_full_name:'姓名', field_phone:'联系电话', field_emergency:'紧急联系人', field_arc:'外国人登录号', field_address:'收货地址', field_iccid:'SIM卡序列号 (ICCID)', field_plan:'选择套餐', field_memo:'备注（选填）',
-    address_warning_badge:'请填写详细地址!', placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
+    address_warning_badge:'! 请准确填写收货地址', placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
     btn_apply_plan:'申请此套餐', btn_submit_order:'填写官方申请表', btn_submit_activation:'提交开通申请', btn_address_help:'地址查询帮助', btn_confirm:'确认', address_help_title:'如何查找地址', address_help_tip_title:'使用Naver / Kakao地图', address_help_tip_desc:'用英文搜索也会显示韩文地址。请选择搜索结果中显示的韩文地址！', address_help_img_placeholder:'指南图片即将上线', address_help_format_title:'地址格式示例：', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (请包含建筑名称和门牌号)',
 
     order_important_title:'重要提示', order_important_desc:'收到快递时，SIM卡中会附上<strong>印刷指南</strong>。请勿丢弃！其中包含开通二维码和订单号。如遗失或损坏，请通过KakaoTalk发送您的姓名和电话号码。',
@@ -2008,7 +2008,7 @@ const LANGS = {
     activation_form_title:'Yêu cầu kích hoạt', activation_form_sub:'Vui lòng nhập thông tin của bạn. Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
     activation_form_notice_title:'Lưu ý quan trọng:', activation_form_notice_desc:'Tên bạn nhập phải khớp chính xác với biểu mẫu đăng ký và thẻ ARC.',
     field_full_name:'Họ và tên', field_phone:'Số điện thoại', field_emergency:'Liên hệ khẩn cấp', field_arc:'Số đăng ký người nước ngoài', field_address:'Địa chỉ giao hàng', field_iccid:'Số sê-ri SIM (ICCID)', field_plan:'Gói đã chọn', field_memo:'Ghi chú thêm (tùy chọn)',
-    address_warning_badge:'Nhập địa chỉ chính xác!', placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
+    address_warning_badge:'! Nhập địa chỉ giao hàng chính xác', placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
     btn_apply_plan:'Đăng ký gói này', btn_submit_order:'Điền biểu mẫu chính thức', btn_submit_activation:'Gửi yêu cầu kích hoạt', btn_address_help:'Hướng dẫn tìm địa chỉ', btn_confirm:'Xác nhận', address_help_title:'Cách tìm địa chỉ', address_help_tip_title:'Dùng Naver / Kakao Map', address_help_tip_desc:'Tìm kiếm bằng tiếng Anh vẫn ra địa chỉ tiếng Hàn. Hãy chọn địa chỉ tiếng Hàn xuất hiện trong kết quả!', address_help_img_placeholder:'Ảnh hướng dẫn sắp có', address_help_format_title:'Ví dụ định dạng địa chỉ:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Vui lòng ghi rõ tên tòa nhà, số phòng)',
 
     order_important_title:'Lưu ý quan trọng', order_important_desc:'Khi nhận hàng, SIM card sẽ được gửi kèm <strong>tờ hướng dẫn</strong>. Đừng vứt đi! Trong đó có mã QR kích hoạt và số đơn hàng. Nếu mất hoặc hỏng, hãy gửi tên và số điện thoại qua KakaoTalk.',
