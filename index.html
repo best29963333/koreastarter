@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 :root {
   --bg: #F7F8FA;
@@ -749,6 +750,70 @@ footer strong { color: rgba(255,255,255,0.85); }
   nav { padding: 0 12px; gap: 6px; }
   h1 { font-size: 28px; }
 }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes border-pulse { 0%,100%{border-color:#FF3E6C;color:#FF3E6C;} 50%{border-color:#ffaabb;color:#ffaabb;} }
+
+/* 개통 요청 nav 강조 */
+.nav-activate-link { color: var(--ink-soft); font-weight: 500; }
+.nav-activate-link:hover { background: var(--bg); color: var(--ink); }
+.nav-activate-link.active { color: var(--accent); background: var(--accent-soft); }
+.mob-activate-link { color: var(--ink) !important; border-color: var(--border) !important; background: var(--bg) !important; }
+
+/* ══════════════════════════
+   개통 요청 페이지
+══════════════════════════ */
+.activate-wrap { max-width: 720px; margin: 0 auto; padding: 36px 24px; }
+
+.journey-steps { display: flex; align-items: flex-start; gap: 0; margin-bottom: 40px; overflow-x: auto; padding-bottom: 4px; }
+.journey-step { display: flex; flex-direction: column; align-items: center; flex: 1; min-width: 72px; position: relative; }
+.journey-step::after { content: ''; position: absolute; top: 20px; left: 50%; right: -50%; height: 2px; background: var(--border); z-index: 0; }
+.journey-step:last-child::after { display: none; }
+.step-circle { width: 40px; height: 40px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--ink-soft); position: relative; z-index: 1; flex-shrink: 0; transition: all 0.2s; }
+.journey-step.done .step-circle { background: var(--sim); border-color: var(--sim); color: white; }
+.journey-step.done::after { background: var(--sim); }
+.journey-step.active .step-circle { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 0 0 4px var(--accent-soft); }
+.step-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); margin-top: 8px; text-align: center; line-height: 1.3; white-space: nowrap; }
+.journey-step.done .step-label { color: var(--sim); }
+.journey-step.active .step-label { color: var(--accent); font-weight: 700; }
+
+.activate-section { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 28px 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.activate-section-title { font-size: 17px; font-weight: 800; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.02em; }
+.activate-section-desc { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.6; }
+
+.activate-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.activate-option { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px 20px; text-align: center; }
+.activate-option.kakao-opt { background: var(--kakao); border-color: var(--kakao); }
+.activate-option.form-opt { background: var(--sim-soft); border-color: #BFDBFE; }
+.activate-opt-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.kakao-opt .activate-opt-icon { background: rgba(0,0,0,0.1); }
+.form-opt .activate-opt-icon { background: var(--sim); }
+.activate-opt-title { font-size: 15px; font-weight: 800; margin-bottom: 5px; letter-spacing: -0.02em; }
+.kakao-opt .activate-opt-title { color: var(--kakao-ink); }
+.form-opt .activate-opt-title { color: var(--sim); }
+.activate-opt-desc { font-size: 12.5px; line-height: 1.55; margin-bottom: 14px; }
+.kakao-opt .activate-opt-desc { color: rgba(59,30,8,0.7); }
+.form-opt .activate-opt-desc { color: var(--ink-soft); }
+.btn-kakao-activate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px 0; border-radius: 10px; background: var(--kakao-ink); color: var(--kakao); font-size: 13.5px; font-weight: 800; border: none; cursor: pointer; transition: all 0.15s; text-decoration: none; }
+.btn-kakao-activate:hover { background: #1e0f04; transform: translateY(-1px); }
+.btn-form-activate { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px 0; border-radius: 10px; background: var(--sim); color: white; font-size: 13.5px; font-weight: 800; border: none; cursor: pointer; transition: all 0.15s; }
+.btn-form-activate:hover { background: #1D4ED8; transform: translateY(-1px); }
+
+.qr-placeholder { width: 100px; height: 100px; border-radius: 12px; background: var(--bg); border: 2px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 11px; color: var(--ink-light); font-weight: 600; text-align: center; gap: 4px; }
+.form-notice { background: var(--accent-soft); border: 1.5px solid #FECDD3; border-radius: 10px; padding: 12px 16px; font-size: 12.5px; color: #9F1239; line-height: 1.6; margin-bottom: 16px; }
+.form-notice strong { font-weight: 800; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* 신청 폼 모달 */
+.order-modal { background: var(--surface); border-radius: 20px; padding: 28px 26px; width: 100%; max-width: 560px; box-shadow: var(--shadow-lg); animation: modalIn 0.22s ease; border: 1.5px solid var(--border); max-height: 90vh; overflow-y: auto; }
+.order-modal-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; color: var(--ink); letter-spacing: -0.02em; }
+.order-modal-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 22px; line-height: 1.6; }
+.order-plan-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--sim-soft); border: 1.5px solid #BFDBFE; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 700; color: var(--sim); margin-bottom: 20px; }
+
+@media (max-width: 768px) {
+  .activate-options { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .step-label { font-size: 10px; }
+}
 </style>
 </head>
 <body>
@@ -762,8 +827,10 @@ footer strong { color: rgba(255,255,255,0.85); }
   <ul class="nav-center">
     <li><a href="#" onclick="showPage('home')" id="nav-home" class="active" data-i18n="nav_home">Home</a></li>
     <li><a href="#" onclick="showPage('sim')" id="nav-sim" data-i18n="nav_sim">SIM Cards</a></li>
+    <li><a href="#" onclick="showPage('activate')" id="nav-activate" data-i18n="nav_activate" class="nav-activate-link">Activation</a></li>
     <li><a href="#" onclick="showPage('job')" id="nav-job" data-i18n="nav_job">Job Board</a></li>
-    <li><a href="#" onclick="showPage('comm')" id="nav-comm" data-i18n="nav_comm">Community</a></li>  </ul>
+    <li><a href="#" onclick="showPage('comm')" id="nav-comm" data-i18n="nav_comm">Community</a></li>
+  </ul>
 
   <div class="nav-right">
     <!-- Language -->
@@ -796,6 +863,7 @@ footer strong { color: rgba(255,255,255,0.85); }
 <div class="mobile-menu" id="mobile-menu">
   <button class="mobile-nav-link active" id="mob-home" onclick="showPage('home');closeMobileMenu()" data-i18n="nav_home">Home</button>
   <button class="mobile-nav-link" id="mob-sim" onclick="showPage('sim');closeMobileMenu()" data-i18n="nav_sim">SIM Cards</button>
+  <button class="mobile-nav-link mob-activate-link" id="mob-activate" onclick="showPage('activate');closeMobileMenu()" data-i18n="nav_activate">Activation Request</button>
   <button class="mobile-nav-link" id="mob-job" onclick="showPage('job');closeMobileMenu()" data-i18n="nav_job">Job Board</button>
   <button class="mobile-nav-link" id="mob-comm" onclick="showPage('comm');closeMobileMenu()" data-i18n="nav_comm">Community</button>
   <div style="height:1px;background:var(--border);margin:4px 0;"></div>
@@ -816,7 +884,7 @@ footer strong { color: rgba(255,255,255,0.85); }
       <p class="hero-sub" data-i18n="hero_sub">Everything you need to get settled — SIM cards, jobs, and a community of people who've been there too.</p>
       <div class="hero-cta">
         <button class="btn-hero-primary" onclick="showPage('sim')" data-i18n="hero_cta1">Get a SIM Card</button>
-        <button class="btn-hero-secondary" onclick="showPage('comm')" data-i18n="hero_cta2">Join Community</button>
+        <button class="btn-hero-secondary" onclick="showPage('activate')" data-i18n="hero_cta2">SIM Activation</button>
       </div>
     </div>
 
@@ -860,7 +928,13 @@ footer strong { color: rgba(255,255,255,0.85); }
       <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_sim">SIM Cards</span>
     </div>
     <div class="page-title"><span data-i18n="nav_sim">SIM Cards</span></div>
-    <div class="page-subtitle" data-i18n="sim_subtitle">Official SK Telecom postpaid plans — sign up online, no store visit needed.</div>
+    <!-- 프로모션 배지 -->
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;border:2px solid #FF3E6C;animation:border-pulse 1.5s ease-in-out infinite;margin-bottom:10px;">
+      <span style="font-size:10px;font-weight:800;letter-spacing:0.08em;color:#FF3E6C;animation:border-pulse 1.5s ease-in-out infinite;" data-i18n="promo_badge_label">LIMITED</span>
+      <span style="width:1px;height:13px;background:#FECDD3;display:inline-block;flex-shrink:0;"></span>
+      <span style="font-size:13px;font-weight:700;color:#FF3E6C;animation:border-pulse 1.5s ease-in-out infinite;" data-i18n="promo_badge_text">외국인 전용 특별 할인 진행 중</span>
+    </div>
+    <div class="page-subtitle" data-i18n="sim_subtitle">한국 3대 통신사 공식 요금제 · SKT · KT · LG U+ · 온라인 신청 · 매장 방문 불필요</div>
   </div>
 
   <div class="sim-content">
@@ -893,6 +967,217 @@ footer strong { color: rgba(255,255,255,0.85); }
       <span style="flex-shrink:0;color:var(--sim);font-weight:700;font-size:16px;">i</span>
       <span data-i18n="sim_note">모든 요금제는 후불제 계약입니다. 공식신청서 신청 → 외국인등록증(ARC) + PASS 인증 필수입니다.</span>
     </div>
+  </div>
+</div>
+
+<!-- ════ ACTIVATION REQUEST PAGE ════ -->
+<div class="page" id="page-activate">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span onclick="showPage('home')" data-i18n="nav_home">Home</span> › <span data-i18n="nav_activate">개통 요청</span>
+    </div>
+    <div class="page-title" data-i18n="activate_title">유심 개통 요청</div>
+    <div class="page-subtitle" data-i18n="activate_subtitle">유심을 수령하셨나요? 주문번호를 입력하면 개통 요청이 바로 완료됩니다.</div>
+  </div>
+
+  <div class="activate-wrap">
+
+    <!-- 주문번호 조회 섹션 -->
+    <div class="activate-section">
+      <div class="activate-section-title" data-i18n="activate_lookup_title">주문번호로 개통 요청</div>
+      <div class="activate-section-desc" data-i18n="activate_lookup_desc">택배에 동봉된 인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.</div>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <input class="form-input" id="activate-order-input" type="text" placeholder="KS-20260321-0042" style="font-family:monospace;letter-spacing:0.05em;font-size:15px;flex:1;" data-i18n-placeholder="placeholder_order_number">
+        <button onclick="lookupOrder()" style="padding:0 22px;border-radius:10px;background:var(--sim);color:white;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;" data-i18n="btn_lookup">조회</button>
+      </div>
+
+      <!-- 조회 결과 -->
+      <div id="activate-result" style="display:none;"></div>
+    </div>
+
+    <!-- 인쇄물 분실 안내 -->
+    <div class="activate-section" style="background:var(--kakao);border-color:var(--kakao);">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:15px;font-weight:800;color:var(--kakao-ink);margin-bottom:4px;" data-i18n="activate_lost_title">인쇄물을 분실하셨나요?</div>
+          <div style="font-size:13px;color:rgba(59,30,8,0.75);line-height:1.6;" data-i18n="activate_lost_desc">카카오톡으로 성함과 개통번호를 보내주시면 수동으로 처리해드립니다.</div>
+        </div>
+        <a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" class="btn-kakao-activate" style="width:auto;padding:11px 22px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.542 1.542 4.788 3.894 6.18L5 20l4.19-2.3A11.3 11.3 0 0 0 12 18c5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/></svg>
+          <span data-i18n="activate_kakao_btn">카카오톡 문의</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ 신청 폼 모달 ════ -->
+<div class="overlay" id="order-form-overlay">
+  <div class="order-modal" style="max-width:580px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="order-modal-title" data-i18n="order_form_title">유심 배송 요청</div>
+      <button onclick="closeModal('order-form-overlay')" style="background:var(--bg);border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
+    </div>
+    <div id="order-plan-info" class="order-plan-badge" style="margin-bottom:16px;"></div>
+
+    <!-- 중요 안내 -->
+    <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:12.5px;line-height:1.7;color:#92400E;">
+      <div style="font-weight:800;font-size:13px;margin-bottom:6px;color:#C2410C;" data-i18n="order_important_title">중요 안내</div>
+      <div data-i18n-html="order_important_desc">택배 수령 시 유심카드와 함께 <strong>인쇄물이 동봉</strong>됩니다.<br>인쇄물을 절대 버리지 마세요! 인쇄물에 개통 QR코드와 주문번호가 있습니다.<br>인쇄물 분실/훼손 시 카카오톡으로 성함 + 개통번호를 알려주시면 수동으로 처리해드립니다.</div>
+    </div>
+
+    <!-- 가입 유형 선택 -->
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_signup_type">가입 유형</label>
+      <div style="display:flex;gap:10px;">
+        <label id="label-new-signup" style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--sim);border-radius:10px;cursor:pointer;background:var(--sim-soft);transition:all 0.15s;">
+          <input type="radio" name="signup-type" value="new" id="st-new" checked style="accent-color:var(--sim);">
+          <div>
+            <div style="font-weight:700;font-size:13.5px;color:var(--sim);" data-i18n="signup_new">신규가입</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_new_desc">새 번호 개통</div>
+          </div>
+        </label>
+        <label id="label-mnp" style="flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;">
+          <input type="radio" name="signup-type" value="mnp" id="st-mnp" style="accent-color:var(--sim);">
+          <div>
+            <div style="font-weight:700;font-size:13.5px;color:var(--ink);" data-i18n="signup_mnp">번호이동</div>
+            <div style="font-size:11.5px;color:var(--ink-soft);" data-i18n="signup_mnp_desc">기존 번호 유지</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- 신규가입 섹션 -->
+    <div id="section-new-signup">
+      <div class="form-group">
+        <label class="form-label" data-i18n="field_wish_number">희망 번호 뒷 4자리</label>
+        <div class="form-row">
+          <div>
+            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_1st">1순위</div>
+            <input class="form-input" id="ord-wish1" type="text" maxlength="4" placeholder="예) 1234" style="letter-spacing:0.1em;">
+          </div>
+          <div>
+            <div style="font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;" data-i18n="wish_number_2nd">2순위</div>
+            <input class="form-input" id="ord-wish2" type="text" maxlength="4" placeholder="예) 5678" style="letter-spacing:0.1em;">
+          </div>
+        </div>
+        <div style="font-size:11.5px;color:var(--ink-light);margin-top:5px;" data-i18n="wish_number_notice">희망 번호는 가능한 경우에만 반영되며 보장되지 않습니다.</div>
+      </div>
+    </div>
+
+    <!-- 번호이동 섹션 -->
+    <div id="section-mnp" style="display:none;">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" data-i18n="field_current_carrier">현재 통신사</label>
+          <select class="form-select" id="ord-current-carrier">
+            <option value="" data-i18n="select_carrier">통신사 선택</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="field_mnp_number">이동할 번호</label>
+          <input class="form-input" id="ord-mnp-number" type="tel" placeholder="010-0000-0000">
+        </div>
+      </div>
+    </div>
+
+    <!-- 기본 정보 -->
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" data-i18n="field_full_name">성함</label>
+        <input class="form-input" id="ord-name" type="text" data-i18n-placeholder="placeholder_full_name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="field_emergency">비상연락처</label>
+        <input class="form-input" id="ord-emergency" type="tel" placeholder="+82 10-0000-0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" data-i18n="field_arc">외국인등록번호</label>
+        <input class="form-input" id="ord-arc" type="text" placeholder="000000-0000000">
+      </div>
+      <div class="form-group">
+        <label class="form-label" data-i18n="field_email">이메일</label>
+        <input class="form-input" id="ord-email" type="email" placeholder="example@email.com">
+      </div>
+    </div>
+
+    <!-- 배송 주소 -->
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_address">배송 주소</label>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <input class="form-input" id="ord-postcode" type="text" style="width:110px;flex-shrink:0;" readonly data-i18n-placeholder="placeholder_postcode">
+        <button type="button" onclick="openModal('address-help-overlay')" style="display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:10px;background:var(--sim);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span data-i18n="btn_postcode_search">우편번호 찾기</span>
+        </button>
+      </div>
+      <input class="form-input" id="ord-address" type="text" style="margin-bottom:8px;" readonly data-i18n-placeholder="placeholder_address">
+      <input class="form-input" id="ord-address-detail" type="text" data-i18n-placeholder="placeholder_address_detail">
+    </div>
+
+    <!-- 추가요청사항 -->
+    <div class="form-group">
+      <label class="form-label" data-i18n="field_memo">추가 요청사항 (선택)</label>
+      <textarea class="form-textarea" id="ord-memo" style="min-height:60px;" data-i18n-placeholder="placeholder_memo"></textarea>
+    </div>
+
+    <!-- 개인정보 안내 -->
+    <div class="form-notice" style="margin-bottom:0;">
+      <strong data-i18n="order_form_notice_title">개인정보 안내:</strong>
+      <span data-i18n="order_form_notice_desc"> 입력하신 개인정보는 유심 신청 처리 목적으로만 사용되며 제3자에게 제공되지 않습니다.</span>
+      <span data-i18n="order_form_notice_address"> 고객님의 소중한 상품이 길을 잃지 않도록 상세 주소를 정확히 입력해 주세요.</span>
+    </div>
+
+    <div class="modal-actions" style="margin-top:16px;">
+      <button class="btn-cancel" onclick="closeModal('order-form-overlay')" data-i18n="btn_cancel">취소</button>
+      <button class="btn-submit job-color" onclick="submitOrder()" data-i18n="btn_submit_order">신청 제출</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ 신청 완료 모달 ════ -->
+<div class="overlay" id="order-complete-overlay">
+  <div class="order-modal" style="max-width:440px;text-align:center;">
+    <div style="width:60px;height:60px;background:var(--job-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--job)" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.02em;" data-i18n="order_complete_title">신청이 완료되었습니다!</div>
+    <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:20px;" data-i18n="order_complete_desc">주문번호를 이메일로 발송했습니다. 주문번호로 개통 요청이 가능합니다.</div>
+    <!-- 주문번호 표시 -->
+    <div style="background:var(--sim-soft);border:1.5px solid #BFDBFE;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+      <div style="font-size:11.5px;font-weight:700;color:var(--sim);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;" data-i18n="order_number_label">주문번호</div>
+      <div id="complete-order-number" style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:0.05em;font-family:monospace;"></div>
+    </div>
+    <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:12.5px;color:#92400E;line-height:1.65;text-align:left;">
+      <strong data-i18n="order_complete_notice_title">주문번호를 꼭 보관하세요!</strong><br>
+      <span data-i18n="order_complete_notice_desc">택배 수령 후 개통 요청 시 주문번호가 필요합니다. 이메일로도 발송되었으니 확인해주세요.</span>
+    </div>
+    <button onclick="closeModal('order-complete-overlay')" style="width:100%;padding:13px;border-radius:100px;background:var(--sim);color:white;font-size:14px;font-weight:700;border:none;cursor:pointer;" data-i18n="btn_confirm">확인</button>
+  </div>
+</div>
+
+<!-- ════ 주소 찾기 도움말 모달 ════ -->
+<div class="overlay" id="address-help-overlay">
+  <div class="order-modal" style="max-width:440px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <div style="font-size:17px;font-weight:800;color:var(--ink);" data-i18n="address_help_title">주소 검색</div>
+      <button onclick="closeModal('address-help-overlay')" style="background:var(--bg);border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;">✕</button>
+    </div>
+    <!-- 안내 배너 -->
+    <div style="background:var(--sim-soft);border:1.5px solid #BFDBFE;border-radius:12px;padding:14px 18px;margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:800;color:var(--sim);margin-bottom:6px;" data-i18n="address_help_tip_title">영어로 검색해도 됩니다!</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.65;" data-i18n="address_help_tip_desc">영어로 검색해도 한글 주소가 나옵니다. 검색 후 주소를 클릭하면 자동으로 입력됩니다!</div>
+    </div>
+    <!-- 주소 검색 버튼 -->
+    <button onclick="initKakaoPostcode()" style="width:100%;padding:14px;border-radius:12px;background:var(--sim);color:white;font-size:15px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span data-i18n="btn_postcode_search">우편번호 찾기</span>
+    </button>
+    <button onclick="closeModal('address-help-overlay')" style="width:100%;padding:12px;border-radius:12px;background:var(--bg);color:var(--ink-soft);font-size:14px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;" data-i18n="btn_cancel">Cancel</button>
   </div>
 </div>
 
@@ -1241,12 +1526,12 @@ const LANGS = {
     hero_badge:'For Foreigners in Korea',
     hero_h1_html:'Start your life in Korea<br><em>the easy way</em>',
     hero_sub:'Everything you need to get settled — SIM cards, jobs, and a community of people who\'ve been there too.',
-    hero_cta1:'Get a SIM Card', hero_cta2:'Join Community',
+    hero_cta1:'Get a SIM Card', hero_cta2:'SIM Activation',
     cat_sim_title:'SIM Cards', cat_sim_desc:'Korean mobile plans for foreigners. SK Telecom postpaid — online sign-up in minutes.', cat_sim_cta:'Browse plans →',
     cat_job_title:'Job Board', cat_job_desc:'Find work or post a job. From teaching to startups — the community is hiring.', cat_job_cta:'See listings →',
     cat_comm_title:'Community', cat_comm_desc:'Ask questions, share tips, find housing, buy & sell. Your Korea life bulletin board.', cat_comm_cta:'Join conversation →',
     trust_sk:'Official Plans', trust_lang:'Languages', trust_free:'Free to post & browse', trust_kakao:'KakaoTalk Support',
-    sim_subtitle:'Official SK Telecom postpaid plans — sign up online, no store visit needed.',
+    sim_subtitle:'Official plans from Korea\'s top 3 carriers · SKT · KT · LG U+ · Apply online · No store visit needed', promo_badge_label:'LIMITED', promo_badge_text:'Exclusive foreigner discount — now available',
     kakao_title:'Need help choosing a plan?', kakao_desc:'Chat with us on KakaoTalk — we speak English, Korean, Chinese & Vietnamese.', kakao_hint:'Mon–Fri 9AM–6PM KST · Usually replies within 1 hour', kakao_btn:'KakaoTalk Consultation',
     coming_soon:'Coming Soon',
     carrier_notice:'This carrier is coming soon. Service will be available shortly!',
@@ -1312,6 +1597,66 @@ const LANGS = {
     cat_question:'Question', cat_tip:'Tip', cat_housing:'Housing', cat_sell:'Buy/Sell', cat_social:'Social', cat_daily:'Daily',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'Full-time', jtype_parttime:'Part-time', jtype_remote:'Remote', jtype_other:'Other',
+    // 신청 폼 신규 키
+    order_important_title:'Important Notice', order_important_desc:'A <strong>printed guide</strong> will be included with your SIM card. Do NOT throw it away! It contains the activation QR code and your order number. If lost or damaged, contact us via KakaoTalk with your name and phone number.',
+    field_signup_type:'Signup Type', signup_new:'New Number', signup_new_desc:'Get a new number', signup_mnp:'Number Transfer', signup_mnp_desc:'Keep existing number',
+    field_wish_number:'Preferred Last 4 Digits', wish_number_1st:'1st Choice', wish_number_2nd:'2nd Choice', wish_number_notice:'Preferred numbers are not guaranteed.',
+    field_current_carrier:'Current Carrier', field_mnp_number:'Number to Transfer', select_carrier:'Select carrier',
+    field_email:'Email Address', field_tracking:'Tracking Number',
+    order_complete_title:'Application Complete!', order_complete_desc:'Your order number has been sent to your email.',
+    order_number_label:'Order Number',
+    order_complete_notice_title:'Keep your order number!', order_complete_notice_desc:'You will need it to request activation. Check your email for confirmation.',
+    order_required_fields:'Please fill in all required fields (Name, ARC, Email, Address).',
+    order_invalid_email:'Please enter a valid email address.',
+    order_mnp_required:'Please select your current carrier and enter the number to transfer.',
+    order_duplicate_mnp:'An active order already exists for this number. Order: {n}',
+    order_wait_required:'Please wait {m} more minutes before resubmitting the same number.',
+    order_daily_limit:'Maximum 3 orders per email per day.',
+    // 개통 요청
+    activate_lookup_title:'Request Activation by Order Number', activate_lookup_desc:'Scan the QR code on your printed guide, or enter your order number below.',
+    activate_lost_title:'Lost your printed guide?', activate_lost_desc:'Send your name and phone number via KakaoTalk and we will process it manually.',
+    placeholder_order_number:'e.g. KS-20260321-0042',
+    btn_lookup:'Search', btn_request_activation:'Request Activation', btn_cancel_order:'Cancel Order',
+    lookup_enter_order_number:'Please enter your order number.',
+    lookup_not_found_title:'Order not found', lookup_not_found_desc:'Please check your order number. If you need help, contact us via KakaoTalk.',
+    status_msg_pending:'Your application has been received. We are processing it.',
+    status_msg_processing:'Your SIM card is being prepared. Please wait.',
+    status_msg_shipped:'Your SIM is on its way. Request activation after receiving it.',
+    status_msg_mismatch:'There is an issue with your information. Please contact us via KakaoTalk.',
+    status_msg_requested:'Activation request received. We will complete it within 1 business day.',
+    status_msg_completed:'Activation complete! Enjoy your life in Korea!',
+    status_msg_cancelled:'This order has been cancelled.',
+    cancel_not_available:'Cancellation is not available after shipment. Contact KakaoTalk if needed.',
+    activation_complete_msg:'Activation complete! Thank you.',
+    activation_not_ready:'Activation can only be requested after shipment.',
+    activation_request_success:'Activation request submitted! We will process it within 1 business day.',
+    confirm_cancel_order:'Are you sure you want to cancel this order?',
+    cancel_success_msg:'Order has been cancelled.',
+
+    // 개통 요청 / 신청 폼
+    nav_activate:'Activation',
+    activate_title:'SIM Activation Request', activate_subtitle:'Received your SIM card? Request activation below.',
+    step_order:'Order &\nInfo Submitted', step_form:'Official Form\n+ PASS Auth', step_ship:'SIM Card\nShipped', step_activate:'Activation\nRequest', step_done:'All Set!',
+    activate_notice_title:'Received your SIM card?', activate_notice_desc:'Once you receive your SIM card, please request activation using one of the options below. We\'ll complete your activation within 1 business day.',
+    activate_kakao_title:'KakaoTalk', activate_kakao_desc:'Send us your name and SIM serial number via KakaoTalk. Scan the QR code below.', activate_kakao_btn:'Open KakaoTalk Chat',
+    activate_form_title:'Online Form', activate_form_desc:'Fill in your name and SIM serial number directly on our platform. Fast and easy.', activate_form_btn:'Submit Activation Request',
+    activate_info_title:'What you need to provide',
+    activate_req1_title:'Full Name', activate_req1_desc:'Your name as registered on the official application form.',
+    activate_req2_title:'SIM Serial Number (ICCID)', activate_req2_desc:'Printed on the SIM card package. Starts with 8982.',
+    activate_req3_title:'Processing Time', activate_req3_desc:'Activation is completed within 1 business day after request. You\'ll be notified via KakaoTalk.',
+    qr_coming:'QR Code\nComing Soon',
+    order_form_title:'SIM Card Application', order_form_sub:'Please fill in your details. This information is required to process your SIM card order.',
+    order_form_notice_title:'Privacy Notice:', order_form_notice_desc:'Your personal information is used solely for SIM card processing and will not be shared with third parties.', order_form_notice_address:' Please enter your full address carefully so your package arrives safely.',
+    order_form_next_title:'Next Steps:', order_form_next_desc:'Please complete the official application form below (PASS authentication required) to proceed with your delivery',
+    activation_form_title:'Activation Request', activation_form_sub:'Please enter your details and SIM information. We\'ll process your activation within 1 business day.',
+    activation_form_notice_title:'Important:', activation_form_notice_desc:'The name you enter must match exactly with your official application form and ARC.',
+    field_full_name:'Full Name', field_phone:'Contact Number', field_emergency:'Emergency Contact', field_arc:'Alien Registration No.', field_address:'Delivery Address', field_iccid:'SIM Serial Number (ICCID)', field_plan:'Selected Plan', field_memo:'Additional Notes (optional)',
+    placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
+    btn_apply_plan:'Apply for this plan', btn_submit_order:'Official Application Form', btn_submit_activation:'Submit Request', btn_address_help:'Address Help', btn_confirm:'Confirm', address_help_title:'How to Find Your Address', address_help_tip_title:'Using Naver / Kakao Map', address_help_tip_desc:'You can search in English and a Korean address will appear. Select the Korean address shown in the results!', address_help_img_placeholder:'Guide image coming soon', address_help_format_title:'Address Format Example:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Please include building name, unit number)',
+    order_required_fields:'Please fill in all required fields (Name, Contact, ARC, Address).',
+    order_success_msg:'Your application has been submitted! We\'ll contact you within 1 business day.',
+    activation_required_fields:'Please fill in your name and SIM serial number.',
+    activation_success_msg:'Your activation request has been submitted! We\'ll process it within 1 business day.',
   },
   ko: {
     flag: '🇰🇷', label: '한국어',
@@ -1319,12 +1664,12 @@ const LANGS = {
     hero_badge:'한국 거주 외국인을 위한 서비스',
     hero_h1_html:'한국 생활을<br><em>쉽게 시작하세요</em>',
     hero_sub:'심카드 개통, 일자리, 그리고 같은 경험을 가진 커뮤니티까지 — 한 곳에서 해결하세요.',
-    hero_cta1:'심카드 보기', hero_cta2:'커뮤니티 가입',
+    hero_cta1:'심카드 보기', hero_cta2:'심카드 개통 요청',
     cat_sim_title:'심카드', cat_sim_desc:'외국인을 위한 한국 통신 요금제. SK텔레콤 후불제 — 온라인으로 간편 가입.', cat_sim_cta:'요금제 보기 →',
     cat_job_title:'구인구직', cat_job_desc:'일자리를 찾거나 공고를 올려보세요. 강사부터 스타트업까지.', cat_job_cta:'공고 보기 →',
     cat_comm_title:'커뮤니티', cat_comm_desc:'질문, 팁 공유, 집 구하기, 중고거래 — 한국 생활 게시판.', cat_comm_cta:'대화 참여 →',
     trust_sk:'공식 요금제', trust_lang:'개 언어 지원', trust_free:'무료 열람 및 게시', trust_kakao:'카카오톡 상담',
-    sim_subtitle:'SK텔레콤 공식 후불제 요금제 — 온라인 가입, 매장 방문 불필요.',
+    sim_subtitle:'한국 3대 통신사 공식 요금제 · SKT · KT · LG U+ · 온라인 신청 · 매장 방문 불필요', promo_badge_label:'LIMITED', promo_badge_text:'외국인 전용 특별 할인 진행 중',
     kakao_title:'요금제 선택에 도움이 필요하신가요?', kakao_desc:'카카오톡으로 상담하세요 — 영어, 한국어, 중국어, 베트남어 지원.', kakao_hint:'월~금 오전 9시~오후 6시 · 보통 1시간 이내 답변', kakao_btn:'카카오톡 상담',
     coming_soon:'준비 중',
     carrier_notice:'준비 중입니다. 곧 서비스 예정이에요!',
@@ -1392,6 +1737,64 @@ const LANGS = {
     cat_question:'질문', cat_tip:'팁', cat_housing:'주거', cat_sell:'중고거래', cat_social:'소셜', cat_daily:'일상',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'정규직', jtype_parttime:'파트타임', jtype_remote:'재택근무', jtype_other:'기타',
+    order_important_title:'중요 안내', order_important_desc:'택배 수령 시 유심카드와 함께 <strong>인쇄물이 동봉</strong>됩니다. 인쇄물을 절대 버리지 마세요! 인쇄물에 개통 QR코드와 주문번호가 있습니다. 인쇄물 분실/훼손 시 카카오톡으로 성함 + 개통번호를 알려주시면 수동으로 처리해드립니다.',
+    field_signup_type:'가입 유형', signup_new:'신규가입', signup_new_desc:'새 번호 개통', signup_mnp:'번호이동', signup_mnp_desc:'기존 번호 유지',
+    field_wish_number:'희망 번호 뒷 4자리', wish_number_1st:'1순위', wish_number_2nd:'2순위', wish_number_notice:'희망 번호는 가능한 경우에만 반영되며 보장되지 않습니다.',
+    field_current_carrier:'현재 통신사', field_mnp_number:'이동할 번호', select_carrier:'통신사 선택',
+    field_email:'이메일 주소', field_tracking:'송장번호',
+    order_complete_title:'신청이 완료되었습니다!', order_complete_desc:'주문번호를 이메일로 발송했습니다.',
+    order_number_label:'주문번호',
+    order_complete_notice_title:'주문번호를 꼭 보관하세요!', order_complete_notice_desc:'택배 수령 후 개통 요청 시 주문번호가 필요합니다.',
+    order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 외국인등록번호, 이메일, 주소).',
+    order_invalid_email:'올바른 이메일 주소를 입력해주세요.',
+    order_mnp_required:'현재 통신사와 이동할 번호를 입력해주세요.',
+    order_duplicate_mnp:'해당 번호로 진행 중인 신청이 있습니다. 주문번호: {n}',
+    order_wait_required:'{m}분 후에 재신청 가능합니다.',
+    order_daily_limit:'하루 동일 이메일로 최대 3건까지 신청 가능합니다.',
+    activate_lookup_title:'주문번호로 개통 요청', activate_lookup_desc:'인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.',
+    activate_lost_title:'인쇄물을 분실하셨나요?', activate_lost_desc:'카카오톡으로 성함과 개통번호를 보내주시면 수동으로 처리해드립니다.',
+    placeholder_order_number:'예) KS-20260321-0042',
+    btn_lookup:'조회', btn_request_activation:'개통 요청', btn_cancel_order:'주문 취소',
+    lookup_enter_order_number:'주문번호를 입력해주세요.',
+    lookup_not_found_title:'주문을 찾을 수 없습니다', lookup_not_found_desc:'주문번호를 다시 확인해주세요. 도움이 필요하시면 카카오톡으로 문의해주세요.',
+    status_msg_pending:'신청이 접수되었습니다. 처리 중입니다.',
+    status_msg_processing:'유심을 준비 중입니다. 잠시만 기다려주세요.',
+    status_msg_shipped:'유심이 배송 중입니다. 수령 후 개통 요청해주세요.',
+    status_msg_mismatch:'입력 정보에 문제가 있습니다. 카카오톡으로 문의해주세요.',
+    status_msg_requested:'개통 요청이 접수되었습니다. 1영업일 이내에 완료해드립니다.',
+    status_msg_completed:'개통이 완료되었습니다! 즐거운 한국 생활 되세요!',
+    status_msg_cancelled:'취소된 주문입니다.',
+    cancel_not_available:'발송 이후에는 자동 취소가 불가합니다. 카카오톡으로 문의해주세요.',
+    activation_complete_msg:'개통 완료! 이용해주셔서 감사합니다.',
+    activation_not_ready:'발송 완료 후 개통 요청이 가능합니다.',
+    activation_request_success:'개통 요청이 접수되었습니다! 1영업일 이내에 처리해드립니다.',
+    confirm_cancel_order:'이 주문을 취소하시겠습니까?',
+    cancel_success_msg:'주문이 취소되었습니다.',
+
+    // 개통 요청 / 신청 폼
+    nav_activate:'개통 요청',
+    activate_title:'유심 개통 요청', activate_subtitle:'유심을 받으셨나요? 아래에서 개통을 요청하세요.',
+    step_order:'주문 및\n정보 제출', step_form:'공식 신청서\n+ PASS 인증', step_ship:'유심\n택배 발송', step_activate:'개통\n요청', step_done:'개통 완료!',
+    activate_notice_title:'유심을 수령하셨나요?', activate_notice_desc:'유심을 받으셨다면 아래 방법 중 하나로 개통을 요청해주세요. 요청 후 1영업일 이내에 개통을 완료해드립니다.',
+    activate_kakao_title:'카카오톡', activate_kakao_desc:'카카오톡으로 성함과 유심 일련번호(ICCID)를 보내주세요. 아래 QR코드를 스캔하세요.', activate_kakao_btn:'카카오톡 채팅 열기',
+    activate_form_title:'온라인 폼', activate_form_desc:'플랫폼에서 직접 성함과 유심 일련번호를 입력해주세요. 빠르고 간편합니다.', activate_form_btn:'개통 요청 제출',
+    activate_info_title:'필요한 정보',
+    activate_req1_title:'성함', activate_req1_desc:'공식 신청서에 등록한 이름과 동일하게 입력해주세요.',
+    activate_req2_title:'유심 일련번호 (ICCID)', activate_req2_desc:'유심 패키지에 인쇄되어 있습니다. 8982로 시작합니다.',
+    activate_req3_title:'처리 시간', activate_req3_desc:'요청 후 1영업일 이내에 개통이 완료됩니다. 카카오톡으로 안내해드립니다.',
+    qr_coming:'QR 코드\n준비 중',
+    order_form_title:'유심 신청', order_form_sub:'아래 정보를 입력해주세요. 유심 신청 처리를 위해 필요한 정보입니다.',
+    order_form_notice_title:'개인정보 안내:', order_form_notice_desc:'입력하신 개인정보는 유심 신청 처리 목적으로만 사용되며 제3자에게 제공되지 않습니다.', order_form_notice_address:' 고객님의 소중한 상품이 길을 잃지 않도록 상세 주소를 정확히 입력해 주세요.',
+    order_form_next_title:'다음 단계:', order_form_next_desc:'아래 공식 신청서 (PASS 인증 필요) 까지 작성해주셔야 배송이 진행됩니다',
+    activation_form_title:'개통 요청', activation_form_sub:'성함과 유심 정보를 입력해주세요. 요청 후 1영업일 이내에 개통을 처리해드립니다.',
+    activation_form_notice_title:'주의사항:', activation_form_notice_desc:'입력하시는 성함은 공식 신청서 및 외국인등록증(ARC)과 정확히 일치해야 합니다.',
+    field_full_name:'성함', field_phone:'연락처', field_emergency:'비상연락처', field_arc:'외국인등록번호', field_address:'배송 주소', field_iccid:'유심 일련번호 (ICCID)', field_plan:'선택 요금제', field_memo:'추가 요청사항 (선택)',
+    placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
+    btn_apply_plan:'이 요금제 신청하기', btn_submit_order:'공식 신청서 작성하기', btn_submit_activation:'개통 요청 제출', btn_address_help:'주소 찾기 도움말', btn_confirm:'확인', address_help_title:'주소 찾는 방법', address_help_tip_title:'네이버 / 카카오 지도 활용하기', address_help_tip_desc:'영어로 검색해도 한글 주소가 나옵니다. 검색된 한글 주소를 선택하세요!', address_help_img_placeholder:'안내 이미지 준비 중', address_help_format_title:'주소 형식 예시:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (건물명, 동/호수 포함)',
+    order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 연락처, 외국인등록번호, 주소).',
+    order_success_msg:'신청이 완료되었습니다! 1영업일 이내에 연락드리겠습니다.',
+    activation_required_fields:'성함과 유심 일련번호를 입력해주세요.',
+    activation_success_msg:'개통 요청이 접수되었습니다! 1영업일 이내에 처리해드리겠습니다.',
   },
   zh: {
     flag: '🇨🇳', label: '中文',
@@ -1399,12 +1802,12 @@ const LANGS = {
     hero_badge:'专为在韩外国人服务',
     hero_h1_html:'在韩国开始<br><em>全新生活</em>',
     hero_sub:'SIM卡办理、求职招聘、生活社区 — 一站式解决您的在韩生活需求。',
-    hero_cta1:'办理SIM卡', hero_cta2:'加入社区',
+    hero_cta1:'办理SIM卡', hero_cta2:'申请SIM卡开通',
     cat_sim_title:'SIM卡', cat_sim_desc:'面向外国人的韩国手机套餐。SK电讯后付费 — 在线办理，几分钟完成。', cat_sim_cta:'查看套餐 →',
     cat_job_title:'招聘信息', cat_job_desc:'找工作或发布招聘。从教学到创业公司 — 社区正在招聘。', cat_job_cta:'查看招聘 →',
     cat_comm_title:'社区', cat_comm_desc:'提问、分享技巧、找房、二手交易 — 您的在韩生活公告栏。', cat_comm_cta:'加入讨论 →',
     trust_sk:'官方套餐', trust_lang:'种语言', trust_free:'免费发帖与浏览', trust_kakao:'KakaoTalk咨询',
-    sim_subtitle:'SK电讯官方后付费套餐 — 在线办理，无需到店。',
+    sim_subtitle:'韩国三大运营商官方套餐 · SKT · KT · LG U+ · 在线申请 · 无需到店', promo_badge_label:'LIMITED', promo_badge_text:'外国人专属特别优惠进行中',
     kakao_title:'需要帮助选择套餐？', kakao_desc:'通过KakaoTalk与我们联系 — 支持英语、韩语、中文和越南语。', kakao_hint:'周一至周五 上午9点~下午6点(KST) · 通常1小时内回复', kakao_btn:'KakaoTalk咨询',
     coming_soon:'即将推出',
     carrier_notice:'正在准备中，即将开放服务！',
@@ -1461,6 +1864,28 @@ const LANGS = {
     cat_question:'提问', cat_tip:'技巧', cat_housing:'住房', cat_sell:'买卖', cat_social:'社交', cat_daily:'日常',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'全职', jtype_parttime:'兼职', jtype_remote:'远程', jtype_other:'其他',
+    nav_activate:'开通申请',
+    activate_title:'SIM卡开通申请', activate_subtitle:'收到SIM卡了吗？请在下方申请开通。',
+    activate_notice_title:'收到SIM卡了吗？', activate_notice_desc:'收到SIM卡后，请通过以下方式之一申请开通。我们将在1个工作日内完成开通。',
+    activate_kakao_title:'KakaoTalk', activate_kakao_desc:'请通过KakaoTalk发送您的姓名和SIM卡序列号。扫描下方二维码。', activate_kakao_btn:'打开KakaoTalk聊天',
+    activate_form_title:'在线表单', activate_form_desc:'直接在平台上填写您的姓名和SIM卡序列号，快捷方便。', activate_form_btn:'提交开通申请',
+    activate_info_title:'所需信息',
+    activate_req1_title:'姓名', activate_req1_desc:'请与官方申请表上登记的姓名完全一致。',
+    activate_req2_title:'SIM卡序列号 (ICCID)', activate_req2_desc:'印在SIM卡包装上，以8982开头。',
+    activate_req3_title:'处理时间', activate_req3_desc:'申请后1个工作日内完成开通，通过KakaoTalk通知您。',
+    qr_coming:'二维码\n即将上线',
+    order_form_title:'SIM卡申请', order_form_sub:'请填写以下信息，这是处理您SIM卡申请所需的信息。',
+    order_form_notice_title:'隐私声明：', order_form_notice_desc:'您的个人信息仅用于SIM卡申请处理，不会与第三方共享。', order_form_notice_address:' 为确保您的包裹准确送达，请务必填写详细地址。',
+    order_form_next_title:'下一步：', order_form_next_desc:'请完成下方官方申请表（需要PASS认证），以便进行配送',
+    activation_form_title:'开通申请', activation_form_sub:'请输入您的姓名和SIM卡信息，我们将在1个工作日内处理。',
+    activation_form_notice_title:'注意事项：', activation_form_notice_desc:'输入的姓名必须与官方申请表及外国人登录证（ARC）完全一致。',
+    field_full_name:'姓名', field_phone:'联系电话', field_emergency:'紧急联系人', field_arc:'外国人登录号', field_address:'收货地址', field_iccid:'SIM卡序列号 (ICCID)', field_plan:'选择套餐', field_memo:'备注（选填）',
+    placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
+    btn_apply_plan:'申请此套餐', btn_submit_order:'填写官方申请表', btn_submit_activation:'提交开通申请', btn_address_help:'地址查询帮助', btn_confirm:'确认', address_help_title:'如何查找地址', address_help_tip_title:'使用Naver / Kakao地图', address_help_tip_desc:'用英文搜索也会显示韩文地址。请选择搜索结果中显示的韩文地址！', address_help_img_placeholder:'指南图片即将上线', address_help_format_title:'地址格式示例：', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (请包含建筑名称和门牌号)',
+    order_required_fields:'请填写所有必填项（姓名、联系方式、外国人登录号、地址）。',
+    order_success_msg:'申请已提交！我们将在1个工作日内与您联系。',
+    activation_required_fields:'请填写姓名和SIM卡序列号。',
+    activation_success_msg:'开通申请已收到！我们将在1个工作日内处理。',
   },
   vi: {
     flag: '🇻🇳', label: 'VI',
@@ -1468,12 +1893,12 @@ const LANGS = {
     hero_badge:'Dành cho người nước ngoài tại Hàn Quốc',
     hero_h1_html:'Bắt đầu cuộc sống<br><em>ở Hàn Quốc</em>',
     hero_sub:'Mọi thứ bạn cần để ổn định — SIM card, việc làm và cộng đồng những người đã trải qua.',
-    hero_cta1:'Mua SIM Card', hero_cta2:'Tham gia Cộng đồng',
+    hero_cta1:'Mua SIM Card', hero_cta2:'Yêu cầu kích hoạt SIM',
     cat_sim_title:'SIM Card', cat_sim_desc:'Gói cước di động Hàn Quốc cho người nước ngoài. SK Telecom trả sau — đăng ký online chỉ vài phút.', cat_sim_cta:'Xem gói cước →',
     cat_job_title:'Việc làm', cat_job_desc:'Tìm việc hoặc đăng tuyển dụng. Từ giảng dạy đến startup — cộng đồng đang tuyển dụng.', cat_job_cta:'Xem tin tuyển dụng →',
     cat_comm_title:'Cộng đồng', cat_comm_desc:'Đặt câu hỏi, chia sẻ mẹo, tìm nhà, mua bán — Bảng tin cuộc sống Hàn Quốc của bạn.', cat_comm_cta:'Tham gia trò chuyện →',
     trust_sk:'Gói chính hãng', trust_lang:'Ngôn ngữ', trust_free:'Miễn phí đăng và xem', trust_kakao:'Tư vấn KakaoTalk',
-    sim_subtitle:'Gói cước trả sau chính hãng SK Telecom — đăng ký online, không cần đến cửa hàng.',
+    sim_subtitle:'Gói chính hãng 3 nhà mạng lớn · SKT · KT · LG U+ · Đăng ký online · Không cần đến cửa hàng', promo_badge_label:'LIMITED', promo_badge_text:'Ưu đãi đặc biệt dành cho người nước ngoài',
     kakao_title:'Cần giúp đỡ chọn gói cước?', kakao_desc:'Nhắn tin qua KakaoTalk — chúng tôi hỗ trợ tiếng Anh, Hàn, Trung và Việt.', kakao_hint:'Thứ 2–6 9AM–6PM KST · Thường phản hồi trong 1 giờ', kakao_btn:'Tư vấn KakaoTalk',
     coming_soon:'Sắp ra mắt',
     carrier_notice:'🔧 Đang chuẩn bị. Dịch vụ sẽ sớm ra mắt!',
@@ -1530,6 +1955,28 @@ const LANGS = {
     cat_question:'Câu hỏi', cat_tip:'Mẹo hay', cat_housing:'Nhà ở', cat_sell:'Mua/Bán', cat_social:'Xã hội', cat_daily:'Hàng ngày',
     // 구인구직 근무형태 옵션
     jtype_fulltime:'Toàn thời gian', jtype_parttime:'Bán thời gian', jtype_remote:'Làm từ xa', jtype_other:'Khác',
+    nav_activate:'Yêu cầu kích hoạt',
+    activate_title:'Yêu cầu kích hoạt SIM', activate_subtitle:'Đã nhận được SIM chưa? Gửi yêu cầu kích hoạt bên dưới.',
+    activate_notice_title:'Đã nhận được SIM chưa?', activate_notice_desc:'Sau khi nhận được SIM, hãy gửi yêu cầu kích hoạt bằng một trong các cách bên dưới. Chúng tôi sẽ hoàn tất kích hoạt trong vòng 1 ngày làm việc.',
+    activate_kakao_title:'KakaoTalk', activate_kakao_desc:'Gửi tên và số sê-ri SIM qua KakaoTalk. Quét mã QR bên dưới.', activate_kakao_btn:'Mở chat KakaoTalk',
+    activate_form_title:'Biểu mẫu online', activate_form_desc:'Điền tên và số sê-ri SIM trực tiếp trên nền tảng. Nhanh chóng và dễ dàng.', activate_form_btn:'Gửi yêu cầu kích hoạt',
+    activate_info_title:'Thông tin cần cung cấp',
+    activate_req1_title:'Họ và tên', activate_req1_desc:'Tên phải khớp chính xác với biểu mẫu đăng ký chính thức.',
+    activate_req2_title:'Số sê-ri SIM (ICCID)', activate_req2_desc:'In trên vỏ hộp SIM. Bắt đầu bằng 8982.',
+    activate_req3_title:'Thời gian xử lý', activate_req3_desc:'Kích hoạt hoàn tất trong vòng 1 ngày làm việc. Bạn sẽ được thông báo qua KakaoTalk.',
+    qr_coming:'Mã QR\nSắp có',
+    order_form_title:'Đăng ký SIM Card', order_form_sub:'Vui lòng điền thông tin bên dưới để xử lý đơn đăng ký SIM card.',
+    order_form_notice_title:'Bảo mật thông tin:', order_form_notice_desc:'Thông tin cá nhân của bạn chỉ được sử dụng cho mục đích xử lý đơn hàng SIM card.', order_form_notice_address:' Vui lòng nhập địa chỉ đầy đủ và chính xác để đảm bảo gói hàng đến đúng nơi.',
+    order_form_next_title:'Bước tiếp theo:', order_form_next_desc:'Vui lòng hoàn thành biểu mẫu đăng ký chính thức bên dưới (yêu cầu xác thực PASS) để tiến hành giao hàng',
+    activation_form_title:'Yêu cầu kích hoạt', activation_form_sub:'Vui lòng nhập thông tin của bạn. Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
+    activation_form_notice_title:'Lưu ý quan trọng:', activation_form_notice_desc:'Tên bạn nhập phải khớp chính xác với biểu mẫu đăng ký và thẻ ARC.',
+    field_full_name:'Họ và tên', field_phone:'Số điện thoại', field_emergency:'Liên hệ khẩn cấp', field_arc:'Số đăng ký người nước ngoài', field_address:'Địa chỉ giao hàng', field_iccid:'Số sê-ri SIM (ICCID)', field_plan:'Gói đã chọn', field_memo:'Ghi chú thêm (tùy chọn)',
+    placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
+    btn_apply_plan:'Đăng ký gói này', btn_submit_order:'Điền biểu mẫu chính thức', btn_submit_activation:'Gửi yêu cầu kích hoạt', btn_address_help:'Hướng dẫn tìm địa chỉ', btn_confirm:'Xác nhận', address_help_title:'Cách tìm địa chỉ', address_help_tip_title:'Dùng Naver / Kakao Map', address_help_tip_desc:'Tìm kiếm bằng tiếng Anh vẫn ra địa chỉ tiếng Hàn. Hãy chọn địa chỉ tiếng Hàn xuất hiện trong kết quả!', address_help_img_placeholder:'Ảnh hướng dẫn sắp có', address_help_format_title:'Ví dụ định dạng địa chỉ:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Vui lòng ghi rõ tên tòa nhà, số phòng)',
+    order_required_fields:'Vui lòng điền đầy đủ thông tin bắt buộc (Họ tên, SĐT, Số ARC, Địa chỉ).',
+    order_success_msg:'Đơn đăng ký đã được gửi! Chúng tôi sẽ liên hệ trong vòng 1 ngày làm việc.',
+    activation_required_fields:'Vui lòng điền họ tên và số sê-ri SIM.',
+    activation_success_msg:'Yêu cầu kích hoạt đã được tiếp nhận! Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
   }
 };
 
@@ -1778,8 +2225,43 @@ function closeMobileMenu() {
 /* ═══════════════════════════════════════
    MODALS
 ═══════════════════════════════════════ */
-function openModal(id) { document.getElementById(id).classList.add('open'); }
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function initKakaoPostcode() {
+  const wrap = document.getElementById('kakao-postcode-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+
+  // 팝업 방식 — iframe 삽입보다 훨씬 안정적
+  new daum.Postcode({
+    oncomplete: function(data) {
+      const addr = data.roadAddress || data.jibunAddress;
+      const postcode = data.zonecode;
+      const postcodeEl = document.getElementById('ord-postcode');
+      const addressEl = document.getElementById('ord-address');
+      const detailEl = document.getElementById('ord-address-detail');
+      if (postcodeEl) postcodeEl.value = postcode;
+      if (addressEl) addressEl.value = addr;
+      closeModal('address-help-overlay');
+      if (detailEl) setTimeout(() => detailEl.focus(), 100);
+    },
+    theme: {
+      bgColor: '#FFFFFF',
+      searchBgColor: '#2563EB',
+      contentBgColor: '#FFFFFF',
+      pageBgColor: '#F7F8FA',
+      textColor: '#111827',
+      queryTextColor: '#FFFFFF',
+      postcodeTextColor: '#FF3E6C',
+      emphTextColor: '#2563EB',
+      outlineColor: '#E5E7EB',
+    }
+  }).open();
+  closeModal('address-help-overlay');
+}
 document.addEventListener('click', e => {
   if (e.target.classList.contains('overlay')) {
     e.target.classList.remove('open');
@@ -1905,7 +2387,7 @@ function renderPlans() {
         '<div class="plan-notes-title">'+lb('notes')+'</div>'+
         planNotes.map(n=>'<div class="plan-notes-item">• '+n+'</div>').join('')+
       '</div>'+
-      '<a href="'+applyUrl+'" target="_blank" class="btn-plan '+(p.popular?'btn-plan-primary':'btn-plan-outline')+'">'+applyLabel+'</a>'+
+      '<button onclick="openOrderForm(\''+p.name+'\',\''+p.carrier+'\',\''+p.finalPrice+'\')" class="btn-plan '+(p.popular?'btn-plan-primary':'btn-plan-outline')+'">'+t('btn_apply_plan')+'</button>'+
     '</div>';
   }).join('');
 }
@@ -2429,6 +2911,312 @@ function submitComment() {
     const s = document.querySelector('.comments-section');
     if (s) s.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, 100);
+}
+
+
+/* ═══════════════════════════════════════
+   주문 DB & 신청 시스템
+═══════════════════════════════════════ */
+// 주문 DB (localStorage 기반 — Supabase 연동 전 임시)
+function getOrderDB() {
+  try { return JSON.parse(localStorage.getItem('ks_orders') || '[]'); } catch(e) { return []; }
+}
+function saveOrderDB(orders) {
+  try { localStorage.setItem('ks_orders', JSON.stringify(orders)); } catch(e) {}
+}
+
+// 주문번호 생성: KS-YYYYMMDD-XXXX
+function generateOrderNumber() {
+  const d = new Date();
+  const date = d.getFullYear().toString() +
+    String(d.getMonth()+1).padStart(2,'0') +
+    String(d.getDate()).padStart(2,'0');
+  const orders = getOrderDB();
+  const todayOrders = orders.filter(o => o.orderNumber.includes(date));
+  const seq = String(todayOrders.length + 1).padStart(4,'0');
+  return 'KS-' + date + '-' + seq;
+}
+
+// 상태 라벨
+const ORDER_STATUS = {
+  pending:   { label:'신청접수',   color:'#F59E0B', bg:'#FEF3C7' },
+  processing:{ label:'처리중',     color:'#3B82F6', bg:'#EFF6FF' },
+  shipped:   { label:'발송완료',   color:'#8B5CF6', bg:'#F5F3FF' },
+  mismatch:  { label:'정보불일치', color:'#EF4444', bg:'#FEF2F2' },
+  requested: { label:'개통요청',   color:'#F97316', bg:'#FFF7ED' },
+  completed: { label:'개통완료',   color:'#10B981', bg:'#ECFDF5' },
+  cancelled: { label:'취소됨',     color:'#6B7280', bg:'#F9FAFB' },
+};
+
+// 가입 유형 선택 UI
+let currentSignupType = 'new';
+let currentOrderPlan = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 신규/번호이동 라디오 이벤트
+  document.querySelectorAll('input[name="signup-type"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      currentSignupType = radio.value;
+      const isNew = radio.value === 'new';
+      document.getElementById('section-new-signup').style.display = isNew ? '' : 'none';
+      document.getElementById('section-mnp').style.display = isNew ? 'none' : '';
+      document.getElementById('label-new-signup').style.border = isNew ? '1.5px solid var(--sim)' : '1.5px solid var(--border)';
+      document.getElementById('label-new-signup').style.background = isNew ? 'var(--sim-soft)' : '';
+      document.getElementById('label-mnp').style.border = isNew ? '1.5px solid var(--border)' : '1.5px solid var(--sim)';
+      document.getElementById('label-mnp').style.background = isNew ? '' : 'var(--sim-soft)';
+    });
+  });
+
+  // 통신사 리스트 로드
+  loadCarrierList();
+
+  // URL에서 주문번호 파라미터 확인 (QR 스캔 시)
+  const urlParams = new URLSearchParams(window.location.search);
+  const qrOrder = urlParams.get('order');
+  if (qrOrder) {
+    showPage('activate');
+    const input = document.getElementById('activate-order-input');
+    if (input) { input.value = qrOrder; lookupOrder(); }
+  }
+});
+
+function loadCarrierList() {
+  const select = document.getElementById('ord-current-carrier');
+  if (!select) return;
+  try {
+    // 현재 선택된 요금제의 통신사 파악
+    const carrier = currentOrderPlan.carrier || '';
+    let groupKey = 'ks_mnp_carriers_skt';
+    if (carrier === 'KT') groupKey = 'ks_mnp_carriers_kt';
+    else if (carrier === 'LG U+') groupKey = 'ks_mnp_carriers_lg';
+
+    const MNP_DEFAULTS = {
+      ks_mnp_carriers_skt: ['KT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+      ks_mnp_carriers_kt:  ['SKT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+      ks_mnp_carriers_lg:  ['SKT','KT','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+    };
+    const stored = localStorage.getItem(groupKey);
+    const carriers = stored ? JSON.parse(stored) : MNP_DEFAULTS[groupKey];
+
+    select.innerHTML = '<option value="">' + t('select_carrier') + '</option>';
+    carriers.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      select.appendChild(opt);
+    });
+  } catch(e) {}
+}
+
+function openOrderForm(planName, carrier, price) {
+  currentOrderPlan = { planName, carrier, price };
+  const badge = document.getElementById('order-plan-info');
+  if (badge) badge.textContent = carrier + ' · ' + planName + ' — ₩' + price + '/mo';
+  // 폼 초기화
+  ['ord-name','ord-emergency','ord-arc','ord-email','ord-postcode','ord-address','ord-address-detail','ord-memo','ord-wish1','ord-wish2','ord-mnp-number'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('st-new').checked = true;
+  document.getElementById('section-new-signup').style.display = '';
+  document.getElementById('section-mnp').style.display = 'none';
+  document.getElementById('label-new-signup').style.cssText = 'flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--sim);border-radius:10px;cursor:pointer;background:var(--sim-soft);transition:all 0.15s;';
+  document.getElementById('label-mnp').style.cssText = 'flex:1;display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all 0.15s;';
+  currentSignupType = 'new';
+  loadCarrierList();
+  openModal('order-form-overlay');
+}
+
+function submitOrder() {
+  const name = document.getElementById('ord-name').value.trim();
+  const emergency = document.getElementById('ord-emergency').value.trim();
+  const arc = document.getElementById('ord-arc').value.trim();
+  const email = document.getElementById('ord-email').value.trim();
+  const address = document.getElementById('ord-address').value.trim();
+  const addressDetail = document.getElementById('ord-address-detail').value.trim();
+
+  // 필수 항목 체크
+  if (!name || !arc || !email || !address) {
+    alert(t('order_required_fields')); return;
+  }
+  // 이메일 형식 체크
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert(t('order_invalid_email')); return;
+  }
+  // 번호이동 체크
+  if (currentSignupType === 'mnp') {
+    const carrier = document.getElementById('ord-current-carrier').value;
+    const mnpNum = document.getElementById('ord-mnp-number').value.trim();
+    if (!carrier || !mnpNum) { alert(t('order_mnp_required')); return; }
+  }
+
+  // 중복 체크: 동일 이메일 + (신규: 희망번호 없음 / 번호이동: 동일번호) — 진행중인 건
+  const orders = getOrderDB();
+  if (currentSignupType === 'mnp') {
+    const mnpNum = document.getElementById('ord-mnp-number').value.trim();
+    const dup = orders.find(o =>
+      o.email === email &&
+      o.signupType === 'mnp' &&
+      o.mnpNumber === mnpNum &&
+      !['cancelled','completed'].includes(o.status)
+    );
+    if (dup) {
+      alert(t('order_duplicate_mnp').replace('{n}', dup.orderNumber)); return;
+    }
+    // 재신청 횟수 체크
+    const cancelCount = orders.filter(o =>
+      o.email === email && o.signupType === 'mnp' && o.mnpNumber === mnpNum && o.status === 'cancelled'
+    ).length;
+    if (cancelCount >= 3) {
+      const lastCancel = orders.filter(o =>
+        o.email === email && o.mnpNumber === mnpNum && o.status === 'cancelled'
+      ).sort((a,b) => b.cancelledAt - a.cancelledAt)[0];
+      if (lastCancel) {
+        const waitHours = parseInt(localStorage.getItem('ks_reorder_wait_hours') || '6');
+        const waitMs = waitHours * 3600000;
+        const elapsed = Date.now() - lastCancel.cancelledAt;
+        if (elapsed < waitMs) {
+          const remaining = Math.ceil((waitMs - elapsed) / 60000);
+          alert(t('order_wait_required').replace('{m}', remaining)); return;
+        }
+      }
+    }
+  }
+
+  // 하루 동일 이메일 3건 제한
+  const today = new Date().toDateString();
+  const todayCount = orders.filter(o => o.email === email && new Date(o.createdAt).toDateString() === today).length;
+  if (todayCount >= 3) { alert(t('order_daily_limit')); return; }
+
+  // 주문번호 생성 및 저장
+  const orderNumber = generateOrderNumber();
+  const memo = document.getElementById('ord-memo').value.trim();
+  const wish1 = document.getElementById('ord-wish1')?.value.trim() || '';
+  const wish2 = document.getElementById('ord-wish2')?.value.trim() || '';
+  const mnpCarrier = document.getElementById('ord-current-carrier')?.value || '';
+  const mnpNumber = document.getElementById('ord-mnp-number')?.value.trim() || '';
+
+  const newOrder = {
+    orderNumber,
+    createdAt: Date.now(),
+    status: 'pending',
+    name, emergency, arc, email,
+    address: address + (addressDetail ? ' ' + addressDetail : ''),
+    postcode: document.getElementById('ord-postcode').value,
+    signupType: currentSignupType,
+    wish1, wish2, mnpCarrier, mnpNumber,
+    plan: currentOrderPlan.planName,
+    carrier: currentOrderPlan.carrier,
+    price: currentOrderPlan.price,
+    memo,
+    iccid: '', trackingNumber: '', cancelledAt: null, cancelCount: 0,
+    activationRequestedAt: null,
+  };
+  orders.push(newOrder);
+  saveOrderDB(orders);
+
+  closeModal('order-form-overlay');
+
+  // 완료 모달 표시
+  document.getElementById('complete-order-number').textContent = orderNumber;
+  openModal('order-complete-overlay');
+}
+
+// 개통 요청 — 주문번호 조회
+function lookupOrder() {
+  const input = document.getElementById('activate-order-input');
+  const result = document.getElementById('activate-result');
+  if (!input || !result) return;
+  const orderNum = input.value.trim().toUpperCase();
+  if (!orderNum) { alert(t('lookup_enter_order_number')); return; }
+
+  const orders = getOrderDB();
+  const order = orders.find(o => o.orderNumber === orderNum);
+  result.style.display = 'block';
+
+  if (!order) {
+    result.innerHTML = `
+      <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:12px;padding:18px 20px;text-align:center;">
+        <div style="font-size:15px;font-weight:800;color:#991B1B;margin-bottom:6px;">${t('lookup_not_found_title')}</div>
+        <div style="font-size:13px;color:#7F1D1D;line-height:1.65;">${t('lookup_not_found_desc')}</div>
+        <a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 22px;border-radius:10px;background:#3B1E08;color:#FAE100;font-size:13.5px;font-weight:800;text-decoration:none;">${t('activate_kakao_btn')}</a>
+      </div>`;
+    return;
+  }
+
+  const st = ORDER_STATUS[order.status] || ORDER_STATUS.pending;
+  const canRequest = order.status === 'shipped';
+  const isCompleted = order.status === 'completed';
+  const isCancelled = order.status === 'cancelled';
+  const canCancel = ['pending','processing'].includes(order.status);
+
+  const statusMessages = {
+    pending:    t('status_msg_pending'),
+    processing: t('status_msg_processing'),
+    shipped:    t('status_msg_shipped'),
+    mismatch:   t('status_msg_mismatch'),
+    requested:  t('status_msg_requested'),
+    completed:  t('status_msg_completed'),
+    cancelled:  t('status_msg_cancelled'),
+  };
+
+  result.innerHTML = `
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;">
+      <!-- 상단 헤더 -->
+      <div style="background:var(--bg);padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--ink-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">${t('order_number_label')}</div>
+          <div style="font-size:18px;font-weight:800;font-family:monospace;color:var(--ink);">${order.orderNumber}</div>
+        </div>
+        <div style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:100px;background:${st.bg};border:1.5px solid ${st.color}20;">
+          <span style="width:8px;height:8px;border-radius:50%;background:${st.color};margin-right:7px;flex-shrink:0;"></span>
+          <span style="font-size:13px;font-weight:800;color:${st.color};">${st.label}</span>
+        </div>
+      </div>
+      <!-- 상태 안내 메시지 -->
+      <div style="padding:14px 20px;background:${st.bg};border-bottom:1px solid var(--border);font-size:13px;color:${st.color};font-weight:600;line-height:1.6;">
+        ${statusMessages[order.status] || ''}
+      </div>
+      <!-- 주문 정보 -->
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--border);">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_full_name')}</span><span style="font-weight:700;color:var(--ink);">${order.name}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_plan')}</span><span style="font-weight:700;color:var(--sim);">${order.carrier} · ${order.plan}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signupType === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
+        ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">ICCID</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
+        ${order.trackingNumber ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_tracking')}</span><span style="font-weight:700;color:var(--ink);">${order.trackingNumber}</span></div>` : ''}
+      </div>
+      <!-- 액션 버튼 -->
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
+        ${canRequest ? `<button onclick="submitActivationRequest('${order.orderNumber}')" style="width:100%;padding:13px;border-radius:100px;background:var(--accent);color:white;font-size:14px;font-weight:800;border:none;cursor:pointer;">${t('btn_request_activation')}</button>` : ''}
+        ${isCompleted ? `<div style="text-align:center;padding:10px;font-size:13px;color:var(--job);font-weight:700;">${t('activation_complete_msg')}</div>` : ''}
+        ${order.status === 'mismatch' ? `<a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:100px;background:#3B1E08;color:#FAE100;font-size:14px;font-weight:800;text-decoration:none;">${t('activate_kakao_btn')}</a>` : ''}
+        ${canCancel ? `<button onclick="cancelOrder('${order.orderNumber}')" style="width:100%;padding:11px;border-radius:100px;background:var(--bg);color:var(--ink-soft);font-size:13px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;">${t('btn_cancel_order')}</button>` : ''}
+        ${!canCancel && !isCompleted && !isCancelled ? `<div style="text-align:center;font-size:12px;color:var(--ink-light);padding:6px;">${t('cancel_not_available')}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+function submitActivationRequest(orderNumber) {
+  const orders = getOrderDB();
+  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
+  if (idx === -1) return;
+  if (orders[idx].status !== 'shipped') { alert(t('activation_not_ready')); return; }
+  orders[idx].status = 'requested';
+  orders[idx].activationRequestedAt = Date.now();
+  saveOrderDB(orders);
+  alert(t('activation_request_success'));
+  lookupOrder();
+}
+
+function cancelOrder(orderNumber) {
+  if (!confirm(t('confirm_cancel_order'))) return;
+  const orders = getOrderDB();
+  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
+  if (idx === -1) return;
+  orders[idx].status = 'cancelled';
+  orders[idx].cancelledAt = Date.now();
+  orders[idx].cancelCount = (orders[idx].cancelCount || 0) + 1;
+  saveOrderDB(orders);
+  alert(t('cancel_success_msg'));
+  lookupOrder();
 }
 
 
