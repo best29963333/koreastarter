@@ -530,6 +530,10 @@ textarea.form-control { resize: vertical; min-height: 80px; }
       </div>
 
       <div class="nav-section-title" data-i18n="nav_content">콘텐츠</div>
+      <div class="nav-item" onclick="goSection('orders')">
+        <span class="nav-icon">📦</span><span>주문 관리</span>
+        <span class="nav-badge red" id="badge-orders">0</span>
+      </div>
       <div class="nav-item" onclick="goSection('jobs')">
         <span class="nav-icon">💼</span><span data-i18n="nav_jobs">구인구직</span>
         <span class="nav-badge yellow" id="badge-jobs">0</span>
@@ -625,6 +629,98 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <div class="table-title" data-i18n="dash_activity">활동 로그</div>
             </div>
             <div class="activity-feed" id="activity-log"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 주문 관리 ── -->
+      <div class="section" id="sec-orders">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">주문 관리 <span id="orders-count" style="font-size:13px;color:var(--ink-muted);font-weight:500;"></span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <select id="order-status-filter" onchange="renderAdminOrders()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);">
+                <option value="all">전체 상태</option>
+                <option value="pending">신청접수</option>
+                <option value="processing">처리중</option>
+                <option value="shipped">발송완료</option>
+                <option value="mismatch">정보불일치</option>
+                <option value="requested">개통요청</option>
+                <option value="completed">개통완료</option>
+                <option value="cancelled">취소됨</option>
+              </select>
+              <input type="text" id="order-search-input" oninput="renderAdminOrders()" placeholder="주문번호 / 성함 검색..." style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);width:180px;">
+            </div>
+          </div>
+          <div id="orders-list"></div>
+        </div>
+
+        <!-- 번호이동 기존 통신사 목록 관리 -->
+        <div class="table-card" style="margin-top:20px;">
+          <div class="table-header">
+            <div class="table-title">번호이동 기존 통신사 목록 관리</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:13px;color:var(--ink-muted);margin-bottom:18px;">
+              요금제별로 번호이동 신청 시 표시될 <strong>기존 통신사 목록</strong>을 관리합니다.<br>
+              예) SKT 요금제 신청 → 번호이동 선택 시 아래 "SKT 요금제 신청 시" 목록이 표시됩니다.
+            </div>
+
+            <!-- SKT 요금제 신청 시 -->
+            <div style="margin-bottom:20px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#FF4D1C;flex-shrink:0;"></div>
+                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">SKT 요금제 신청 시 — 기존 통신사 목록</span>
+              </div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">SKT 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-skt" placeholder="예) KT, LG U+, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('skt')" style="padding:8px 16px;border-radius:8px;background:#FF4D1C;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-skt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+
+            <!-- KT 요금제 신청 시 -->
+            <div style="margin-bottom:20px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#2563EB;flex-shrink:0;"></div>
+                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">KT 요금제 신청 시 — 기존 통신사 목록</span>
+              </div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">KT 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-kt" placeholder="예) SKT, LG U+, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('kt')" style="padding:8px 16px;border-radius:8px;background:#2563EB;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-kt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+
+            <!-- LG 요금제 신청 시 -->
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <div style="width:10px;height:10px;border-radius:50%;background:#A855F7;flex-shrink:0;"></div>
+                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">LG U+ 요금제 신청 시 — 기존 통신사 목록</span>
+              </div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">LG U+ 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-lg" placeholder="예) SKT, KT, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('lg')" style="padding:8px 16px;border-radius:8px;background:#A855F7;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-lg" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 재신청 대기 시간 설정 -->
+        <div class="table-card" style="margin-top:20px;">
+          <div class="table-header">
+            <div class="table-title">재신청 대기 시간 설정</div>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:13.5px;color:var(--ink);">동일 번호 3회 취소 후 재신청 대기 시간:</span>
+            <input type="number" id="reorder-wait-hours" min="1" max="72" value="6" style="width:70px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);font-size:14px;font-weight:700;text-align:center;background:var(--surface);color:var(--ink);">
+            <span style="font-size:13.5px;color:var(--ink);">시간</span>
+            <button onclick="saveReorderWait()" style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
           </div>
         </div>
       </div>
@@ -1423,7 +1519,7 @@ let DB = {
       notes:'12개월내 해지시 위약금 발생\n12개월내 정지시 할인 불가, 위약금 누적\n정지·해지 없이 12개월 지속 사용이 가장 유리\n요금제는 M+6개월 이후 하향 가능 (상향은 관계없음)',
       features:'완전 무제한 데이터\n5G 포함\n국내 통화·SMS 무제한\n해외 로밍 (10일)' },
   ],
-  carrierVisibility: { 'SK Telecom': true, 'KT': true, 'LG U+': true },
+  carrierVisibility: { 'SK Telecom': true, 'KT': false, 'LG U+': false },
   members: [
     { id:1, name:'Mike Thompson', provider:'Google', joined:'2025-01-10', posts:3, points:8, attendance:5, status:'active' },
     { id:2, name:'Julia Kim', provider:'KakaoTalk', joined:'2025-01-11', posts:7, points:35, attendance:32, status:'active' },
@@ -1479,6 +1575,355 @@ function goSection(id) {
   if (id === 'sim') renderAdminPlans();
   if (id === 'members') renderMembers();
   if (id === 'dashboard') refreshDashboard();
+  if (id === 'orders') { renderAdminOrders(); renderMnpCarriers(); }
+}
+
+/* ═══════════════ 주문 관리 ═══════════════ */
+const ORDER_STATUS_ADMIN = {
+  pending:    { label:'신청접수',   color:'#F59E0B', bg:'#FEF3C7' },
+  processing: { label:'처리중',     color:'#3B82F6', bg:'#EFF6FF' },
+  shipped:    { label:'발송완료',   color:'#8B5CF6', bg:'#F5F3FF' },
+  mismatch:   { label:'정보불일치', color:'#EF4444', bg:'#FEF2F2' },
+  requested:  { label:'개통요청',   color:'#F97316', bg:'#FFF7ED' },
+  completed:  { label:'개통완료',   color:'#10B981', bg:'#ECFDF5' },
+  cancelled:  { label:'취소됨',     color:'#6B7280', bg:'#F9FAFB' },
+};
+
+function getOrderDB() {
+  try { return JSON.parse(localStorage.getItem('ks_orders') || '[]'); } catch(e) { return []; }
+}
+function saveOrderDB(orders) {
+  try { localStorage.setItem('ks_orders', JSON.stringify(orders)); } catch(e) {}
+}
+
+function updateOrderBadge() {
+  const orders = getOrderDB();
+  const pending = orders.filter(o => ['pending','processing','requested'].includes(o.status)).length;
+  const badge = document.getElementById('badge-orders');
+  if (badge) { badge.textContent = pending || ''; badge.style.display = pending ? '' : 'none'; }
+}
+
+function renderAdminOrders() {
+  const list = document.getElementById('orders-list');
+  if (!list) return;
+  let orders = getOrderDB();
+  const statusFilter = document.getElementById('order-status-filter')?.value || 'all';
+  const searchQ = (document.getElementById('order-search-input')?.value || '').toLowerCase();
+
+  if (statusFilter !== 'all') orders = orders.filter(o => o.status === statusFilter);
+  if (searchQ) orders = orders.filter(o =>
+    o.orderNumber.toLowerCase().includes(searchQ) ||
+    (o.name||'').toLowerCase().includes(searchQ) ||
+    (o.email||'').toLowerCase().includes(searchQ)
+  );
+  orders = [...orders].sort((a,b) => b.createdAt - a.createdAt);
+
+  const countEl = document.getElementById('orders-count');
+  if (countEl) countEl.textContent = `(${orders.length}건)`;
+
+  if (!orders.length) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ink-muted);font-size:14px;">주문이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML = orders.map(o => {
+    const st = ORDER_STATUS_ADMIN[o.status] || ORDER_STATUS_ADMIN.pending;
+    const date = new Date(o.createdAt).toLocaleDateString('ko-KR');
+    return `
+    <div style="border-bottom:1px solid var(--border);padding:16px 20px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+            <span style="font-size:14px;font-weight:800;font-family:monospace;color:var(--ink);">${o.orderNumber}</span>
+            <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;background:${st.bg};font-size:11.5px;font-weight:700;color:${st.color};">${st.label}</span>
+            <span style="font-size:12px;color:var(--ink-muted);">${date}</span>
+          </div>
+          <div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:2px;">${o.name} · ${o.signupType === 'new' ? '신규' : '번호이동'}</div>
+          <div style="font-size:13px;color:var(--ink-muted);">${o.carrier} · ${o.plan} · ${o.email}</div>
+          ${o.mnpNumber ? `<div style="font-size:12.5px;color:var(--ink-muted);">이동번호: ${o.mnpNumber} (${o.mnpCarrier})</div>` : ''}
+          ${o.address ? `<div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">${o.address}</div>` : ''}
+        </div>
+        <button onclick="openOrderDetail('${o.orderNumber}')" style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">상세 / 처리</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openOrderDetail(orderNumber) {
+  const orders = getOrderDB();
+  const o = orders.find(x => x.orderNumber === orderNumber);
+  if (!o) return;
+  const st = ORDER_STATUS_ADMIN[o.status] || ORDER_STATUS_ADMIN.pending;
+
+  const modal = document.createElement('div');
+  modal.id = 'order-detail-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;backdrop-filter:blur(4px);';
+  modal.innerHTML = `
+    <div style="background:var(--surface);border-radius:20px;width:100%;max-width:600px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;margin-bottom:40px;">
+      <!-- 헤더 -->
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--ink-muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">주문 상세</div>
+          <div style="font-size:18px;font-weight:800;font-family:monospace;color:var(--ink);">${o.orderNumber}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="padding:5px 14px;border-radius:100px;background:${st.bg};font-size:12.5px;font-weight:700;color:${st.color};">${st.label}</span>
+          <button onclick="document.getElementById('order-detail-modal').remove()" style="background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink-muted);display:flex;align-items:center;justify-content:center;">✕</button>
+        </div>
+      </div>
+
+      <!-- 고객 정보 -->
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">고객 정보</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          ${infoRow('성함', o.name)}
+          ${infoRow('가입유형', o.signupType === 'new' ? '신규가입' : '번호이동')}
+          ${infoRow('요금제', o.carrier + ' · ' + o.plan)}
+          ${infoRow('이메일', o.email)}
+          ${infoRow('외국인등록번호', o.arc)}
+          ${infoRow('비상연락처', o.emergency)}
+          ${o.mnpNumber ? infoRow('이동번호', o.mnpNumber + ' (' + o.mnpCarrier + ')') : ''}
+          ${o.wish1 ? infoRow('희망번호', '1순위: ' + o.wish1 + (o.wish2 ? ' / 2순위: ' + o.wish2 : '')) : ''}
+        </div>
+        <div style="margin-top:10px;padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:13px;color:var(--ink);">
+          <span style="color:var(--ink-muted);font-size:12px;display:block;margin-bottom:3px;">배송주소</span>
+          ${o.address || '-'}
+        </div>
+        ${o.memo ? `<div style="margin-top:8px;padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:13px;color:var(--ink);"><span style="color:var(--ink-muted);font-size:12px;display:block;margin-bottom:3px;">추가요청사항</span>${o.memo}</div>` : ''}
+      </div>
+
+      <!-- 운영자 처리 영역 -->
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">처리 정보 입력</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <!-- ICCID 바코드 스캔 입력 -->
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">유심 일련번호 (ICCID) — 바코드 스캔</label>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="admin-iccid-input" value="${o.iccid || ''}" placeholder="바코드 리더기로 스캔하세요..." style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;font-family:monospace;background:var(--surface);color:var(--ink);" autofocus>
+              <button onclick="saveIccid('${o.orderNumber}')" style="padding:10px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
+            </div>
+          </div>
+          <!-- 송장번호 -->
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;">송장번호</label>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="admin-tracking-input" value="${o.trackingNumber || ''}" placeholder="송장번호 입력..." style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;background:var(--surface);color:var(--ink);">
+              <button onclick="saveTracking('${o.orderNumber}')" style="padding:10px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상태 변경 -->
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">상태 변경</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          ${Object.entries(ORDER_STATUS_ADMIN).map(([key, val]) =>
+            `<button onclick="changeOrderStatus('${o.orderNumber}','${key}')" style="padding:7px 16px;border-radius:100px;font-size:12.5px;font-weight:700;border:1.5px solid ${val.color}40;background:${o.status===key ? val.bg : 'transparent'};color:${val.color};cursor:pointer;">${val.label}</button>`
+          ).join('')}
+        </div>
+      </div>
+
+      <!-- 인쇄물 출력 -->
+      <div style="padding:16px 24px;display:flex;gap:8px;justify-content:flex-end;">
+        <button onclick="printOrderSlip('${o.orderNumber}')" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;background:var(--surface2);border:1.5px solid var(--border);color:var(--ink);font-size:13.5px;font-weight:700;cursor:pointer;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          인쇄물 출력
+        </button>
+      </div>
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+function infoRow(label, value) {
+  return `<div style="padding:8px 10px;background:var(--surface2);border-radius:8px;">
+    <div style="font-size:11px;color:var(--ink-muted);margin-bottom:2px;">${label}</div>
+    <div style="font-size:13.5px;font-weight:600;color:var(--ink);">${value || '-'}</div>
+  </div>`;
+}
+
+function saveIccid(orderNumber) {
+  const val = document.getElementById('admin-iccid-input')?.value.trim();
+  if (!val) { alert('ICCID를 입력해주세요.'); return; }
+  const orders = getOrderDB();
+  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
+  if (idx === -1) return;
+  orders[idx].iccid = val;
+  saveOrderDB(orders);
+  alert('ICCID가 저장되었습니다.');
+}
+
+function saveTracking(orderNumber) {
+  const val = document.getElementById('admin-tracking-input')?.value.trim();
+  if (!val) { alert('송장번호를 입력해주세요.'); return; }
+  const orders = getOrderDB();
+  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
+  if (idx === -1) return;
+  orders[idx].trackingNumber = val;
+  saveOrderDB(orders);
+  alert('송장번호가 저장되었습니다.');
+}
+
+function changeOrderStatus(orderNumber, newStatus) {
+  const orders = getOrderDB();
+  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
+  if (idx === -1) return;
+  orders[idx].status = newStatus;
+  if (newStatus === 'cancelled') {
+    orders[idx].cancelledAt = Date.now();
+    orders[idx].cancelCount = (orders[idx].cancelCount || 0) + 1;
+  }
+  saveOrderDB(orders);
+  document.getElementById('order-detail-modal')?.remove();
+  renderAdminOrders();
+  updateOrderBadge();
+  logActivity(`주문 ${orderNumber} 상태 → ${ORDER_STATUS_ADMIN[newStatus]?.label}`, 'blue');
+  toast(`상태가 "${ORDER_STATUS_ADMIN[newStatus]?.label}"으로 변경되었습니다.`, 'success');
+}
+
+function printOrderSlip(orderNumber) {
+  const orders = getOrderDB();
+  const o = orders.find(x => x.orderNumber === orderNumber);
+  if (!o) return;
+  const qrUrl = `https://koreastarter.vercel.app/?order=${o.orderNumber}`;
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>배송 안내문 - ${o.orderNumber}</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+<style>
+  body{font-family:'Noto Sans KR',sans-serif;padding:32px;max-width:480px;margin:0 auto;color:#111;}
+  .logo{font-size:22px;font-weight:900;letter-spacing:-0.02em;margin-bottom:24px;}
+  .logo span{color:#FF3E6C;}
+  .order-box{border:2.5px solid #2563EB;border-radius:14px;padding:18px 20px;margin-bottom:20px;text-align:center;}
+  .order-label{font-size:11px;font-weight:700;color:#6B7280;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
+  .order-number{font-size:24px;font-weight:900;font-family:monospace;color:#111;letter-spacing:0.04em;}
+  .info-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px;}
+  .info-table td{padding:7px 10px;border-bottom:1px solid #E5E7EB;}
+  .info-table td:first-child{color:#6B7280;font-weight:600;width:110px;}
+  .notice-box{background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px;line-height:1.7;color:#92400E;}
+  .notice-box strong{color:#C2410C;}
+  .qr-section{text-align:center;margin-bottom:20px;}
+  .qr-section p{font-size:12.5px;color:#6B7280;margin-top:8px;line-height:1.6;}
+  .steps{background:#EFF6FF;border-radius:10px;padding:14px 16px;font-size:13px;color:#1E40AF;line-height:1.8;}
+  .steps strong{display:block;font-size:13.5px;margin-bottom:6px;color:#1D4ED8;}
+  @media print{button{display:none!important}}
+</style></head><body>
+<div class="logo">Korea<span>Starter</span></div>
+<div class="order-box">
+  <div class="order-label">주문번호</div>
+  <div class="order-number">${o.orderNumber}</div>
+</div>
+<table class="info-table">
+  <tr><td>성함</td><td>${o.name}</td></tr>
+  <tr><td>가입유형</td><td>${o.signupType === 'new' ? '신규가입' : '번호이동'}</td></tr>
+  <tr><td>요금제</td><td>${o.carrier} · ${o.plan}</td></tr>
+  ${o.mnpNumber ? `<tr><td>이동번호</td><td>${o.mnpNumber}</td></tr>` : ''}
+  <tr><td>배송주소</td><td>${o.address}</td></tr>
+  ${o.trackingNumber ? `<tr><td>송장번호</td><td>${o.trackingNumber}</td></tr>` : ''}
+</table>
+<div class="notice-box">
+  <strong>이 인쇄물을 절대 버리지 마세요!</strong>
+  유심 개통을 위해 아래 QR코드 스캔 또는 주문번호가 필요합니다.<br>
+  인쇄물 분실 시 카카오톡으로 성함 + 개통번호를 알려주세요.
+</div>
+<div class="qr-section">
+  <div id="qrcode"></div>
+  <p>QR코드를 스캔하면<br>개통 요청 페이지로 바로 이동합니다.</p>
+</div>
+<div class="steps">
+  <strong>개통 요청 방법</strong>
+  1. 위 QR코드 스캔 → 개통 요청 버튼 클릭<br>
+  2. 또는 KoreaStarter 사이트 → 개통 요청 메뉴 → 주문번호 입력<br>
+  3. 문의: 카카오톡 채널 KoreaStarter
+</div>
+<br>
+<button onclick="window.print()" style="width:100%;padding:12px;border-radius:10px;background:#2563EB;color:white;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-top:8px;">인쇄하기</button>
+<script>
+  window.onload = function() {
+    new QRCode(document.getElementById("qrcode"), {
+      text: "${qrUrl}",
+      width: 160, height: 160,
+      colorDark: "#111827", colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  };
+<\/script>
+</body></html>`);
+  win.document.close();
+}
+
+/* ═══════════════ 번호이동 기존 통신사 관리 ═══════════════ */
+const MNP_GROUP_KEYS = { skt: 'ks_mnp_carriers_skt', kt: 'ks_mnp_carriers_kt', lg: 'ks_mnp_carriers_lg' };
+const MNP_GROUP_COLORS = { skt: '#FF4D1C', kt: '#2563EB', lg: '#A855F7' };
+const MNP_GROUP_DEFAULTS = {
+  skt: ['KT', 'LG U+', 'SK7모바일', '헬로모바일', 'KT M모바일', 'U+알뜰모바일', '기타 알뜰폰'],
+  kt:  ['SKT', 'LG U+', 'SK7모바일', '헬로모바일', 'KT M모바일', 'U+알뜰모바일', '기타 알뜰폰'],
+  lg:  ['SKT', 'KT', 'SK7모바일', '헬로모바일', 'KT M모바일', 'U+알뜰모바일', '기타 알뜰폰'],
+};
+
+function renderMnpCarriers() {
+  ['skt','kt','lg'].forEach(group => {
+    const list = document.getElementById(`mnp-carrier-list-${group}`);
+    if (!list) return;
+    const stored = localStorage.getItem(MNP_GROUP_KEYS[group]);
+    const carriers = stored ? JSON.parse(stored) : MNP_GROUP_DEFAULTS[group];
+    // 기본값 없으면 저장
+    if (!stored) localStorage.setItem(MNP_GROUP_KEYS[group], JSON.stringify(carriers));
+    const color = MNP_GROUP_COLORS[group];
+    if (!carriers.length) {
+      list.innerHTML = '<span style="font-size:12.5px;color:var(--ink-muted);">등록된 통신사가 없습니다.</span>';
+      return;
+    }
+    list.innerHTML = carriers.map((c, i) => `
+      <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:${color}12;border:1.5px solid ${color}30;border-radius:100px;font-size:13px;font-weight:600;color:${color};">
+        ${c}
+        <button onclick="removeMnpCarrier('${group}',${i})" style="background:none;border:none;cursor:pointer;color:${color};opacity:0.6;font-size:14px;line-height:1;padding:0;margin-left:2px;">✕</button>
+      </div>`).join('');
+  });
+}
+
+function addMnpCarrier(group) {
+  const input = document.getElementById(`new-carrier-${group}`);
+  const name = input?.value.trim();
+  if (!name) return;
+  const key = MNP_GROUP_KEYS[group];
+  const carriers = JSON.parse(localStorage.getItem(key) || JSON.stringify(MNP_GROUP_DEFAULTS[group]));
+  if (carriers.includes(name)) { alert('이미 등록된 통신사입니다.'); return; }
+  carriers.push(name);
+  localStorage.setItem(key, JSON.stringify(carriers));
+  if (input) input.value = '';
+  renderMnpCarriers();
+  // 메인 페이지 select용 통합 목록도 업데이트
+  syncMnpCarriersToMain();
+  toast(`"${name}" 통신사가 추가되었습니다.`, 'success');
+}
+
+function removeMnpCarrier(group, idx) {
+  const key = MNP_GROUP_KEYS[group];
+  const carriers = JSON.parse(localStorage.getItem(key) || '[]');
+  carriers.splice(idx, 1);
+  localStorage.setItem(key, JSON.stringify(carriers));
+  renderMnpCarriers();
+  syncMnpCarriersToMain();
+}
+
+// 메인 페이지 select 박스용 통합 목록 동기화
+function syncMnpCarriersToMain() {
+  const all = [];
+  ['skt','kt','lg'].forEach(group => {
+    const carriers = JSON.parse(localStorage.getItem(MNP_GROUP_KEYS[group]) || '[]');
+    carriers.forEach(c => { if (!all.includes(c)) all.push(c); });
+  });
+  localStorage.setItem('ks_mnp_carriers', JSON.stringify(all));
+}
+
+function saveReorderWait() {
+  const val = document.getElementById('reorder-wait-hours')?.value;
+  if (!val || isNaN(val) || val < 1) { alert('올바른 시간을 입력해주세요.'); return; }
+  localStorage.setItem('ks_reorder_wait_hours', val);
+  toast(`재신청 대기 시간이 ${val}시간으로 저장되었습니다.`, 'success');
 }
 
 /* ═══════════════ INIT ═══════════════ */
@@ -1488,6 +1933,7 @@ function initApp() {
   applyAdminLang();
   refreshDashboard();
   updateBadges();
+  updateOrderBadge();
   startClock();
   logActivity(t('activity_login'), 'blue');
 }
