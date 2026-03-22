@@ -1609,8 +1609,8 @@ function goSection(id) {
   if (id === 'members') renderMembers();
   if (id === 'dashboard') refreshDashboard();
   if (id === 'orders') {
-    // 오늘 날짜 기본 세팅
-    const today = new Date().toISOString().slice(0,10);
+    // 오늘 날짜 기본 세팅 (KST 기준)
+    const today = new Date(new Date().getTime() + 9*60*60*1000).toISOString().slice(0,10);
     const fromEl = document.getElementById('order-date-from');
     const toEl = document.getElementById('order-date-to');
     if (fromEl && !fromEl.value) fromEl.value = today;
@@ -1641,21 +1641,27 @@ async function updateOrderBadge() {
 }
 
 function setDateFilter(type) {
-  const today = new Date();
-  const fmt = d => d.toISOString().slice(0,10);
+  // 한국 시간(KST = UTC+9) 기준으로 오늘 날짜 계산
+  const nowKST = new Date(new Date().getTime() + 9 * 60 * 60 * 1000);
+  const fmt = d => {
+    const kst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+    return kst.toISOString().slice(0,10);
+  };
   let from, to;
 
   if (type === 'today') {
-    from = to = fmt(today);
+    from = to = fmt(new Date());
   } else if (type === 'yesterday') {
-    const yd = new Date(today); yd.setDate(yd.getDate()-1);
+    const yd = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
     from = to = fmt(yd);
   } else if (type === 'thismonth') {
-    from = fmt(new Date(today.getFullYear(), today.getMonth(), 1));
-    to = fmt(new Date(today.getFullYear(), today.getMonth()+1, 0));
+    const y = nowKST.getUTCFullYear(), m = nowKST.getUTCMonth();
+    from = fmt(new Date(Date.UTC(y, m, 1) - 9*60*60*1000));
+    to = fmt(new Date(Date.UTC(y, m+1, 0) - 9*60*60*1000));
   } else if (type === 'lastmonth') {
-    from = fmt(new Date(today.getFullYear(), today.getMonth()-1, 1));
-    to = fmt(new Date(today.getFullYear(), today.getMonth(), 0));
+    const y = nowKST.getUTCFullYear(), m = nowKST.getUTCMonth();
+    from = fmt(new Date(Date.UTC(y, m-1, 1) - 9*60*60*1000));
+    to = fmt(new Date(Date.UTC(y, m, 0) - 9*60*60*1000));
   } else {
     from = ''; to = '';
   }
@@ -1665,7 +1671,6 @@ function setDateFilter(type) {
   if (fromEl) fromEl.value = from;
   if (toEl) toEl.value = to;
 
-  // 버튼 활성화 스타일
   ['today','yesterday','thismonth','lastmonth','all'].forEach(t => {
     const btn = document.getElementById(`dfbtn-${t}`);
     if (!btn) return;
@@ -1690,8 +1695,8 @@ async function renderAdminOrders() {
 
   let query = sb.from('orders').select('*').order('created_at', { ascending: false });
   if (statusFilter !== 'all') query = query.eq('status', statusFilter);
-  if (dateFrom) query = query.gte('created_at', dateFrom + 'T00:00:00');
-  if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59');
+  if (dateFrom) query = query.gte('created_at', dateFrom + 'T00:00:00+09:00');
+  if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59+09:00');
 
   const { data: orders, error } = await query;
   if (error) { list.innerHTML = '<div style="text-align:center;padding:30px;color:red;">오류가 발생했습니다.</div>'; return; }
