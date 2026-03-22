@@ -1638,6 +1638,7 @@ const LANGS = {
     activate_lookup_title:'Order Lookup · Activation & Tracking', activate_lookup_desc:'Scan the QR code on your printed guide, or enter your order number below.',
     activate_lost_title:'Lost your printed guide?', activate_lost_desc:'Send your name and phone number via KakaoTalk and we will process it manually.',
     placeholder_order_number:'e.g. KS-20260321-0042-X7K3',
+    status_label_pending:'Pending', status_label_processing:'Processing', status_label_form_received:'Official Form Confirmed', status_label_shipped:'Shipped', status_label_mismatch:'Info Mismatch', status_label_requested:'Activation Requested', status_label_completed:'Activated', status_label_cancelled:'Cancelled',
     btn_lookup:'Search', btn_request_activation:'Request Activation', activation_requested_label:'Activation Requested', activation_processing_title:'Your request has been received!', activation_processing_desc:'Activation takes 1–2 business days. We will notify you once complete.', btn_cancel_order:'Cancel Order',
     lookup_enter_order_number:'Please enter your order number.',
     lookup_not_found_title:'Order not found', lookup_not_found_desc:'Please check your order number. If you need help, contact us via KakaoTalk.',
@@ -1672,7 +1673,7 @@ const LANGS = {
     order_form_next_title:'Next Steps:', order_form_next_desc:'Please complete the official application form below (PASS authentication required) to proceed with your delivery',
     activation_form_title:'Activation Request', activation_form_sub:'Please enter your details and SIM information. We\'ll process your activation within 1 business day.',
     activation_form_notice_title:'Important:', activation_form_notice_desc:'The name you enter must match exactly with your official application form and ARC.',
-    field_full_name:'Full Name', field_phone:'Contact Number', field_emergency:'Emergency Contact', field_arc:'Alien Registration No.', field_address:'Delivery Address', field_iccid:'SIM Serial Number (ICCID)', field_plan:'Selected Plan', field_memo:'Additional Notes (optional)',
+    field_full_name:'Full Name', field_phone:'Contact Number', field_emergency:'Emergency Contact', field_arc:'Alien Registration No.', field_address:'Delivery Address', field_iccid:'SIM Serial Number (ICCID)', field_usim_serial:'SIM Serial Number', field_courier_tracking:'Courier · Tracking No.', field_plan:'Selected Plan', field_memo:'Additional Notes (optional)',
     address_warning_badge:'! Delivery address must be accurate', placeholder_full_name:'Your full name', placeholder_postcode:'Postcode', placeholder_address:'Base address (auto-filled)', placeholder_address_detail:'Detail address (unit, floor, etc.)', placeholder_memo:'Any special requests...', btn_postcode_search:'Search Address',
     btn_apply_plan:'Apply for this plan', btn_submit_order:'Official Application Form', btn_submit_activation:'Submit Request', btn_address_help:'Address Help', btn_confirm:'Confirm', address_help_title:'How to Find Your Address', address_help_tip_title:'Using Naver / Kakao Map', address_help_tip_desc:'You can search in English and a Korean address will appear. Select the Korean address shown in the results!', address_help_img_placeholder:'Guide image coming soon', address_help_format_title:'Address Format Example:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Please include building name, unit number)',
     order_required_fields:'Please fill in all required fields (Name, Contact, ARC, Address).',
@@ -1776,6 +1777,7 @@ const LANGS = {
     activate_lookup_title:'주문번호로 개통 요청 (송장번호 조회)', activate_lookup_desc:'인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.',
     activate_lost_title:'인쇄물을 분실하셨나요?', activate_lost_desc:'카카오톡으로 성함과 개통번호를 보내주시면 수동으로 처리해드립니다.',
     placeholder_order_number:'예) KS-20260321-0042-X7K3',
+    status_label_pending:'신청접수', status_label_processing:'처리중', status_label_form_received:'공식신청서 접수확인', status_label_shipped:'발송완료', status_label_mismatch:'정보불일치', status_label_requested:'개통요청', status_label_completed:'개통완료', status_label_cancelled:'취소됨',
     btn_lookup:'조회', btn_request_activation:'개통 요청', activation_requested_label:'개통 요청 완료', activation_processing_title:'요청이 접수되었습니다!', activation_processing_desc:'개통까지 1~2영업일이 소요됩니다. 완료되면 안내해드립니다.', btn_cancel_order:'주문 취소',
     lookup_enter_order_number:'주문번호를 입력해주세요.',
     lookup_not_found_title:'주문을 찾을 수 없습니다', lookup_not_found_desc:'주문번호를 다시 확인해주세요. 도움이 필요하시면 카카오톡으로 문의해주세요.',
@@ -1810,7 +1812,7 @@ const LANGS = {
     order_form_next_title:'다음 단계:', order_form_next_desc:'아래 공식 신청서 (PASS 인증 필요) 까지 작성해주셔야 배송이 진행됩니다',
     activation_form_title:'개통 요청', activation_form_sub:'성함과 유심 정보를 입력해주세요. 요청 후 1영업일 이내에 개통을 처리해드립니다.',
     activation_form_notice_title:'주의사항:', activation_form_notice_desc:'입력하시는 성함은 공식 신청서 및 외국인등록증(ARC)과 정확히 일치해야 합니다.',
-    field_full_name:'성함', field_phone:'연락처', field_emergency:'비상연락처', field_arc:'외국인등록번호', field_address:'배송 주소', field_iccid:'유심 일련번호 (ICCID)', field_plan:'선택 요금제', field_memo:'추가 요청사항 (선택)',
+    field_full_name:'성함', field_phone:'연락처', field_emergency:'비상연락처', field_arc:'외국인등록번호', field_address:'배송 주소', field_iccid:'유심 일련번호 (ICCID)', field_usim_serial:'유심 일련번호', field_courier_tracking:'택배 · 송장번호', field_plan:'선택 요금제', field_memo:'추가 요청사항 (선택)',
     address_warning_badge:'! 배송 주소 정확히 입력', placeholder_full_name:'성함을 입력하세요', placeholder_postcode:'우편번호', placeholder_address:'기본주소 (자동입력)', placeholder_address_detail:'상세주소 (동/호수, 층 등)', placeholder_memo:'특별 요청사항이 있으시면 입력해주세요...', btn_postcode_search:'우편번호 찾기',
     btn_apply_plan:'이 요금제 신청하기', btn_submit_order:'공식 신청서 작성하기', btn_submit_activation:'개통 요청 제출', btn_address_help:'주소 찾기 도움말', btn_confirm:'확인', address_help_title:'주소 찾는 방법', address_help_tip_title:'네이버 / 카카오 지도 활용하기', address_help_tip_desc:'영어로 검색해도 한글 주소가 나옵니다. 검색된 한글 주소를 선택하세요!', address_help_img_placeholder:'안내 이미지 준비 중', address_help_format_title:'주소 형식 예시:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (건물명, 동/호수 포함)',
     order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 연락처, 외국인등록번호, 주소).',
@@ -1901,7 +1903,7 @@ const LANGS = {
     order_form_next_title:'下一步：', order_form_next_desc:'请完成下方官方申请表（需要PASS认证），以便进行配送',
     activation_form_title:'开通申请', activation_form_sub:'请输入您的姓名和SIM卡信息，我们将在1个工作日内处理。',
     activation_form_notice_title:'注意事项：', activation_form_notice_desc:'输入的姓名必须与官方申请表及外国人登录证（ARC）完全一致。',
-    field_full_name:'姓名', field_phone:'联系电话', field_emergency:'紧急联系人', field_arc:'外国人登录号', field_address:'收货地址', field_iccid:'SIM卡序列号 (ICCID)', field_plan:'选择套餐', field_memo:'备注（选填）',
+    field_full_name:'姓名', field_phone:'联系电话', field_emergency:'紧急联系人', field_arc:'外国人登录号', field_address:'收货地址', field_iccid:'SIM卡序列号 (ICCID)', field_usim_serial:'SIM卡序列号', field_courier_tracking:'快递 · 运单号', field_plan:'选择套餐', field_memo:'备注（选填）',
     address_warning_badge:'! 请准确填写收货地址', placeholder_full_name:'请输入姓名', placeholder_postcode:'邮政编码', placeholder_address:'基本地址（自动填充）', placeholder_address_detail:'详细地址（房号、楼层等）', placeholder_memo:'如有特殊要求请填写...', btn_postcode_search:'搜索地址',
     btn_apply_plan:'申请此套餐', btn_submit_order:'填写官方申请表', btn_submit_activation:'提交开通申请', btn_address_help:'地址查询帮助', btn_confirm:'确认', address_help_title:'如何查找地址', address_help_tip_title:'使用Naver / Kakao地图', address_help_tip_desc:'用英文搜索也会显示韩文地址。请选择搜索结果中显示的韩文地址！', address_help_img_placeholder:'指南图片即将上线', address_help_format_title:'地址格式示例：', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (请包含建筑名称和门牌号)',
 
@@ -1922,6 +1924,7 @@ const LANGS = {
     activate_lookup_title:'订单号查询 · 开通申请 & 物流查询', activate_lookup_desc:'扫描印刷指南上的二维码，或在下方输入订单号。',
     activate_lost_title:'遗失了印刷指南？', activate_lost_desc:'请通过KakaoTalk发送姓名和电话号码，我们将手动处理。',
     placeholder_order_number:'例) KS-20260321-0042-X7K3',
+    status_label_pending:'申请受理', status_label_processing:'处理中', status_label_form_received:'官方申请已确认', status_label_shipped:'已发货', status_label_mismatch:'信息不符', status_label_requested:'已申请开通', status_label_completed:'已开通', status_label_cancelled:'已取消',
     btn_lookup:'查询', btn_request_activation:'申请开通', activation_requested_label:'开通申请已提交', activation_processing_title:'申请已受理！', activation_processing_desc:'开通需要1~2个工作日，完成后我们将通知您。', btn_cancel_order:'取消订单',
     lookup_enter_order_number:'请输入订单号。',
     lookup_not_found_title:'未找到订单', lookup_not_found_desc:'请确认订单号。如需帮助，请通过KakaoTalk联系我们。',
@@ -2023,7 +2026,7 @@ const LANGS = {
     order_form_next_title:'Bước tiếp theo:', order_form_next_desc:'Vui lòng hoàn thành biểu mẫu đăng ký chính thức bên dưới (yêu cầu xác thực PASS) để tiến hành giao hàng',
     activation_form_title:'Yêu cầu kích hoạt', activation_form_sub:'Vui lòng nhập thông tin của bạn. Chúng tôi sẽ xử lý trong vòng 1 ngày làm việc.',
     activation_form_notice_title:'Lưu ý quan trọng:', activation_form_notice_desc:'Tên bạn nhập phải khớp chính xác với biểu mẫu đăng ký và thẻ ARC.',
-    field_full_name:'Họ và tên', field_phone:'Số điện thoại', field_emergency:'Liên hệ khẩn cấp', field_arc:'Số đăng ký người nước ngoài', field_address:'Địa chỉ giao hàng', field_iccid:'Số sê-ri SIM (ICCID)', field_plan:'Gói đã chọn', field_memo:'Ghi chú thêm (tùy chọn)',
+    field_full_name:'Họ và tên', field_phone:'Số điện thoại', field_emergency:'Liên hệ khẩn cấp', field_arc:'Số đăng ký người nước ngoài', field_address:'Địa chỉ giao hàng', field_iccid:'Số sê-ri SIM (ICCID)', field_usim_serial:'Số sê-ri SIM', field_courier_tracking:'Vận chuyển · Mã vận đơn', field_plan:'Gói đã chọn', field_memo:'Ghi chú thêm (tùy chọn)',
     address_warning_badge:'! Nhập địa chỉ giao hàng chính xác', placeholder_full_name:'Nhập họ và tên', placeholder_postcode:'Mã bưu chính', placeholder_address:'Địa chỉ cơ bản (tự động điền)', placeholder_address_detail:'Địa chỉ chi tiết (số phòng, tầng...)', placeholder_memo:'Yêu cầu đặc biệt nếu có...', btn_postcode_search:'Tìm địa chỉ',
     btn_apply_plan:'Đăng ký gói này', btn_submit_order:'Điền biểu mẫu chính thức', btn_submit_activation:'Gửi yêu cầu kích hoạt', btn_address_help:'Hướng dẫn tìm địa chỉ', btn_confirm:'Xác nhận', address_help_title:'Cách tìm địa chỉ', address_help_tip_title:'Dùng Naver / Kakao Map', address_help_tip_desc:'Tìm kiếm bằng tiếng Anh vẫn ra địa chỉ tiếng Hàn. Hãy chọn địa chỉ tiếng Hàn xuất hiện trong kết quả!', address_help_img_placeholder:'Ảnh hướng dẫn sắp có', address_help_format_title:'Ví dụ định dạng địa chỉ:', address_help_format_desc:'서울특별시 강남구 테헤란로 152, OO동 OO호 (Vui lòng ghi rõ tên tòa nhà, số phòng)',
 
@@ -2044,6 +2047,7 @@ const LANGS = {
     activate_lookup_title:'Tra cứu đơn hàng · Kích hoạt & Theo dõi vận chuyển', activate_lookup_desc:'Quét mã QR trên tờ hướng dẫn hoặc nhập số đơn hàng bên dưới.',
     activate_lost_title:'Mất tờ hướng dẫn?', activate_lost_desc:'Gửi tên và số điện thoại qua KakaoTalk, chúng tôi sẽ xử lý thủ công.',
     placeholder_order_number:'VD) KS-20260321-0042-X7K3',
+    status_label_pending:'Đã tiếp nhận', status_label_processing:'Đang xử lý', status_label_form_received:'Đã xác nhận biểu mẫu', status_label_shipped:'Đã giao hàng', status_label_mismatch:'Thông tin không khớp', status_label_requested:'Đã yêu cầu kích hoạt', status_label_completed:'Đã kích hoạt', status_label_cancelled:'Đã hủy',
     btn_lookup:'Tra cứu', btn_request_activation:'Yêu cầu kích hoạt', activation_requested_label:'Đã gửi yêu cầu kích hoạt', activation_processing_title:'Yêu cầu đã được tiếp nhận!', activation_processing_desc:'Kích hoạt mất 1~2 ngày làm việc. Chúng tôi sẽ thông báo khi hoàn tất.', btn_cancel_order:'Hủy đơn hàng',
     lookup_enter_order_number:'Vui lòng nhập số đơn hàng.',
     lookup_not_found_title:'Không tìm thấy đơn hàng', lookup_not_found_desc:'Vui lòng kiểm tra lại số đơn hàng. Nếu cần hỗ trợ, liên hệ qua KakaoTalk.',
@@ -3016,16 +3020,29 @@ async function generateOrderNumber() {
 }
 
 // 상태 라벨
-const ORDER_STATUS = {
-  pending:      { label:'신청접수',           color:'#F59E0B', bg:'#FEF3C7' },
-  processing:   { label:'처리중',             color:'#3B82F6', bg:'#EFF6FF' },
-  form_received:{ label:'공식신청서 접수확인', color:'#0EA5E9', bg:'#E0F2FE' },
-  shipped:      { label:'발송완료',           color:'#8B5CF6', bg:'#F5F3FF' },
-  mismatch:     { label:'정보불일치',         color:'#EF4444', bg:'#FEF2F2' },
-  requested:    { label:'개통요청',           color:'#F97316', bg:'#FFF7ED' },
-  completed:    { label:'개통완료',           color:'#10B981', bg:'#ECFDF5' },
-  cancelled:    { label:'취소됨',             color:'#6B7280', bg:'#F9FAFB' },
+// ORDER_STATUS 라벨은 t() 함수로 동적 처리
+const ORDER_STATUS_COLORS = {
+  pending:      { color:'#F59E0B', bg:'#FEF3C7' },
+  processing:   { color:'#3B82F6', bg:'#EFF6FF' },
+  form_received:{ color:'#0EA5E9', bg:'#E0F2FE' },
+  shipped:      { color:'#8B5CF6', bg:'#F5F3FF' },
+  mismatch:     { color:'#EF4444', bg:'#FEF2F2' },
+  requested:    { color:'#F97316', bg:'#FFF7ED' },
+  completed:    { color:'#10B981', bg:'#ECFDF5' },
+  cancelled:    { color:'#6B7280', bg:'#F9FAFB' },
 };
+function getOrderStatus(status) {
+  const colors = ORDER_STATUS_COLORS[status] || ORDER_STATUS_COLORS.pending;
+  const labels = {
+    pending:'status_label_pending', processing:'status_label_processing',
+    form_received:'status_label_form_received', shipped:'status_label_shipped',
+    mismatch:'status_label_mismatch', requested:'status_label_requested',
+    completed:'status_label_completed', cancelled:'status_label_cancelled',
+  };
+  return { ...colors, label: t(labels[status] || 'status_label_pending') };
+}
+// 하위 호환성
+const ORDER_STATUS = ORDER_STATUS_COLORS;
 
 // 가입 유형 선택 UI
 let currentSignupType = 'new';
@@ -3235,7 +3252,7 @@ async function lookupOrder() {
     return;
   }
 
-  const st = ORDER_STATUS[order.status] || ORDER_STATUS.pending;
+  const st = getOrderStatus(order.status);
   const canRequest = order.status === 'shipped';
   const isRequested = order.status === 'requested';
   const isCompleted = order.status === 'completed';
@@ -3297,9 +3314,9 @@ async function lookupOrder() {
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_full_name')}</span><span style="font-weight:700;color:var(--ink);">${maskName(order.name)}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_plan')}</span><span style="font-weight:700;color:var(--sim);">${order.carrier} · ${order.plan}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signup_type === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
-        ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">유심 일련번호</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
+        ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_usim_serial')}</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
         ${order.tracking_number ? `<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;gap:8px;">
-          <span style="color:var(--ink-soft);flex-shrink:0;">택배 · 송장번호</span>
+          <span style="color:var(--ink-soft);flex-shrink:0;">${t('field_courier_tracking')}</span>
           <div style="display:flex;align-items:center;gap:6px;">
             <span style="font-weight:700;color:var(--ink);">${order.courier ? order.courier + ' · ' : ''}${order.tracking_number}</span>
             ${getTrackingLink(order.courier, order.tracking_number)}
