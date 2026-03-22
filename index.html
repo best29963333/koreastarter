@@ -993,7 +993,7 @@ footer strong { color: rgba(255,255,255,0.85); }
 
     <!-- 주문번호 조회 섹션 -->
     <div class="activate-section">
-      <div class="activate-section-title" data-i18n="activate_lookup_title">주문번호로 개통 요청</div>
+      <div class="activate-section-title" data-i18n="activate_lookup_title">주문번호로 개통 요청 (송장번호 조회)</div>
       <div class="activate-section-desc" data-i18n="activate_lookup_desc">택배에 동봉된 인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.</div>
 
       <div style="display:flex;gap:8px;margin-bottom:16px;">
@@ -1635,7 +1635,7 @@ const LANGS = {
     order_wait_required:'Please wait {m} more minutes before resubmitting the same number.',
     order_daily_limit:'Maximum 3 orders per email per day.',
     // 개통 요청
-    activate_lookup_title:'Request Activation by Order Number', activate_lookup_desc:'Scan the QR code on your printed guide, or enter your order number below.',
+    activate_lookup_title:'Order Lookup · Activation & Tracking', activate_lookup_desc:'Scan the QR code on your printed guide, or enter your order number below.',
     activate_lost_title:'Lost your printed guide?', activate_lost_desc:'Send your name and phone number via KakaoTalk and we will process it manually.',
     placeholder_order_number:'e.g. KS-20260321-0042-X7K3',
     btn_lookup:'Search', btn_request_activation:'Request Activation', activation_requested_label:'Activation Requested', activation_processing_title:'Your request has been received!', activation_processing_desc:'Activation takes 1–2 business days. We will notify you once complete.', btn_cancel_order:'Cancel Order',
@@ -1773,7 +1773,7 @@ const LANGS = {
     order_duplicate_mnp:'해당 번호로 진행 중인 신청이 있습니다. 주문번호: {n}',
     order_wait_required:'{m}분 후에 재신청 가능합니다.',
     order_daily_limit:'하루 동일 이메일로 최대 3건까지 신청 가능합니다.',
-    activate_lookup_title:'주문번호로 개통 요청', activate_lookup_desc:'인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.',
+    activate_lookup_title:'주문번호로 개통 요청 (송장번호 조회)', activate_lookup_desc:'인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.',
     activate_lost_title:'인쇄물을 분실하셨나요?', activate_lost_desc:'카카오톡으로 성함과 개통번호를 보내주시면 수동으로 처리해드립니다.',
     placeholder_order_number:'예) KS-20260321-0042-X7K3',
     btn_lookup:'조회', btn_request_activation:'개통 요청', activation_requested_label:'개통 요청 완료', activation_processing_title:'요청이 접수되었습니다!', activation_processing_desc:'개통까지 1~2영업일이 소요됩니다. 완료되면 안내해드립니다.', btn_cancel_order:'주문 취소',
@@ -1919,7 +1919,7 @@ const LANGS = {
     order_duplicate_mnp:'该号码已有进行中的申请。订单号：{n}',
     order_wait_required:'请在{m}分钟后重新申请。',
     order_daily_limit:'同一邮箱每天最多申请3次。',
-    activate_lookup_title:'通过订单号申请开通', activate_lookup_desc:'扫描印刷指南上的二维码，或在下方输入订单号。',
+    activate_lookup_title:'订单号查询 · 开通申请 & 物流查询', activate_lookup_desc:'扫描印刷指南上的二维码，或在下方输入订单号。',
     activate_lost_title:'遗失了印刷指南？', activate_lost_desc:'请通过KakaoTalk发送姓名和电话号码，我们将手动处理。',
     placeholder_order_number:'例) KS-20260321-0042-X7K3',
     btn_lookup:'查询', btn_request_activation:'申请开通', activation_requested_label:'开通申请已提交', activation_processing_title:'申请已受理！', activation_processing_desc:'开通需要1~2个工作日，完成后我们将通知您。', btn_cancel_order:'取消订单',
@@ -2041,7 +2041,7 @@ const LANGS = {
     order_duplicate_mnp:'Đã có đơn hàng đang xử lý cho số này. Đơn hàng: {n}',
     order_wait_required:'Vui lòng chờ {m} phút trước khi đăng ký lại.',
     order_daily_limit:'Tối đa 3 đơn hàng mỗi ngày cho cùng một email.',
-    activate_lookup_title:'Yêu cầu kích hoạt bằng số đơn hàng', activate_lookup_desc:'Quét mã QR trên tờ hướng dẫn hoặc nhập số đơn hàng bên dưới.',
+    activate_lookup_title:'Tra cứu đơn hàng · Kích hoạt & Theo dõi vận chuyển', activate_lookup_desc:'Quét mã QR trên tờ hướng dẫn hoặc nhập số đơn hàng bên dưới.',
     activate_lost_title:'Mất tờ hướng dẫn?', activate_lost_desc:'Gửi tên và số điện thoại qua KakaoTalk, chúng tôi sẽ xử lý thủ công.',
     placeholder_order_number:'VD) KS-20260321-0042-X7K3',
     btn_lookup:'Tra cứu', btn_request_activation:'Yêu cầu kích hoạt', activation_requested_label:'Đã gửi yêu cầu kích hoạt', activation_processing_title:'Yêu cầu đã được tiếp nhận!', activation_processing_desc:'Kích hoạt mất 1~2 ngày làm việc. Chúng tôi sẽ thông báo khi hoàn tất.', btn_cancel_order:'Hủy đơn hàng',
@@ -3045,13 +3045,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   loadCarrierList();
-  const urlParams = new URLSearchParams(window.location.search);
-  const qrOrder = urlParams.get('order');
-  if (qrOrder) {
-    showPage('activate');
-    const input = document.getElementById('activate-order-input');
-    if (input) { input.value = qrOrder; lookupOrder(); }
-  }
 });
 
 async function loadCarrierList() {
@@ -3415,6 +3408,21 @@ applyLang();
 renderPlans();
 renderJobs();
 renderComm();
+
+// QR 스캔 진입 처리 — applyLang() 이후에 실행해야 언어 적용됨
+(function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const qrOrder = urlParams.get('order');
+  if (qrOrder) {
+    showPage('activate');
+    const input = document.getElementById('activate-order-input');
+    if (input) {
+      input.value = qrOrder;
+      // 렌더링 완료 후 조회
+      setTimeout(() => lookupOrder(), 100);
+    }
+  }
+})();
 
 document.querySelectorAll('input[name="job-post-type"]').forEach(radio => {
   radio.addEventListener('change', () => {
