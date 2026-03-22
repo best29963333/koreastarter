@@ -997,7 +997,7 @@ footer strong { color: rgba(255,255,255,0.85); }
       <div class="activate-section-desc" data-i18n="activate_lookup_desc">택배에 동봉된 인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.</div>
 
       <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <input class="form-input" id="activate-order-input" type="text" placeholder="KS-20260321-0042" style="font-family:monospace;letter-spacing:0.05em;font-size:15px;flex:1;" data-i18n-placeholder="placeholder_order_number">
+        <input class="form-input" id="activate-order-input" type="text" placeholder="KS-20260321-0042-X7K3" style="font-family:monospace;letter-spacing:0.05em;font-size:15px;flex:1;" data-i18n-placeholder="placeholder_order_number">
         <button onclick="lookupOrder()" style="padding:0 22px;border-radius:10px;background:var(--sim);color:white;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;" data-i18n="btn_lookup">조회</button>
       </div>
 
@@ -1637,7 +1637,7 @@ const LANGS = {
     // 개통 요청
     activate_lookup_title:'Request Activation by Order Number', activate_lookup_desc:'Scan the QR code on your printed guide, or enter your order number below.',
     activate_lost_title:'Lost your printed guide?', activate_lost_desc:'Send your name and phone number via KakaoTalk and we will process it manually.',
-    placeholder_order_number:'e.g. KS-20260321-0042',
+    placeholder_order_number:'e.g. KS-20260321-0042-X7K3',
     btn_lookup:'Search', btn_request_activation:'Request Activation', activation_requested_label:'Activation Requested', activation_processing_title:'Your request has been received!', activation_processing_desc:'Activation takes 1–2 business days. We will notify you once complete.', btn_cancel_order:'Cancel Order',
     lookup_enter_order_number:'Please enter your order number.',
     lookup_not_found_title:'Order not found', lookup_not_found_desc:'Please check your order number. If you need help, contact us via KakaoTalk.',
@@ -1775,7 +1775,7 @@ const LANGS = {
     order_daily_limit:'하루 동일 이메일로 최대 3건까지 신청 가능합니다.',
     activate_lookup_title:'주문번호로 개통 요청', activate_lookup_desc:'인쇄물의 QR코드를 스캔하거나, 아래에 주문번호를 직접 입력해주세요.',
     activate_lost_title:'인쇄물을 분실하셨나요?', activate_lost_desc:'카카오톡으로 성함과 개통번호를 보내주시면 수동으로 처리해드립니다.',
-    placeholder_order_number:'예) KS-20260321-0042',
+    placeholder_order_number:'예) KS-20260321-0042-X7K3',
     btn_lookup:'조회', btn_request_activation:'개통 요청', activation_requested_label:'개통 요청 완료', activation_processing_title:'요청이 접수되었습니다!', activation_processing_desc:'개통까지 1~2영업일이 소요됩니다. 완료되면 안내해드립니다.', btn_cancel_order:'주문 취소',
     lookup_enter_order_number:'주문번호를 입력해주세요.',
     lookup_not_found_title:'주문을 찾을 수 없습니다', lookup_not_found_desc:'주문번호를 다시 확인해주세요. 도움이 필요하시면 카카오톡으로 문의해주세요.',
@@ -1921,7 +1921,7 @@ const LANGS = {
     order_daily_limit:'同一邮箱每天最多申请3次。',
     activate_lookup_title:'通过订单号申请开通', activate_lookup_desc:'扫描印刷指南上的二维码，或在下方输入订单号。',
     activate_lost_title:'遗失了印刷指南？', activate_lost_desc:'请通过KakaoTalk发送姓名和电话号码，我们将手动处理。',
-    placeholder_order_number:'例) KS-20260321-0042',
+    placeholder_order_number:'例) KS-20260321-0042-X7K3',
     btn_lookup:'查询', btn_request_activation:'申请开通', activation_requested_label:'开通申请已提交', activation_processing_title:'申请已受理！', activation_processing_desc:'开通需要1~2个工作日，完成后我们将通知您。', btn_cancel_order:'取消订单',
     lookup_enter_order_number:'请输入订单号。',
     lookup_not_found_title:'未找到订单', lookup_not_found_desc:'请确认订单号。如需帮助，请通过KakaoTalk联系我们。',
@@ -2043,7 +2043,7 @@ const LANGS = {
     order_daily_limit:'Tối đa 3 đơn hàng mỗi ngày cho cùng một email.',
     activate_lookup_title:'Yêu cầu kích hoạt bằng số đơn hàng', activate_lookup_desc:'Quét mã QR trên tờ hướng dẫn hoặc nhập số đơn hàng bên dưới.',
     activate_lost_title:'Mất tờ hướng dẫn?', activate_lost_desc:'Gửi tên và số điện thoại qua KakaoTalk, chúng tôi sẽ xử lý thủ công.',
-    placeholder_order_number:'VD) KS-20260321-0042',
+    placeholder_order_number:'VD) KS-20260321-0042-X7K3',
     btn_lookup:'Tra cứu', btn_request_activation:'Yêu cầu kích hoạt', activation_requested_label:'Đã gửi yêu cầu kích hoạt', activation_processing_title:'Yêu cầu đã được tiếp nhận!', activation_processing_desc:'Kích hoạt mất 1~2 ngày làm việc. Chúng tôi sẽ thông báo khi hoàn tất.', btn_cancel_order:'Hủy đơn hàng',
     lookup_enter_order_number:'Vui lòng nhập số đơn hàng.',
     lookup_not_found_title:'Không tìm thấy đơn hàng', lookup_not_found_desc:'Vui lòng kiểm tra lại số đơn hàng. Nếu cần hỗ trợ, liên hệ qua KakaoTalk.',
@@ -3009,7 +3009,10 @@ async function generateOrderNumber() {
     .select('*', { count: 'exact', head: true })
     .like('order_number', `KS-${date}-%`);
   const seq = String((count || 0) + 1).padStart(4,'0');
-  return 'KS-' + date + '-' + seq;
+  // 랜덤 4자리 영숫자 (혼동 방지: O,0,I,1 제외)
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const rand = Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
+  return `KS-${date}-${seq}-${rand}`;
 }
 
 // 상태 라벨
@@ -3298,16 +3301,53 @@ async function lookupOrder() {
       </div>
       <div style="padding:14px 20px;background:${st.bg};border-bottom:1px solid var(--border);font-size:13px;color:${st.color};font-weight:600;line-height:1.6;">${statusMessages[order.status] || ''}</div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--border);">
-        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_full_name')}</span><span style="font-weight:700;color:var(--ink);">${order.name}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_full_name')}</span><span style="font-weight:700;color:var(--ink);">${maskName(order.name)}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_plan')}</span><span style="font-weight:700;color:var(--sim);">${order.carrier} · ${order.plan}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signup_type === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
-        ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">ICCID</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
-        ${order.tracking_number ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_tracking')}</span><span style="font-weight:700;color:var(--ink);">${order.tracking_number}</span></div>` : ''}
+        ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">유심 일련번호</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
+        ${order.tracking_number ? `<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;gap:8px;">
+          <span style="color:var(--ink-soft);flex-shrink:0;">택배 · 송장번호</span>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-weight:700;color:var(--ink);">${order.courier ? order.courier + ' · ' : ''}${order.tracking_number}</span>
+            ${getTrackingLink(order.courier, order.tracking_number)}
+          </div>
+        </div>` : ''}
       </div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
         ${actionHTML}
       </div>
     </div>`;
+}
+
+// 이름 마스킹: 홍순국 → 홍*국
+function maskName(name) {
+  if (!name) return '';
+  const chars = [...name]; // 유니코드 안전하게 분리
+  if (chars.length <= 1) return name;
+  if (chars.length === 2) return chars[0] + '*';
+  const masked = chars.map((c, i) => {
+    if (i === 0 || i === chars.length - 1) return c;
+    return '*';
+  });
+  return masked.join('');
+}
+
+// 택배사별 배송조회 링크
+function getTrackingLink(courier, trackingNum) {
+  if (!courier || !trackingNum) return '';
+  const urls = {
+    'CJ대한통운': `https://trace.cjlogistics.com/next/tracking.html?wblNo=${trackingNum}`,
+    '한진택배':   `https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=${trackingNum}`,
+    '롯데택배':   `https://www.lotteglogis.com/home/reservation/tracking/index?InvNo=${trackingNum}`,
+    '우체국택배': `https://service.epost.go.kr/trace.RetrieveEmsRigiTraceList.comm?sid1=${trackingNum}`,
+    '로젠택배':   `https://www.ilogen.com/web/personal/trace/${trackingNum}`,
+  };
+  const url = urls[courier];
+  if (!url) return '';
+  return `<a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;background:var(--sim-soft);border:1px solid #BFDBFE;color:var(--sim);font-size:11.5px;font-weight:700;text-decoration:none;">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    배송조회
+  </a>`;
 }
 
 async function submitActivationRequest(orderNumber) {
