@@ -1635,21 +1635,72 @@ async function renderAdminOrders() {
   list.innerHTML = filtered.map(o => {
     const st = ORDER_STATUS_ADMIN[o.status] || ORDER_STATUS_ADMIN.pending;
     const date = new Date(o.created_at).toLocaleDateString('ko-KR');
+    const COURIERS = ['CJ대한통운','한진택배','롯데택배','우체국택배','로젠택배','카카오T당일','쿠팡로켓','기타'];
+    const courierOpts = COURIERS.map(c => `<option value="${c}" ${o.courier===c?'selected':''}>${c}</option>`).join('');
+    const statusBtns = Object.entries(ORDER_STATUS_ADMIN).map(([key, val]) =>
+      `<button onclick="quickChangeStatus('${o.order_number}','${key}')" title="${val.label}"
+        style="padding:5px 12px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid ${val.color}40;background:${o.status===key?val.bg:'transparent'};color:${val.color};cursor:pointer;">${val.label}</button>`
+    ).join('');
+
     return `
-    <div style="border-bottom:1px solid var(--border);padding:16px 20px;">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="border-bottom:1px solid var(--border);">
+      <!-- 주문 헤더 -->
+      <div style="padding:14px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
         <div style="flex:1;min-width:200px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;flex-wrap:wrap;">
             <span style="font-size:14px;font-weight:800;font-family:monospace;color:var(--ink);">${o.order_number}</span>
             <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;background:${st.bg};font-size:11.5px;font-weight:700;color:${st.color};">${st.label}</span>
             <span style="font-size:12px;color:var(--ink-muted);">${date}</span>
           </div>
           <div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:2px;">${o.name} · ${o.signup_type === 'new' ? '신규' : '번호이동'}</div>
           <div style="font-size:13px;color:var(--ink-muted);">${o.carrier} · ${o.plan} · ${o.email}</div>
-          ${o.mnp_number ? `<div style="font-size:12.5px;color:var(--ink-muted);">이동번호: ${o.mnp_number} (${o.mnp_carrier})</div>` : ''}
-          ${o.address ? `<div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">${o.address}</div>` : ''}
+          ${o.tracking_number ? `<div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">${o.courier || ''} · ${o.tracking_number}</div>` : ''}
         </div>
-        <button onclick="openOrderDetail('${o.order_number}')" style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">상세 / 처리</button>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="toggleInlinePanel('${o.order_number}')"
+            style="padding:7px 14px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--ink-muted);font-size:12px;font-weight:700;cursor:pointer;">
+            ✏️ 빠른처리
+          </button>
+          <button onclick="openOrderDetail('${o.order_number}')"
+            style="padding:7px 14px;border-radius:8px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">
+            상세
+          </button>
+        </div>
+      </div>
+
+      <!-- 인라인 빠른 처리 패널 (토글) -->
+      <div id="inline-panel-${o.order_number}" style="display:none;padding:14px 20px;background:var(--surface2);border-top:1px solid var(--border);">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+
+          <!-- ICCID -->
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">ICCID (바코드 스캔)</label>
+            <input type="text" id="inline-iccid-${o.order_number}" value="${o.iccid||''}" placeholder="스캔하세요..."
+              style="flex:1;min-width:160px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
+            <button onclick="quickSaveIccid('${o.order_number}')"
+              style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;">저장</button>
+          </div>
+
+          <!-- 택배사 + 송장 -->
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">택배사 + 송장 스캔</label>
+            <select id="inline-courier-${o.order_number}"
+              style="width:140px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);">
+              <option value="">택배사 선택</option>
+              ${courierOpts}
+            </select>
+            <input type="text" id="inline-tracking-${o.order_number}" value="${o.tracking_number||''}" placeholder="바코드 스캔..."
+              style="flex:1;min-width:140px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
+            <button onclick="quickSaveTracking('${o.order_number}')"
+              style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;">저장</button>
+          </div>
+
+          <!-- 상태 변경 -->
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">상태 변경</label>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;">${statusBtns}</div>
+          </div>
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -1658,6 +1709,12 @@ async function renderAdminOrders() {
 async function openOrderDetail(orderNumber) {
   const { data: o, error } = await sb.from('orders').select('*').eq('order_number', orderNumber).single();
   if (error || !o) { alert('주문을 찾을 수 없습니다.'); return; }
+
+  // 택배사 목록
+  const COURIERS = ['CJ대한통운','한진택배','롯데택배','우체국택배','로젠택배','카카오T당일','쿠팡로켓','기타'];
+  const courierOptions = COURIERS.map(c =>
+    `<option value="${c}" ${o.courier === c ? 'selected' : ''}>${c}</option>`
+  ).join('');
 
   const st = ORDER_STATUS_ADMIN[o.status] || ORDER_STATUS_ADMIN.pending;
   const modal = document.createElement('div');
@@ -1675,6 +1732,8 @@ async function openOrderDetail(orderNumber) {
           <button onclick="document.getElementById('order-detail-modal').remove()" style="background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:14px;color:var(--ink-muted);display:flex;align-items:center;justify-content:center;">✕</button>
         </div>
       </div>
+
+      <!-- 고객 정보 -->
       <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
         <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">고객 정보</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -1693,25 +1752,45 @@ async function openOrderDetail(orderNumber) {
         </div>
         ${o.memo ? `<div style="margin-top:8px;padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:13px;color:var(--ink);"><span style="color:var(--ink-muted);font-size:12px;display:block;margin-bottom:3px;">추가요청사항</span>${o.memo}</div>` : ''}
       </div>
+
+      <!-- 처리 정보 입력 -->
       <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
-        <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">처리 정보 입력</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:14px;">처리 정보 입력</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <!-- ICCID 바코드 스캔 -->
           <div>
-            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:5px;">유심 일련번호 (ICCID) — 바코드 스캔</label>
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:6px;">
+              유심 일련번호 (ICCID) — 바코드 스캔
+            </label>
             <div style="display:flex;gap:8px;">
-              <input type="text" id="admin-iccid-input" value="${o.iccid || ''}" placeholder="바코드 리더기로 스캔하세요..." style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;font-family:monospace;background:var(--surface);color:var(--ink);" autofocus>
-              <button onclick="saveIccid('${o.order_number}')" style="padding:10px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
+              <input type="text" id="admin-iccid-input" value="${o.iccid || ''}" placeholder="바코드 리더기로 스캔하세요..."
+                style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;font-family:monospace;background:var(--surface);color:var(--ink);" autofocus>
+              <button onclick="saveIccid('${o.order_number}')" style="padding:10px 18px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
             </div>
           </div>
+
+          <!-- 택배사 선택 + 송장번호 바코드 스캔 -->
           <div>
-            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:5px;">송장번호</label>
-            <div style="display:flex;gap:8px;">
-              <input type="text" id="admin-tracking-input" value="${o.tracking_number || ''}" placeholder="송장번호 입력..." style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;background:var(--surface);color:var(--ink);">
-              <button onclick="saveTracking('${o.order_number}')" style="padding:10px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
+            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);display:block;margin-bottom:6px;">
+              택배사 선택 + 송장번호 — 바코드 스캔
+            </label>
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+              <select id="admin-courier-select"
+                style="width:160px;flex-shrink:0;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <option value="">택배사 선택</option>
+                ${courierOptions}
+              </select>
+              <input type="text" id="admin-tracking-input" value="${o.tracking_number || ''}" placeholder="바코드 리더기로 스캔하세요..."
+                style="flex:1;padding:10px 14px;border-radius:8px;border:1.5px solid var(--border);font-size:14px;font-family:monospace;background:var(--surface);color:var(--ink);">
+              <button onclick="saveTracking('${o.order_number}')" style="padding:10px 18px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
             </div>
+            ${o.courier ? `<div style="font-size:12px;color:var(--ink-muted);">현재 택배사: <strong>${o.courier}</strong> · 송장: <strong>${o.tracking_number || '-'}</strong></div>` : ''}
           </div>
         </div>
       </div>
+
+      <!-- 상태 변경 -->
       <div style="padding:18px 24px;border-bottom:1px solid var(--border);">
         <div style="font-size:12px;font-weight:700;color:var(--ink-muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px;">상태 변경</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
@@ -1720,6 +1799,8 @@ async function openOrderDetail(orderNumber) {
           ).join('')}
         </div>
       </div>
+
+      <!-- 하단 버튼 -->
       <div style="padding:16px 24px;display:flex;gap:8px;justify-content:flex-end;">
         <button onclick="printOrderSlip('${o.order_number}')" style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;background:var(--surface2);border:1.5px solid var(--border);color:var(--ink);font-size:13.5px;font-weight:700;cursor:pointer;">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -1731,7 +1812,55 @@ async function openOrderDetail(orderNumber) {
   document.body.appendChild(modal);
 }
 
-async function saveIccid(orderNumber) {
+function toggleInlinePanel(orderNumber) {
+  const panel = document.getElementById(`inline-panel-${orderNumber}`);
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    // 패널 열릴 때 ICCID 입력창 포커스
+    setTimeout(() => {
+      const input = document.getElementById(`inline-iccid-${orderNumber}`);
+      if (input) input.focus();
+    }, 50);
+  }
+}
+
+async function quickSaveIccid(orderNumber) {
+  const val = document.getElementById(`inline-iccid-${orderNumber}`)?.value.trim();
+  if (!val) { alert('ICCID를 입력해주세요.'); return; }
+  const { error } = await sb.from('orders').update({ iccid: val }).eq('order_number', orderNumber);
+  if (error) { alert('저장 실패: ' + error.message); return; }
+  toast('ICCID 저장 완료!', 'success');
+  renderAdminOrders();
+}
+
+async function quickSaveTracking(orderNumber) {
+  const tracking = document.getElementById(`inline-tracking-${orderNumber}`)?.value.trim();
+  const courier = document.getElementById(`inline-courier-${orderNumber}`)?.value;
+  if (!tracking) { alert('송장번호를 입력해주세요.'); return; }
+  if (!courier) { alert('택배사를 선택해주세요.'); return; }
+  const { error } = await sb.from('orders').update({ tracking_number: tracking, courier }).eq('order_number', orderNumber);
+  if (error) { alert('저장 실패: ' + error.message); return; }
+  toast(`${courier} · ${tracking} 저장 완료!`, 'success');
+  renderAdminOrders();
+}
+
+async function quickChangeStatus(orderNumber, newStatus) {
+  const updateData = { status: newStatus };
+  if (newStatus === 'shipped') updateData.shipped_at = new Date().toISOString();
+  if (newStatus === 'completed') updateData.activated_at = new Date().toISOString();
+  if (newStatus === 'cancelled') {
+    const { data } = await sb.from('orders').select('cancel_count').eq('order_number', orderNumber).single();
+    updateData.cancelled_at = new Date().toISOString();
+    updateData.cancel_count = (data?.cancel_count || 0) + 1;
+  }
+  const { error } = await sb.from('orders').update(updateData).eq('order_number', orderNumber);
+  if (error) { alert('상태 변경 실패'); return; }
+  toast(`${ORDER_STATUS_ADMIN[newStatus]?.label}으로 변경됐습니다.`, 'success');
+  updateOrderBadge();
+  renderAdminOrders();
+}
   const val = document.getElementById('admin-iccid-input')?.value.trim();
   if (!val) { alert('ICCID를 입력해주세요.'); return; }
   const { error } = await sb.from('orders').update({ iccid: val }).eq('order_number', orderNumber);
@@ -1740,11 +1869,14 @@ async function saveIccid(orderNumber) {
 }
 
 async function saveTracking(orderNumber) {
-  const val = document.getElementById('admin-tracking-input')?.value.trim();
-  if (!val) { alert('송장번호를 입력해주세요.'); return; }
-  const { error } = await sb.from('orders').update({ tracking_number: val }).eq('order_number', orderNumber);
+  const tracking = document.getElementById('admin-tracking-input')?.value.trim();
+  const courier = document.getElementById('admin-courier-select')?.value || '';
+  if (!tracking) { alert('송장번호를 입력해주세요.'); return; }
+  if (!courier) { alert('택배사를 선택해주세요.'); return; }
+  const { error } = await sb.from('orders').update({ tracking_number: tracking, courier }).eq('order_number', orderNumber);
   if (error) { alert('저장 실패: ' + error.message); return; }
-  toast('송장번호가 저장되었습니다.', 'success');
+  toast(`${courier} · ${tracking} 저장되었습니다.`, 'success');
+  renderAdminOrders();
 }
 
 async function changeOrderStatus(orderNumber, newStatus) {
