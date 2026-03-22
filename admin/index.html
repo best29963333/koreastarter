@@ -645,17 +645,40 @@ textarea.form-control { resize: vertical; min-height: 80px; }
           <div class="table-header">
             <div class="table-title">주문 관리 <span id="orders-count" style="font-size:13px;color:var(--ink-muted);font-weight:500;"></span></div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <!-- 빠른 날짜 버튼 -->
+              <div style="display:flex;gap:4px;">
+                <button onclick="setDateFilter('today')" id="dfbtn-today"
+                  style="padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--blue);background:var(--blue);color:white;cursor:pointer;">당일</button>
+                <button onclick="setDateFilter('yesterday')" id="dfbtn-yesterday"
+                  style="padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--ink-muted);cursor:pointer;">전일</button>
+                <button onclick="setDateFilter('thismonth')" id="dfbtn-thismonth"
+                  style="padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--ink-muted);cursor:pointer;">당월</button>
+                <button onclick="setDateFilter('lastmonth')" id="dfbtn-lastmonth"
+                  style="padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--ink-muted);cursor:pointer;">전월</button>
+                <button onclick="setDateFilter('all')" id="dfbtn-all"
+                  style="padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--border);background:transparent;color:var(--ink-muted);cursor:pointer;">전체</button>
+              </div>
+              <!-- 날짜 직접 선택 -->
+              <div style="display:flex;align-items:center;gap:4px;">
+                <input type="date" id="order-date-from" onchange="renderAdminOrders()"
+                  style="padding:6px 8px;border-radius:8px;border:1px solid var(--border);font-size:12.5px;background:var(--surface);color:var(--ink);">
+                <span style="font-size:12px;color:var(--ink-muted);">~</span>
+                <input type="date" id="order-date-to" onchange="renderAdminOrders()"
+                  style="padding:6px 8px;border-radius:8px;border:1px solid var(--border);font-size:12.5px;background:var(--surface);color:var(--ink);">
+              </div>
+              <!-- 상태 필터 + 검색 -->
               <select id="order-status-filter" onchange="renderAdminOrders()" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);">
                 <option value="all">전체 상태</option>
                 <option value="pending">신청접수</option>
                 <option value="processing">처리중</option>
+                <option value="form_received">공식신청서 접수확인</option>
                 <option value="shipped">발송완료</option>
                 <option value="mismatch">정보불일치</option>
                 <option value="requested">개통요청</option>
                 <option value="completed">개통완료</option>
                 <option value="cancelled">취소됨</option>
               </select>
-              <input type="text" id="order-search-input" oninput="renderAdminOrders()" placeholder="주문번호 / 성함 검색..." style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);width:180px;">
+              <input type="text" id="order-search-input" oninput="renderAdminOrders()" placeholder="주문번호 / 성함 검색..." style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);width:160px;">
               <button onclick="downloadOrdersExcel()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:#059669;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 엑셀 다운
@@ -1585,26 +1608,74 @@ function goSection(id) {
   if (id === 'sim') { renderAdminPlans(); renderMnpCarriers(); }
   if (id === 'members') renderMembers();
   if (id === 'dashboard') refreshDashboard();
-  if (id === 'orders') { renderAdminOrders(); renderMnpCarriers(); }
+  if (id === 'orders') {
+    // 오늘 날짜 기본 세팅
+    const today = new Date().toISOString().slice(0,10);
+    const fromEl = document.getElementById('order-date-from');
+    const toEl = document.getElementById('order-date-to');
+    if (fromEl && !fromEl.value) fromEl.value = today;
+    if (toEl && !toEl.value) toEl.value = today;
+    renderAdminOrders();
+    renderMnpCarriers();
+  }
 }
 
 /* ═══════════════ 주문 관리 (Supabase) ═══════════════ */
 const ORDER_STATUS_ADMIN = {
-  pending:    { label:'신청접수',   color:'#F59E0B', bg:'#FEF3C7' },
-  processing: { label:'처리중',     color:'#3B82F6', bg:'#EFF6FF' },
-  shipped:    { label:'발송완료',   color:'#8B5CF6', bg:'#F5F3FF' },
-  mismatch:   { label:'정보불일치', color:'#EF4444', bg:'#FEF2F2' },
-  requested:  { label:'개통요청',   color:'#F97316', bg:'#FFF7ED' },
-  completed:  { label:'개통완료',   color:'#10B981', bg:'#ECFDF5' },
-  cancelled:  { label:'취소됨',     color:'#6B7280', bg:'#F9FAFB' },
+  pending:      { label:'신청접수',          color:'#F59E0B', bg:'#FEF3C7' },
+  processing:   { label:'처리중',            color:'#3B82F6', bg:'#EFF6FF' },
+  form_received:{ label:'공식신청서 접수확인', color:'#0EA5E9', bg:'#E0F2FE' },
+  shipped:      { label:'발송완료',          color:'#8B5CF6', bg:'#F5F3FF' },
+  mismatch:     { label:'정보불일치',        color:'#EF4444', bg:'#FEF2F2' },
+  requested:    { label:'개통요청',          color:'#F97316', bg:'#FFF7ED' },
+  completed:    { label:'개통완료',          color:'#10B981', bg:'#ECFDF5' },
+  cancelled:    { label:'취소됨',            color:'#6B7280', bg:'#F9FAFB' },
 };
 
 async function updateOrderBadge() {
   const { count } = await sb.from('orders')
     .select('*', { count: 'exact', head: true })
-    .in('status', ['pending','processing','requested']);
+    .in('status', ['pending','processing','form_received','requested']);
   const badge = document.getElementById('badge-orders');
   if (badge) { badge.textContent = count || ''; badge.style.display = count ? '' : 'none'; }
+}
+
+function setDateFilter(type) {
+  const today = new Date();
+  const fmt = d => d.toISOString().slice(0,10);
+  let from, to;
+
+  if (type === 'today') {
+    from = to = fmt(today);
+  } else if (type === 'yesterday') {
+    const yd = new Date(today); yd.setDate(yd.getDate()-1);
+    from = to = fmt(yd);
+  } else if (type === 'thismonth') {
+    from = fmt(new Date(today.getFullYear(), today.getMonth(), 1));
+    to = fmt(new Date(today.getFullYear(), today.getMonth()+1, 0));
+  } else if (type === 'lastmonth') {
+    from = fmt(new Date(today.getFullYear(), today.getMonth()-1, 1));
+    to = fmt(new Date(today.getFullYear(), today.getMonth(), 0));
+  } else {
+    from = ''; to = '';
+  }
+
+  const fromEl = document.getElementById('order-date-from');
+  const toEl = document.getElementById('order-date-to');
+  if (fromEl) fromEl.value = from;
+  if (toEl) toEl.value = to;
+
+  // 버튼 활성화 스타일
+  ['today','yesterday','thismonth','lastmonth','all'].forEach(t => {
+    const btn = document.getElementById(`dfbtn-${t}`);
+    if (!btn) return;
+    const active = t === type;
+    btn.style.background = active ? 'var(--blue)' : 'transparent';
+    btn.style.color = active ? 'white' : 'var(--ink-muted)';
+    btn.style.borderColor = active ? 'var(--blue)' : 'var(--border)';
+  });
+
+  renderAdminOrders();
 }
 
 async function renderAdminOrders() {
@@ -1614,9 +1685,13 @@ async function renderAdminOrders() {
 
   const statusFilter = document.getElementById('order-status-filter')?.value || 'all';
   const searchQ = (document.getElementById('order-search-input')?.value || '').toLowerCase();
+  const dateFrom = document.getElementById('order-date-from')?.value;
+  const dateTo = document.getElementById('order-date-to')?.value;
 
   let query = sb.from('orders').select('*').order('created_at', { ascending: false });
   if (statusFilter !== 'all') query = query.eq('status', statusFilter);
+  if (dateFrom) query = query.gte('created_at', dateFrom + 'T00:00:00');
+  if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59');
 
   const { data: orders, error } = await query;
   if (error) { list.innerHTML = '<div style="text-align:center;padding:30px;color:red;">오류가 발생했습니다.</div>'; return; }
