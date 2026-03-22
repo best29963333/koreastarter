@@ -3430,12 +3430,19 @@ renderComm();
 (function() {
   const urlParams = new URLSearchParams(window.location.search);
   const qrOrder = urlParams.get('order');
+  const urlLang = urlParams.get('lang');
+
+  // URL에 lang 파라미터 있으면 해당 언어로 강제 설정
+  if (urlLang && ['en','ko','zh','vi'].includes(urlLang)) {
+    currentLang = urlLang;
+    applyLang(); // 언어 재적용
+  }
+
   if (qrOrder) {
     showPage('activate');
     const input = document.getElementById('activate-order-input');
     if (input) {
       input.value = qrOrder;
-      // 렌더링 완료 후 조회
       setTimeout(() => lookupOrder(), 100);
     }
   }
