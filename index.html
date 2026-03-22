@@ -1779,7 +1779,7 @@ const LANGS = {
     btn_lookup:'조회', btn_request_activation:'개통 요청', activation_requested_label:'개통 요청 완료', activation_processing_title:'요청이 접수되었습니다!', activation_processing_desc:'개통까지 1~2영업일이 소요됩니다. 완료되면 안내해드립니다.', btn_cancel_order:'주문 취소',
     lookup_enter_order_number:'주문번호를 입력해주세요.',
     lookup_not_found_title:'주문을 찾을 수 없습니다', lookup_not_found_desc:'주문번호를 다시 확인해주세요. 도움이 필요하시면 카카오톡으로 문의해주세요.',
-    status_msg_pending:'신청이 접수되었습니다. 처리 중입니다.',
+    status_msg_pending:'신청이 접수되었습니다. 처리 중입니다.', status_msg_form_received:'공식 신청서 접수가 확인되었습니다. 유심을 준비 중입니다.',
     status_msg_processing:'유심을 준비 중입니다. 잠시만 기다려주세요.',
     status_msg_shipped:'유심이 배송 중입니다. 수령 후 개통 요청해주세요.',
     status_msg_mismatch:'입력 정보에 문제가 있습니다. 카카오톡으로 문의해주세요.',
@@ -1925,7 +1925,7 @@ const LANGS = {
     btn_lookup:'查询', btn_request_activation:'申请开通', activation_requested_label:'开通申请已提交', activation_processing_title:'申请已受理！', activation_processing_desc:'开通需要1~2个工作日，完成后我们将通知您。', btn_cancel_order:'取消订单',
     lookup_enter_order_number:'请输入订单号。',
     lookup_not_found_title:'未找到订单', lookup_not_found_desc:'请确认订单号。如需帮助，请通过KakaoTalk联系我们。',
-    status_msg_pending:'您的申请已收到，正在处理中。',
+    status_msg_pending:'您的申请已收到，正在处理中。', status_msg_form_received:'官方申请表已确认收到，正在准备SIM卡。',
     status_msg_processing:'正在准备SIM卡，请稍候。',
     status_msg_shipped:'SIM卡正在配送中，收货后请申请开通。',
     status_msg_mismatch:'您的信息有问题，请通过KakaoTalk联系我们。',
@@ -2047,7 +2047,7 @@ const LANGS = {
     btn_lookup:'Tra cứu', btn_request_activation:'Yêu cầu kích hoạt', activation_requested_label:'Đã gửi yêu cầu kích hoạt', activation_processing_title:'Yêu cầu đã được tiếp nhận!', activation_processing_desc:'Kích hoạt mất 1~2 ngày làm việc. Chúng tôi sẽ thông báo khi hoàn tất.', btn_cancel_order:'Hủy đơn hàng',
     lookup_enter_order_number:'Vui lòng nhập số đơn hàng.',
     lookup_not_found_title:'Không tìm thấy đơn hàng', lookup_not_found_desc:'Vui lòng kiểm tra lại số đơn hàng. Nếu cần hỗ trợ, liên hệ qua KakaoTalk.',
-    status_msg_pending:'Đơn hàng đã được tiếp nhận, đang xử lý.',
+    status_msg_pending:'Đơn hàng đã được tiếp nhận, đang xử lý.', status_msg_form_received:'Biểu mẫu chính thức đã được xác nhận. Đang chuẩn bị SIM card.',
     status_msg_processing:'Đang chuẩn bị SIM card, vui lòng chờ.',
     status_msg_shipped:'SIM đang được giao. Yêu cầu kích hoạt sau khi nhận.',
     status_msg_mismatch:'Thông tin có vấn đề, vui lòng liên hệ qua KakaoTalk.',
@@ -3014,13 +3014,14 @@ async function generateOrderNumber() {
 
 // 상태 라벨
 const ORDER_STATUS = {
-  pending:   { label:'신청접수',   color:'#F59E0B', bg:'#FEF3C7' },
-  processing:{ label:'처리중',     color:'#3B82F6', bg:'#EFF6FF' },
-  shipped:   { label:'발송완료',   color:'#8B5CF6', bg:'#F5F3FF' },
-  mismatch:  { label:'정보불일치', color:'#EF4444', bg:'#FEF2F2' },
-  requested: { label:'개통요청',   color:'#F97316', bg:'#FFF7ED' },
-  completed: { label:'개통완료',   color:'#10B981', bg:'#ECFDF5' },
-  cancelled: { label:'취소됨',     color:'#6B7280', bg:'#F9FAFB' },
+  pending:      { label:'신청접수',           color:'#F59E0B', bg:'#FEF3C7' },
+  processing:   { label:'처리중',             color:'#3B82F6', bg:'#EFF6FF' },
+  form_received:{ label:'공식신청서 접수확인', color:'#0EA5E9', bg:'#E0F2FE' },
+  shipped:      { label:'발송완료',           color:'#8B5CF6', bg:'#F5F3FF' },
+  mismatch:     { label:'정보불일치',         color:'#EF4444', bg:'#FEF2F2' },
+  requested:    { label:'개통요청',           color:'#F97316', bg:'#FFF7ED' },
+  completed:    { label:'개통완료',           color:'#10B981', bg:'#ECFDF5' },
+  cancelled:    { label:'취소됨',             color:'#6B7280', bg:'#F9FAFB' },
 };
 
 // 가입 유형 선택 UI
@@ -3246,6 +3247,7 @@ async function lookupOrder() {
 
   const statusMessages = {
     pending: t('status_msg_pending'), processing: t('status_msg_processing'),
+    form_received: t('status_msg_form_received'),
     shipped: t('status_msg_shipped'), mismatch: t('status_msg_mismatch'),
     requested: t('status_msg_requested'), completed: t('status_msg_completed'),
     cancelled: t('status_msg_cancelled'),
