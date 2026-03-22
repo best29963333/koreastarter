@@ -1648,57 +1648,55 @@ async function renderAdminOrders() {
 
     return `
     <div style="border-bottom:1px solid var(--border);padding:14px 20px;">
-      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
 
-        <!-- 좌측: 주문 정보 -->
-        <div style="flex:1;min-width:220px;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;">
-            <span style="font-size:13.5px;font-weight:800;font-family:monospace;color:var(--ink);">${o.order_number}</span>
-            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:100px;background:${st.bg};font-size:11px;font-weight:700;color:${st.color};">${st.label}</span>
+      <!-- 상단: 주문 정보 + 상세 버튼 -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+            <span style="font-size:14px;font-weight:800;font-family:monospace;color:var(--ink);">${o.order_number}</span>
+            <span style="display:inline-flex;align-items:center;padding:2px 10px;border-radius:100px;background:${st.bg};font-size:11.5px;font-weight:700;color:${st.color};">${st.label}</span>
             <span style="font-size:11.5px;color:var(--ink-muted);">${date}</span>
           </div>
-          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">${o.name} · ${o.signup_type === 'new' ? '신규' : '번호이동'}</div>
-          <div style="font-size:12.5px;color:var(--ink-muted);">${o.carrier} · ${o.plan}</div>
-          <div style="font-size:12px;color:var(--ink-muted);">${o.email}</div>
-          ${o.tracking_number ? `<div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">📦 ${o.courier||''} · ${o.tracking_number}</div>` : ''}
-          <button onclick="openOrderDetail('${o.order_number}')" style="margin-top:8px;padding:5px 12px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--ink-muted);font-size:12px;font-weight:600;cursor:pointer;">상세 보기</button>
+          <div style="font-size:13.5px;font-weight:700;color:var(--ink);">${o.name} · ${o.signup_type === 'new' ? '신규' : '번호이동'} · ${o.carrier} · ${o.plan}</div>
+          <div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">${o.email}${o.tracking_number ? ` · 📦 ${o.courier||''} ${o.tracking_number}` : ''}</div>
+        </div>
+        <button onclick="openOrderDetail('${o.order_number}')" style="flex-shrink:0;padding:6px 14px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--ink-muted);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">상세 보기</button>
+      </div>
+
+      <!-- 하단: 처리 패널 (전체 너비) -->
+      <div style="background:var(--surface2);border-radius:10px;padding:12px 14px;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;">
+
+        <!-- ICCID -->
+        <div>
+          <div style="font-size:10.5px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;letter-spacing:0.04em;">ICCID (바코드 스캔)</div>
+          <div style="display:flex;gap:5px;">
+            <input type="text" id="inline-iccid-${o.order_number}" value="${o.iccid||''}" placeholder="스캔하세요..."
+              style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);min-width:0;">
+            <button onclick="quickSaveIccid('${o.order_number}')"
+              style="padding:7px 11px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;flex-shrink:0;">저장</button>
+          </div>
         </div>
 
-        <!-- 우측: 빠른 처리 패널 -->
-        <div style="flex:0 0 320px;min-width:260px;background:var(--surface2);border-radius:10px;padding:12px 14px;border:1px solid var(--border);">
-
-          <!-- ICCID -->
-          <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;">ICCID (바코드 스캔)</div>
-            <div style="display:flex;gap:6px;">
-              <input type="text" id="inline-iccid-${o.order_number}" value="${o.iccid||''}" placeholder="스캔하세요..."
-                style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
-              <button onclick="quickSaveIccid('${o.order_number}')"
-                style="padding:7px 12px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">저장</button>
-            </div>
+        <!-- 택배사 + 송장 -->
+        <div>
+          <div style="font-size:10.5px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;letter-spacing:0.04em;">택배사 + 송장 (바코드 스캔)</div>
+          <div style="display:flex;gap:5px;">
+            <select id="inline-courier-${o.order_number}"
+              style="width:100px;flex-shrink:0;padding:7px 6px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;background:var(--surface);color:var(--ink);">
+              <option value="">택배사</option>
+              ${courierOpts}
+            </select>
+            <input type="text" id="inline-tracking-${o.order_number}" value="${o.tracking_number||''}" placeholder="바코드 스캔..."
+              style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);min-width:0;">
+            <button onclick="quickSaveTracking('${o.order_number}')"
+              style="padding:7px 11px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;flex-shrink:0;">저장</button>
           </div>
+        </div>
 
-          <!-- 택배사 + 송장 -->
-          <div style="margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;">택배사 + 송장 (바코드 스캔)</div>
-            <div style="display:flex;gap:6px;">
-              <select id="inline-courier-${o.order_number}"
-                style="width:110px;padding:7px 8px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;background:var(--surface);color:var(--ink);">
-                <option value="">택배사</option>
-                ${courierOpts}
-              </select>
-              <input type="text" id="inline-tracking-${o.order_number}" value="${o.tracking_number||''}" placeholder="바코드 스캔..."
-                style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
-              <button onclick="quickSaveTracking('${o.order_number}')"
-                style="padding:7px 12px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">저장</button>
-            </div>
-          </div>
-
-          <!-- 상태 변경 -->
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:5px;">상태 변경</div>
-            <div style="display:flex;flex-wrap:wrap;gap:4px;">${statusBtns}</div>
-          </div>
+        <!-- 상태 변경 -->
+        <div style="grid-column:1/-1;">
+          <div style="font-size:10.5px;font-weight:700;color:var(--ink-muted);margin-bottom:5px;letter-spacing:0.04em;">상태 변경</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">${statusBtns}</div>
         </div>
 
       </div>
