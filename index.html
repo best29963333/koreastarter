@@ -3315,12 +3315,16 @@ async function lookupOrder() {
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_plan')}</span><span style="font-weight:700;color:var(--sim);">${order.carrier} · ${order.plan}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signup_type === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
         ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_usim_serial')}</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
-        ${order.tracking_number ? `<div style="display:flex;justify-content:space-between;font-size:13px;align-items:center;gap:8px;">
-          <span style="color:var(--ink-soft);flex-shrink:0;">${t('field_courier_tracking')}</span>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-weight:700;color:var(--ink);">${order.courier ? order.courier + ' · ' : ''}${order.tracking_number}</span>
-            ${getTrackingLink(order.courier, order.tracking_number)}
+        ${order.tracking_number ? `
+        <div style="margin-top:4px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:9px;background:var(--sim-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--sim)" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
           </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:11px;color:var(--ink-soft);margin-bottom:2px;">${order.courier || t('field_courier_tracking')}</div>
+            <div style="font-size:13px;font-weight:700;font-family:monospace;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${order.tracking_number}</div>
+          </div>
+          ${getTrackingLink(order.courier, order.tracking_number)}
         </div>` : ''}
       </div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;">
@@ -3354,8 +3358,7 @@ function getTrackingLink(courier, trackingNum) {
   };
   const url = urls[courier];
   if (!url) return '';
-  return `<a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;background:var(--sim-soft);border:1px solid #BFDBFE;color:var(--sim);font-size:11.5px;font-weight:700;text-decoration:none;">
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  return `<a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:100px;background:var(--sim);color:white;font-size:12px;font-weight:700;text-decoration:none;flex-shrink:0;white-space:nowrap;">
     배송조회
   </a>`;
 }
