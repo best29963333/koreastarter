@@ -656,78 +656,13 @@ textarea.form-control { resize: vertical; min-height: 80px; }
                 <option value="cancelled">취소됨</option>
               </select>
               <input type="text" id="order-search-input" oninput="renderAdminOrders()" placeholder="주문번호 / 성함 검색..." style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);width:180px;">
+              <button onclick="downloadOrdersExcel()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:#059669;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                엑셀 다운
+              </button>
             </div>
           </div>
           <div id="orders-list"></div>
-        </div>
-
-        <!-- 번호이동 기존 통신사 목록 관리 -->
-        <div class="table-card" style="margin-top:20px;">
-          <div class="table-header">
-            <div class="table-title">번호이동 기존 통신사 목록 관리</div>
-          </div>
-          <div style="padding:16px 20px;">
-            <div style="font-size:13px;color:var(--ink-muted);margin-bottom:18px;">
-              요금제별로 번호이동 신청 시 표시될 <strong>기존 통신사 목록</strong>을 관리합니다.<br>
-              예) SKT 요금제 신청 → 번호이동 선택 시 아래 "SKT 요금제 신청 시" 목록이 표시됩니다.
-            </div>
-
-            <!-- SKT 요금제 신청 시 -->
-            <div style="margin-bottom:20px;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <div style="width:10px;height:10px;border-radius:50%;background:#FF4D1C;flex-shrink:0;"></div>
-                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">SKT 요금제 신청 시 — 기존 통신사 목록</span>
-              </div>
-              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">SKT 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
-              <div style="display:flex;gap:8px;margin-bottom:10px;">
-                <input type="text" id="new-carrier-skt" placeholder="예) KT, LG U+, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
-                <button onclick="addMnpCarrier('skt')" style="padding:8px 16px;border-radius:8px;background:#FF4D1C;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
-              </div>
-              <div id="mnp-carrier-list-skt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
-            </div>
-
-            <!-- KT 요금제 신청 시 -->
-            <div style="margin-bottom:20px;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <div style="width:10px;height:10px;border-radius:50%;background:#2563EB;flex-shrink:0;"></div>
-                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">KT 요금제 신청 시 — 기존 통신사 목록</span>
-              </div>
-              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">KT 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
-              <div style="display:flex;gap:8px;margin-bottom:10px;">
-                <input type="text" id="new-carrier-kt" placeholder="예) SKT, LG U+, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
-                <button onclick="addMnpCarrier('kt')" style="padding:8px 16px;border-radius:8px;background:#2563EB;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
-              </div>
-              <div id="mnp-carrier-list-kt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
-            </div>
-
-            <!-- LG 요금제 신청 시 -->
-            <div>
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <div style="width:10px;height:10px;border-radius:50%;background:#A855F7;flex-shrink:0;"></div>
-                <span style="font-size:13.5px;font-weight:800;color:var(--ink);">LG U+ 요금제 신청 시 — 기존 통신사 목록</span>
-              </div>
-              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:8px;">LG U+ 요금제를 번호이동으로 신청할 때 유저에게 보여줄 기존 통신사 목록</div>
-              <div style="display:flex;gap:8px;margin-bottom:10px;">
-                <input type="text" id="new-carrier-lg" placeholder="예) SKT, KT, 알뜰폰..." style="flex:1;padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
-                <button onclick="addMnpCarrier('lg')" style="padding:8px 16px;border-radius:8px;background:#A855F7;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
-              </div>
-              <div id="mnp-carrier-list-lg" style="display:flex;flex-wrap:wrap;gap:7px;min-height:36px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- 재신청 대기 시간 설정 -->
-        <div class="table-card" style="margin-top:20px;">
-          <div class="table-header">
-            <div class="table-title">재신청 대기 시간 설정</div>
-          </div>
-          <div style="padding:16px 20px;display:flex;align-items:center;gap:12px;">
-            <span style="font-size:13.5px;color:var(--ink);">동일 번호 3회 취소 후 재신청 대기 시간:</span>
-            <input type="number" id="reorder-wait-hours" min="1" max="72" value="6" style="width:70px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);font-size:14px;font-weight:700;text-align:center;background:var(--surface);color:var(--ink);">
-            <span style="font-size:13.5px;color:var(--ink);">시간</span>
-            <button onclick="saveReorderWait()" style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
-          </div>
         </div>
       </div>
 
@@ -849,6 +784,75 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         </div>
 
         <div id="plans-admin-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;"></div>
+
+        <!-- 번호이동 기존 통신사 목록 (통신사별 매칭) -->
+        <div class="table-card" style="margin-top:28px;">
+          <div class="table-header">
+            <div class="table-title">번호이동 기존 통신사 목록 관리</div>
+          </div>
+          <div style="padding:16px 20px;">
+            <div style="font-size:13px;color:var(--ink-muted);margin-bottom:20px;">각 통신사 요금제를 번호이동으로 신청할 때 표시될 기존 통신사 목록입니다.</div>
+
+            <!-- 탭 -->
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+              <button onclick="switchMnpTab('skt',this)" id="mnp-tab-skt"
+                style="padding:8px 20px;border-radius:100px;font-size:13px;font-weight:700;border:2px solid #FF4D1C;background:#FF4D1C;color:white;cursor:pointer;">
+                SKT 요금제
+              </button>
+              <button onclick="switchMnpTab('kt',this)" id="mnp-tab-kt"
+                style="padding:8px 20px;border-radius:100px;font-size:13px;font-weight:700;border:2px solid #2563EB;background:transparent;color:#2563EB;cursor:pointer;">
+                KT 요금제
+              </button>
+              <button onclick="switchMnpTab('lg',this)" id="mnp-tab-lg"
+                style="padding:8px 20px;border-radius:100px;font-size:13px;font-weight:700;border:2px solid #A855F7;background:transparent;color:#A855F7;cursor:pointer;">
+                LG U+ 요금제
+              </button>
+            </div>
+
+            <!-- SKT 패널 -->
+            <div id="mnp-panel-skt">
+              <div style="font-size:12.5px;color:var(--ink-muted);margin-bottom:10px;">SKT 요금제 번호이동 신청 시 표시될 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-skt" placeholder="예) KT, LG U+, 알뜰폰..." style="flex:1;padding:9px 14px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('skt')" style="padding:9px 18px;border-radius:8px;background:#FF4D1C;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-skt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:40px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+
+            <!-- KT 패널 -->
+            <div id="mnp-panel-kt" style="display:none;">
+              <div style="font-size:12.5px;color:var(--ink-muted);margin-bottom:10px;">KT 요금제 번호이동 신청 시 표시될 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-kt" placeholder="예) SKT, LG U+, 알뜰폰..." style="flex:1;padding:9px 14px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('kt')" style="padding:9px 18px;border-radius:8px;background:#2563EB;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-kt" style="display:flex;flex-wrap:wrap;gap:7px;min-height:40px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+
+            <!-- LG 패널 -->
+            <div id="mnp-panel-lg" style="display:none;">
+              <div style="font-size:12.5px;color:var(--ink-muted);margin-bottom:10px;">LG U+ 요금제 번호이동 신청 시 표시될 기존 통신사 목록</div>
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <input type="text" id="new-carrier-lg" placeholder="예) SKT, KT, 알뜰폰..." style="flex:1;padding:9px 14px;border-radius:8px;border:1px solid var(--border);font-size:13.5px;background:var(--surface);color:var(--ink);">
+                <button onclick="addMnpCarrier('lg')" style="padding:9px 18px;border-radius:8px;background:#A855F7;color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">추가</button>
+              </div>
+              <div id="mnp-carrier-list-lg" style="display:flex;flex-wrap:wrap;gap:7px;min-height:40px;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 재신청 대기 시간 설정 -->
+        <div class="table-card" style="margin-top:16px;">
+          <div class="table-header">
+            <div class="table-title">재신청 대기 시간 설정</div>
+          </div>
+          <div style="padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <span style="font-size:13.5px;color:var(--ink);">동일 번호 3회 취소 후 재신청 대기 시간:</span>
+            <input type="number" id="reorder-wait-hours" min="1" max="72" value="6" style="width:70px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);font-size:14px;font-weight:700;text-align:center;background:var(--surface);color:var(--ink);">
+            <span style="font-size:13.5px;color:var(--ink);">시간</span>
+            <button onclick="saveReorderWait()" style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;">저장</button>
+          </div>
+        </div>
       </div>
 
       <!-- ── MEMBERS ── -->
@@ -1578,7 +1582,7 @@ function goSection(id) {
   document.getElementById('topbar-meta').textContent = t(`section_${id}_meta`);
   if (id === 'jobs') renderAdminJobs();
   if (id === 'community') renderAdminComm();
-  if (id === 'sim') renderAdminPlans();
+  if (id === 'sim') { renderAdminPlans(); renderMnpCarriers(); }
   if (id === 'members') renderMembers();
   if (id === 'dashboard') refreshDashboard();
   if (id === 'orders') { renderAdminOrders(); renderMnpCarriers(); }
@@ -1639,68 +1643,64 @@ async function renderAdminOrders() {
     const courierOpts = COURIERS.map(c => `<option value="${c}" ${o.courier===c?'selected':''}>${c}</option>`).join('');
     const statusBtns = Object.entries(ORDER_STATUS_ADMIN).map(([key, val]) =>
       `<button onclick="quickChangeStatus('${o.order_number}','${key}')" title="${val.label}"
-        style="padding:5px 12px;border-radius:100px;font-size:11.5px;font-weight:700;border:1.5px solid ${val.color}40;background:${o.status===key?val.bg:'transparent'};color:${val.color};cursor:pointer;">${val.label}</button>`
+        style="padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;border:1.5px solid ${val.color}40;background:${o.status===key?val.bg:'transparent'};color:${val.color};cursor:pointer;white-space:nowrap;">${val.label}</button>`
     ).join('');
 
     return `
-    <div style="border-bottom:1px solid var(--border);">
-      <!-- 주문 헤더 -->
-      <div style="padding:14px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:200px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;flex-wrap:wrap;">
-            <span style="font-size:14px;font-weight:800;font-family:monospace;color:var(--ink);">${o.order_number}</span>
-            <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;background:${st.bg};font-size:11.5px;font-weight:700;color:${st.color};">${st.label}</span>
-            <span style="font-size:12px;color:var(--ink-muted);">${date}</span>
-          </div>
-          <div style="font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:2px;">${o.name} · ${o.signup_type === 'new' ? '신규' : '번호이동'}</div>
-          <div style="font-size:13px;color:var(--ink-muted);">${o.carrier} · ${o.plan} · ${o.email}</div>
-          ${o.tracking_number ? `<div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">${o.courier || ''} · ${o.tracking_number}</div>` : ''}
-        </div>
-        <div style="display:flex;gap:8px;flex-shrink:0;">
-          <button onclick="toggleInlinePanel('${o.order_number}')"
-            style="padding:7px 14px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--ink-muted);font-size:12px;font-weight:700;cursor:pointer;">
-            ✏️ 빠른처리
-          </button>
-          <button onclick="openOrderDetail('${o.order_number}')"
-            style="padding:7px 14px;border-radius:8px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">
-            상세
-          </button>
-        </div>
-      </div>
+    <div style="border-bottom:1px solid var(--border);padding:14px 20px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
 
-      <!-- 인라인 빠른 처리 패널 (토글) -->
-      <div id="inline-panel-${o.order_number}" style="display:none;padding:14px 20px;background:var(--surface2);border-top:1px solid var(--border);">
-        <div style="display:flex;flex-direction:column;gap:12px;">
+        <!-- 좌측: 주문 정보 -->
+        <div style="flex:1;min-width:220px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;">
+            <span style="font-size:13.5px;font-weight:800;font-family:monospace;color:var(--ink);">${o.order_number}</span>
+            <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:100px;background:${st.bg};font-size:11px;font-weight:700;color:${st.color};">${st.label}</span>
+            <span style="font-size:11.5px;color:var(--ink-muted);">${date}</span>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;">${o.name} · ${o.signup_type === 'new' ? '신규' : '번호이동'}</div>
+          <div style="font-size:12.5px;color:var(--ink-muted);">${o.carrier} · ${o.plan}</div>
+          <div style="font-size:12px;color:var(--ink-muted);">${o.email}</div>
+          ${o.tracking_number ? `<div style="font-size:12px;color:var(--ink-muted);margin-top:2px;">📦 ${o.courier||''} · ${o.tracking_number}</div>` : ''}
+          <button onclick="openOrderDetail('${o.order_number}')" style="margin-top:8px;padding:5px 12px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--ink-muted);font-size:12px;font-weight:600;cursor:pointer;">상세 보기</button>
+        </div>
+
+        <!-- 우측: 빠른 처리 패널 -->
+        <div style="flex:0 0 320px;min-width:260px;background:var(--surface2);border-radius:10px;padding:12px 14px;border:1px solid var(--border);">
 
           <!-- ICCID -->
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">ICCID (바코드 스캔)</label>
-            <input type="text" id="inline-iccid-${o.order_number}" value="${o.iccid||''}" placeholder="스캔하세요..."
-              style="flex:1;min-width:160px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
-            <button onclick="quickSaveIccid('${o.order_number}')"
-              style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;">저장</button>
+          <div style="margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;">ICCID (바코드 스캔)</div>
+            <div style="display:flex;gap:6px;">
+              <input type="text" id="inline-iccid-${o.order_number}" value="${o.iccid||''}" placeholder="스캔하세요..."
+                style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
+              <button onclick="quickSaveIccid('${o.order_number}')"
+                style="padding:7px 12px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">저장</button>
+            </div>
           </div>
 
           <!-- 택배사 + 송장 -->
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">택배사 + 송장 스캔</label>
-            <select id="inline-courier-${o.order_number}"
-              style="width:140px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:var(--surface);color:var(--ink);">
-              <option value="">택배사 선택</option>
-              ${courierOpts}
-            </select>
-            <input type="text" id="inline-tracking-${o.order_number}" value="${o.tracking_number||''}" placeholder="바코드 스캔..."
-              style="flex:1;min-width:140px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
-            <button onclick="quickSaveTracking('${o.order_number}')"
-              style="padding:8px 16px;border-radius:8px;background:var(--blue);color:white;font-size:12.5px;font-weight:700;border:none;cursor:pointer;">저장</button>
+          <div style="margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:4px;">택배사 + 송장 (바코드 스캔)</div>
+            <div style="display:flex;gap:6px;">
+              <select id="inline-courier-${o.order_number}"
+                style="width:110px;padding:7px 8px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;background:var(--surface);color:var(--ink);">
+                <option value="">택배사</option>
+                ${courierOpts}
+              </select>
+              <input type="text" id="inline-tracking-${o.order_number}" value="${o.tracking_number||''}" placeholder="바코드 스캔..."
+                style="flex:1;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12.5px;font-family:monospace;background:var(--surface);color:var(--ink);">
+              <button onclick="quickSaveTracking('${o.order_number}')"
+                style="padding:7px 12px;border-radius:7px;background:var(--blue);color:white;font-size:12px;font-weight:700;border:none;cursor:pointer;">저장</button>
+            </div>
           </div>
 
           <!-- 상태 변경 -->
-          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
-            <label style="font-size:12px;font-weight:700;color:var(--ink-muted);width:130px;flex-shrink:0;">상태 변경</label>
-            <div style="display:flex;flex-wrap:wrap;gap:5px;">${statusBtns}</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:5px;">상태 변경</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">${statusBtns}</div>
           </div>
         </div>
+
       </div>
     </div>`;
   }).join('');
@@ -1812,18 +1812,57 @@ async function openOrderDetail(orderNumber) {
   document.body.appendChild(modal);
 }
 
-function toggleInlinePanel(orderNumber) {
-  const panel = document.getElementById(`inline-panel-${orderNumber}`);
-  if (!panel) return;
-  const isOpen = panel.style.display !== 'none';
-  panel.style.display = isOpen ? 'none' : 'block';
-  if (!isOpen) {
-    // 패널 열릴 때 ICCID 입력창 포커스
-    setTimeout(() => {
-      const input = document.getElementById(`inline-iccid-${orderNumber}`);
-      if (input) input.focus();
-    }, 50);
-  }
+function switchMnpTab(group, btn) {
+  ['skt','kt','lg'].forEach(g => {
+    document.getElementById(`mnp-panel-${g}`).style.display = g === group ? '' : 'none';
+  });
+  const colors = { skt:'#FF4D1C', kt:'#2563EB', lg:'#A855F7' };
+  ['skt','kt','lg'].forEach(g => {
+    const b = document.getElementById(`mnp-tab-${g}`);
+    if (!b) return;
+    if (g === group) {
+      b.style.background = colors[g];
+      b.style.color = 'white';
+    } else {
+      b.style.background = 'transparent';
+      b.style.color = colors[g];
+    }
+  });
+  renderMnpCarriers();
+}
+
+async function downloadOrdersExcel() {
+  const { data: orders, error } = await sb.from('orders').select('*').order('created_at', { ascending: false });
+  if (error || !orders || !orders.length) { alert('다운로드할 주문이 없습니다.'); return; }
+
+  const STATUS_LABELS = { pending:'신청접수', processing:'처리중', shipped:'발송완료', mismatch:'정보불일치', requested:'개통요청', completed:'개통완료', cancelled:'취소됨' };
+  const headers = ['주문번호','신청일','상태','성함','가입유형','통신사','요금제','이메일','외국인등록번호','비상연락처','우편번호','배송주소','희망번호1','희망번호2','이동번호','현재통신사','ICCID','택배사','송장번호','추가요청사항'];
+
+  const rows = orders.map(o => [
+    o.order_number,
+    new Date(o.created_at).toLocaleDateString('ko-KR'),
+    STATUS_LABELS[o.status] || o.status,
+    o.name, o.signup_type === 'new' ? '신규가입' : '번호이동',
+    o.carrier, o.plan, o.email, o.arc, o.emergency,
+    o.postcode, o.address, o.wish1||'', o.wish2||'',
+    o.mnp_number||'', o.mnp_carrier||'',
+    o.iccid||'', o.courier||'', o.tracking_number||'', o.memo||''
+  ]);
+
+  // CSV → Excel 호환 UTF-8 BOM
+  const bom = '\uFEFF';
+  const csv = bom + [headers, ...rows].map(r =>
+    r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
+  ).join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `KoreaStarter_주문목록_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast(`${orders.length}건 엑셀 다운로드 완료!`, 'success');
 }
 
 async function quickSaveIccid(orderNumber) {
