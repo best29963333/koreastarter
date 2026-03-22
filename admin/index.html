@@ -1861,11 +1861,14 @@ async function quickChangeStatus(orderNumber, newStatus) {
   updateOrderBadge();
   renderAdminOrders();
 }
+
+async function saveIccid(orderNumber) {
   const val = document.getElementById('admin-iccid-input')?.value.trim();
   if (!val) { alert('ICCID를 입력해주세요.'); return; }
   const { error } = await sb.from('orders').update({ iccid: val }).eq('order_number', orderNumber);
   if (error) { alert('저장 실패: ' + error.message); return; }
   toast('ICCID가 저장되었습니다.', 'success');
+  renderAdminOrders();
 }
 
 async function saveTracking(orderNumber) {
