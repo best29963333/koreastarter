@@ -2082,7 +2082,7 @@ function infoRow(label, value) {
 async function printOrderSlip(orderNumber) {
   const { data: o } = await sb.from('orders').select('*').eq('order_number', orderNumber).single();
   if (!o) return;
-  const qrUrl = `https://koreastarter.vercel.app/?order=${o.order_number}`;
+  const qrUrl = `https://koreastarter.vercel.app/?order=${o.order_number}&lang=ko`;
   const win = window.open('', '_blank');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
 <title>배송 안내문 - ${o.order_number}</title>
@@ -2123,7 +2123,7 @@ body{font-family:'Noto Sans KR',sans-serif;padding:32px;max-width:480px;margin:0
   인쇄물 분실 시 카카오톡으로 성함 + 개통번호를 알려주세요.
 </div>
 <div class="qr-section">
-  <div id="qrcode"></div>
+  <div id="qrcode" style="display:flex;justify-content:center;"></div>
   <p>QR코드를 스캔하면<br>개통 요청 페이지로 바로 이동합니다.</p>
 </div>
 <div class="steps">
