@@ -1125,7 +1125,7 @@ footer strong { color: rgba(255,255,255,0.85); }
       </div>
       <div style="display:flex;gap:8px;margin-bottom:8px;">
         <input class="form-input" id="ord-postcode" type="text" style="width:110px;flex-shrink:0;" readonly data-i18n-placeholder="placeholder_postcode">
-        <button type="button" onclick="openModal('address-help-overlay')" style="display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:10px;background:var(--sim);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+        <button type="button" onclick="initKakaoPostcode()" style="display:flex;align-items:center;gap:6px;padding:0 16px;border-radius:10px;background:var(--sim);color:white;font-size:13px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <span data-i18n="btn_postcode_search">우편번호 찾기</span>
         </button>
@@ -2314,11 +2314,11 @@ function openModal(id) {
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function initKakaoPostcode() {
-  const wrap = document.getElementById('kakao-postcode-wrap');
-  if (!wrap) return;
-  wrap.innerHTML = '';
-
-  // 팝업 방식 — iframe 삽입보다 훨씬 안정적
+  if (typeof daum === 'undefined' || !daum.Postcode) {
+    alert('주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+  closeModal('address-help-overlay');
   new daum.Postcode({
     oncomplete: function(data) {
       const addr = data.roadAddress || data.jibunAddress;
@@ -2328,7 +2328,6 @@ function initKakaoPostcode() {
       const detailEl = document.getElementById('ord-address-detail');
       if (postcodeEl) postcodeEl.value = postcode;
       if (addressEl) addressEl.value = addr;
-      closeModal('address-help-overlay');
       if (detailEl) setTimeout(() => detailEl.focus(), 100);
     },
     theme: {
@@ -2343,7 +2342,6 @@ function initKakaoPostcode() {
       outlineColor: '#E5E7EB',
     }
   }).open();
-  closeModal('address-help-overlay');
 }
 document.addEventListener('click', e => {
   if (e.target.classList.contains('overlay')) {
