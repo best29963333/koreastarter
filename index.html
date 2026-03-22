@@ -8,6 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══════════════════════════════════════
+// Supabase 설정 — 본인 키로 교체하세요
+// ═══════════════════════════════════════
+const SUPABASE_URL = 'https://rmspgiabxhjplnklkskk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_fnuDuQoe0JN6VPjSJuGaTw_IME9s68T';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+</script>
 <style>
 :root {
   --bg: #F7F8FA;
@@ -1154,15 +1163,22 @@ footer strong { color: rgba(255,255,255,0.85); }
     <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:8px;letter-spacing:-0.02em;" data-i18n="order_complete_title">신청이 완료되었습니다!</div>
     <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:20px;" data-i18n="order_complete_desc">주문번호를 이메일로 발송했습니다. 주문번호로 개통 요청이 가능합니다.</div>
     <!-- 주문번호 표시 -->
-    <div style="background:var(--sim-soft);border:1.5px solid #BFDBFE;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+    <div style="background:var(--sim-soft);border:1.5px solid #BFDBFE;border-radius:12px;padding:16px 20px;margin-bottom:16px;">
       <div style="font-size:11.5px;font-weight:700;color:var(--sim);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px;" data-i18n="order_number_label">주문번호</div>
       <div id="complete-order-number" style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:0.05em;font-family:monospace;"></div>
     </div>
-    <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:12.5px;color:#92400E;line-height:1.65;text-align:left;">
-      <strong data-i18n="order_complete_notice_title">주문번호를 꼭 보관하세요!</strong><br>
-      <span data-i18n="order_complete_notice_desc">택배 수령 후 개통 요청 시 주문번호가 필요합니다. 이메일로도 발송되었으니 확인해주세요.</span>
+    <!-- 다음 단계 안내 -->
+    <div style="background:#FFF7ED;border:1.5px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:#92400E;line-height:1.7;text-align:left;">
+      <strong style="color:#C2410C;display:block;margin-bottom:6px;" data-i18n="order_next_step_title">다음 단계 — 공식 신청서 작성 필수!</strong>
+      <span data-i18n="order_next_step_desc">아래 버튼을 눌러 통신사 공식 신청서를 작성해주세요. PASS 인증이 필요합니다. 공식 신청서 완료 후 배송이 진행됩니다.</span>
     </div>
-    <button onclick="closeModal('order-complete-overlay')" style="width:100%;padding:13px;border-radius:100px;background:var(--sim);color:white;font-size:14px;font-weight:700;border:none;cursor:pointer;" data-i18n="btn_confirm">확인</button>
+    <!-- 공식 신청서 버튼 -->
+    <a id="complete-official-form-btn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:100px;background:var(--job);color:white;font-size:14px;font-weight:800;text-decoration:none;margin-bottom:10px;box-sizing:border-box;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <span data-i18n="btn_go_official_form">공식 신청서 작성하기</span>
+    </a>
+    <div style="background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#166534;text-align:left;" data-i18n="order_complete_notice_desc">택배 수령 후 개통 요청 시 주문번호가 필요합니다. 이메일로도 발송되었으니 확인해주세요.</div>
+    <button onclick="closeModal('order-complete-overlay')" style="width:100%;padding:12px;border-radius:100px;background:var(--bg);color:var(--ink-soft);font-size:14px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;" data-i18n="btn_cancel">닫기</button>
   </div>
 </div>
 
@@ -1609,7 +1625,7 @@ const LANGS = {
     field_wish_number:'Preferred Last 4 Digits', wish_number_1st:'1st Choice', wish_number_2nd:'2nd Choice', wish_number_notice:'Preferred numbers are not guaranteed.',
     field_current_carrier:'Current Carrier', field_mnp_number:'Number to Transfer', select_carrier:'Select carrier',
     field_email:'Email Address', field_tracking:'Tracking Number',
-    order_complete_title:'Application Complete!', order_complete_desc:'Your order number has been sent to your email.',
+    order_complete_title:'Application Complete!', order_next_step_title:'Next Step — Official Form Required!', order_next_step_desc:'Please click below to complete the official carrier application. PASS authentication is required. Delivery proceeds after completion.', btn_go_official_form:'Go to Official Application Form', order_complete_desc:'Your order number has been sent to your email.',
     order_number_label:'Order Number',
     order_complete_notice_title:'Keep your order number!', order_complete_notice_desc:'You will need it to request activation. Check your email for confirmation.',
     order_required_fields:'Please fill in all required fields (Name, ARC, Email, Address).',
@@ -1748,7 +1764,7 @@ const LANGS = {
     field_wish_number:'희망 번호 뒷 4자리', wish_number_1st:'1순위', wish_number_2nd:'2순위', wish_number_notice:'희망 번호는 가능한 경우에만 반영되며 보장되지 않습니다.',
     field_current_carrier:'현재 통신사', field_mnp_number:'이동할 번호', select_carrier:'통신사 선택',
     field_email:'이메일 주소', field_tracking:'송장번호',
-    order_complete_title:'신청이 완료되었습니다!', order_complete_desc:'주문번호를 이메일로 발송했습니다.',
+    order_complete_title:'신청이 완료되었습니다!', order_next_step_title:'다음 단계 — 공식 신청서 작성 필수!', order_next_step_desc:'아래 버튼을 눌러 통신사 공식 신청서를 작성해주세요. PASS 인증이 필요합니다. 공식 신청서 완료 후 배송이 진행됩니다.', btn_go_official_form:'공식 신청서 작성하기', order_complete_desc:'주문번호를 이메일로 발송했습니다.',
     order_number_label:'주문번호',
     order_complete_notice_title:'주문번호를 꼭 보관하세요!', order_complete_notice_desc:'택배 수령 후 개통 요청 시 주문번호가 필요합니다.',
     order_required_fields:'필수 항목을 모두 입력해주세요 (성함, 외국인등록번호, 이메일, 주소).',
@@ -1894,7 +1910,7 @@ const LANGS = {
     field_wish_number:'希望号码后4位', wish_number_1st:'第1选择', wish_number_2nd:'第2选择', wish_number_notice:'希望号码仅供参考，不保证可用。',
     field_current_carrier:'现有运营商', field_mnp_number:'转网号码', select_carrier:'选择运营商',
     field_email:'电子邮件', field_tracking:'快递单号',
-    order_complete_title:'申请已完成！', order_complete_desc:'订单号已发送至您的邮箱。',
+    order_complete_title:'申请已完成！', order_next_step_title:'下一步 — 必须填写官方申请表！', order_next_step_desc:'请点击下方按钮填写运营商官方申请表。需要PASS认证。完成官方申请后将进行发货。', btn_go_official_form:'填写官方申请表', order_complete_desc:'订单号已发送至您的邮箱。',
     order_number_label:'订单号',
     order_complete_notice_title:'请保存您的订单号！', order_complete_notice_desc:'收货后申请开通时需要订单号，请查收确认邮件。',
     order_required_fields:'请填写所有必填项（姓名、外国人登录号、邮箱、地址）。',
@@ -2016,7 +2032,7 @@ const LANGS = {
     field_wish_number:'4 số cuối mong muốn', wish_number_1st:'Lựa chọn 1', wish_number_2nd:'Lựa chọn 2', wish_number_notice:'Số mong muốn không được đảm bảo.',
     field_current_carrier:'Nhà mạng hiện tại', field_mnp_number:'Số cần chuyển', select_carrier:'Chọn nhà mạng',
     field_email:'Địa chỉ email', field_tracking:'Mã vận đơn',
-    order_complete_title:'Đăng ký hoàn tất!', order_complete_desc:'Số đơn hàng đã được gửi đến email của bạn.',
+    order_complete_title:'Đăng ký hoàn tất!', order_next_step_title:'Bước tiếp theo — Bắt buộc điền biểu mẫu chính thức!', order_next_step_desc:'Vui lòng nhấn bên dưới để điền biểu mẫu đăng ký chính thức của nhà mạng. Yêu cầu xác thực PASS. Giao hàng sẽ tiến hành sau khi hoàn tất.', btn_go_official_form:'Điền biểu mẫu chính thức', order_complete_desc:'Số đơn hàng đã được gửi đến email của bạn.',
     order_number_label:'Số đơn hàng',
     order_complete_notice_title:'Hãy lưu số đơn hàng!', order_complete_notice_desc:'Bạn cần số đơn hàng để yêu cầu kích hoạt sau khi nhận SIM.',
     order_required_fields:'Vui lòng điền đầy đủ thông tin bắt buộc (Họ tên, Số ARC, Email, Địa chỉ).',
@@ -2982,25 +2998,19 @@ function submitComment() {
 
 
 /* ═══════════════════════════════════════
-   주문 DB & 신청 시스템
+   주문 DB & 신청 시스템 (Supabase 연동)
 ═══════════════════════════════════════ */
-// 주문 DB (localStorage 기반 — Supabase 연동 전 임시)
-function getOrderDB() {
-  try { return JSON.parse(localStorage.getItem('ks_orders') || '[]'); } catch(e) { return []; }
-}
-function saveOrderDB(orders) {
-  try { localStorage.setItem('ks_orders', JSON.stringify(orders)); } catch(e) {}
-}
 
 // 주문번호 생성: KS-YYYYMMDD-XXXX
-function generateOrderNumber() {
+async function generateOrderNumber() {
   const d = new Date();
   const date = d.getFullYear().toString() +
     String(d.getMonth()+1).padStart(2,'0') +
     String(d.getDate()).padStart(2,'0');
-  const orders = getOrderDB();
-  const todayOrders = orders.filter(o => o.orderNumber.includes(date));
-  const seq = String(todayOrders.length + 1).padStart(4,'0');
+  const { count } = await sb.from('orders')
+    .select('*', { count: 'exact', head: true })
+    .like('order_number', `KS-${date}-%`);
+  const seq = String((count || 0) + 1).padStart(4,'0');
   return 'KS-' + date + '-' + seq;
 }
 
@@ -3020,7 +3030,6 @@ let currentSignupType = 'new';
 let currentOrderPlan = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 신규/번호이동 라디오 이벤트
   document.querySelectorAll('input[name="signup-type"]').forEach(radio => {
     radio.addEventListener('change', () => {
       currentSignupType = radio.value;
@@ -3033,11 +3042,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('label-mnp').style.background = isNew ? '' : 'var(--sim-soft)';
     });
   });
-
-  // 통신사 리스트 로드
   loadCarrierList();
-
-  // URL에서 주문번호 파라미터 확인 (QR 스캔 시)
   const urlParams = new URLSearchParams(window.location.search);
   const qrOrder = urlParams.get('order');
   if (qrOrder) {
@@ -3047,38 +3052,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-function loadCarrierList() {
+async function loadCarrierList() {
   const select = document.getElementById('ord-current-carrier');
   if (!select) return;
+  const carrier = currentOrderPlan.carrier || '';
+  let settingKey = 'mnp_carriers_skt';
+  if (carrier === 'KT') settingKey = 'mnp_carriers_kt';
+  else if (carrier === 'LG U+') settingKey = 'mnp_carriers_lg';
+
+  const MNP_DEFAULTS = {
+    mnp_carriers_skt: ['KT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+    mnp_carriers_kt:  ['SKT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+    mnp_carriers_lg:  ['SKT','KT','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
+  };
+
+  let carriers = MNP_DEFAULTS[settingKey];
   try {
-    // 현재 선택된 요금제의 통신사 파악
-    const carrier = currentOrderPlan.carrier || '';
-    let groupKey = 'ks_mnp_carriers_skt';
-    if (carrier === 'KT') groupKey = 'ks_mnp_carriers_kt';
-    else if (carrier === 'LG U+') groupKey = 'ks_mnp_carriers_lg';
-
-    const MNP_DEFAULTS = {
-      ks_mnp_carriers_skt: ['KT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
-      ks_mnp_carriers_kt:  ['SKT','LG U+','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
-      ks_mnp_carriers_lg:  ['SKT','KT','SK7모바일','헬로모바일','KT M모바일','U+알뜰모바일','기타 알뜰폰'],
-    };
-    const stored = localStorage.getItem(groupKey);
-    const carriers = stored ? JSON.parse(stored) : MNP_DEFAULTS[groupKey];
-
-    select.innerHTML = '<option value="">' + t('select_carrier') + '</option>';
-    carriers.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c; opt.textContent = c;
-      select.appendChild(opt);
-    });
+    const { data } = await sb.from('admin_settings').select('value').eq('key', settingKey).single();
+    if (data) carriers = data.value;
   } catch(e) {}
+
+  select.innerHTML = '<option value="">' + t('select_carrier') + '</option>';
+  carriers.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    select.appendChild(opt);
+  });
 }
 
 function openOrderForm(planName, carrier, price) {
   currentOrderPlan = { planName, carrier, price };
   const badge = document.getElementById('order-plan-info');
   if (badge) badge.textContent = carrier + ' · ' + planName + ' — ₩' + price + '/mo';
-  // 폼 초기화
   ['ord-name','ord-emergency','ord-arc','ord-email','ord-postcode','ord-address','ord-address-detail','ord-memo','ord-wish1','ord-wish2','ord-mnp-number'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
@@ -3092,7 +3097,7 @@ function openOrderForm(planName, carrier, price) {
   openModal('order-form-overlay');
 }
 
-function submitOrder() {
+async function submitOrder() {
   const name = document.getElementById('ord-name').value.trim();
   const emergency = document.getElementById('ord-emergency').value.trim();
   const arc = document.getElementById('ord-arc').value.trim();
@@ -3100,106 +3105,132 @@ function submitOrder() {
   const address = document.getElementById('ord-address').value.trim();
   const addressDetail = document.getElementById('ord-address-detail').value.trim();
 
-  // 필수 항목 체크
-  if (!name || !arc || !email || !address) {
-    alert(t('order_required_fields')); return;
-  }
-  // 이메일 형식 체크
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert(t('order_invalid_email')); return;
-  }
-  // 번호이동 체크
-  if (currentSignupType === 'mnp') {
-    const carrier = document.getElementById('ord-current-carrier').value;
-    const mnpNum = document.getElementById('ord-mnp-number').value.trim();
-    if (!carrier || !mnpNum) { alert(t('order_mnp_required')); return; }
-  }
+  if (!name || !arc || !email || !address) { alert(t('order_required_fields')); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert(t('order_invalid_email')); return; }
 
-  // 중복 체크: 동일 이메일 + (신규: 희망번호 없음 / 번호이동: 동일번호) — 진행중인 건
-  const orders = getOrderDB();
-  if (currentSignupType === 'mnp') {
-    const mnpNum = document.getElementById('ord-mnp-number').value.trim();
-    const dup = orders.find(o =>
-      o.email === email &&
-      o.signupType === 'mnp' &&
-      o.mnpNumber === mnpNum &&
-      !['cancelled','completed'].includes(o.status)
-    );
-    if (dup) {
-      alert(t('order_duplicate_mnp').replace('{n}', dup.orderNumber)); return;
-    }
-    // 재신청 횟수 체크
-    const cancelCount = orders.filter(o =>
-      o.email === email && o.signupType === 'mnp' && o.mnpNumber === mnpNum && o.status === 'cancelled'
-    ).length;
-    if (cancelCount >= 3) {
-      const lastCancel = orders.filter(o =>
-        o.email === email && o.mnpNumber === mnpNum && o.status === 'cancelled'
-      ).sort((a,b) => b.cancelledAt - a.cancelledAt)[0];
-      if (lastCancel) {
-        const waitHours = parseInt(localStorage.getItem('ks_reorder_wait_hours') || '6');
-        const waitMs = waitHours * 3600000;
-        const elapsed = Date.now() - lastCancel.cancelledAt;
-        if (elapsed < waitMs) {
-          const remaining = Math.ceil((waitMs - elapsed) / 60000);
-          alert(t('order_wait_required').replace('{m}', remaining)); return;
-        }
-      }
-    }
-  }
-
-  // 하루 동일 이메일 3건 제한
-  const today = new Date().toDateString();
-  const todayCount = orders.filter(o => o.email === email && new Date(o.createdAt).toDateString() === today).length;
-  if (todayCount >= 3) { alert(t('order_daily_limit')); return; }
-
-  // 주문번호 생성 및 저장
-  const orderNumber = generateOrderNumber();
-  const memo = document.getElementById('ord-memo').value.trim();
-  const wish1 = document.getElementById('ord-wish1')?.value.trim() || '';
-  const wish2 = document.getElementById('ord-wish2')?.value.trim() || '';
   const mnpCarrier = document.getElementById('ord-current-carrier')?.value || '';
   const mnpNumber = document.getElementById('ord-mnp-number')?.value.trim() || '';
 
-  const newOrder = {
-    orderNumber,
-    createdAt: Date.now(),
-    status: 'pending',
-    name, emergency, arc, email,
-    address: address + (addressDetail ? ' ' + addressDetail : ''),
-    postcode: document.getElementById('ord-postcode').value,
-    signupType: currentSignupType,
-    wish1, wish2, mnpCarrier, mnpNumber,
-    plan: currentOrderPlan.planName,
-    carrier: currentOrderPlan.carrier,
-    price: currentOrderPlan.price,
-    memo,
-    iccid: '', trackingNumber: '', cancelledAt: null, cancelCount: 0,
-    activationRequestedAt: null,
-  };
-  orders.push(newOrder);
-  saveOrderDB(orders);
+  if (currentSignupType === 'mnp' && (!mnpCarrier || !mnpNumber)) {
+    alert(t('order_mnp_required')); return;
+  }
 
-  closeModal('order-form-overlay');
+  // 버튼 비활성화 (중복 클릭 방지)
+  const submitBtn = document.querySelector('#order-form-overlay .btn-submit');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '처리 중...'; }
 
-  // 완료 모달 표시
-  document.getElementById('complete-order-number').textContent = orderNumber;
-  openModal('order-complete-overlay');
+  try {
+    // 중복 체크 (번호이동)
+    if (currentSignupType === 'mnp') {
+      const { data: dupData } = await sb.from('orders')
+        .select('order_number')
+        .eq('email', email)
+        .eq('signup_type', 'mnp')
+        .eq('mnp_number', mnpNumber)
+        .not('status', 'in', '("cancelled","completed")')
+        .limit(1);
+      if (dupData && dupData.length > 0) {
+        alert(t('order_duplicate_mnp').replace('{n}', dupData[0].order_number));
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('btn_submit_order'); }
+        return;
+      }
+
+      // 재신청 횟수 체크
+      const { data: cancelData } = await sb.from('orders')
+        .select('cancelled_at')
+        .eq('email', email)
+        .eq('mnp_number', mnpNumber)
+        .eq('status', 'cancelled')
+        .order('cancelled_at', { ascending: false });
+      if (cancelData && cancelData.length >= 3) {
+        const { data: settingData } = await sb.from('admin_settings').select('value').eq('key','reorder_wait_hours').single();
+        const waitHours = settingData ? parseInt(settingData.value) : 6;
+        const lastCancel = new Date(cancelData[0].cancelled_at).getTime();
+        const elapsed = Date.now() - lastCancel;
+        if (elapsed < waitHours * 3600000) {
+          const remaining = Math.ceil((waitHours * 3600000 - elapsed) / 60000);
+          alert(t('order_wait_required').replace('{m}', remaining));
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('btn_submit_order'); }
+          return;
+        }
+      }
+    }
+
+    // 하루 3건 제한
+    const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+    const { count: todayCount } = await sb.from('orders')
+      .select('*', { count: 'exact', head: true })
+      .eq('email', email)
+      .gte('created_at', todayStart.toISOString());
+    if (todayCount >= 3) {
+      alert(t('order_daily_limit'));
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('btn_submit_order'); }
+      return;
+    }
+
+    // 주문번호 생성
+    const orderNumber = await generateOrderNumber();
+    const wish1 = document.getElementById('ord-wish1')?.value.trim() || '';
+    const wish2 = document.getElementById('ord-wish2')?.value.trim() || '';
+    const memo = document.getElementById('ord-memo').value.trim();
+
+    const { error } = await sb.from('orders').insert({
+      order_number: orderNumber,
+      status: 'pending',
+      name, emergency, arc, email,
+      postcode: document.getElementById('ord-postcode').value,
+      address: address + (addressDetail ? ' ' + addressDetail : ''),
+      signup_type: currentSignupType,
+      wish1, wish2,
+      mnp_carrier: mnpCarrier,
+      mnp_number: mnpNumber,
+      carrier: currentOrderPlan.carrier,
+      plan: currentOrderPlan.planName,
+      price: String(currentOrderPlan.price),
+      memo,
+    });
+
+    if (error) throw error;
+
+    closeModal('order-form-overlay');
+    document.getElementById('complete-order-number').textContent = orderNumber;
+
+    // 통신사별 공식 신청서 링크
+    const CARRIER_URLS = {
+      'SK Telecom': 'https://www.tworld.co.kr',
+      'KT': 'https://www.kt.com',
+      'LG U+': 'https://www.lguplus.com',
+    };
+    const officialBtn = document.getElementById('complete-official-form-btn');
+    if (officialBtn) officialBtn.href = CARRIER_URLS[currentOrderPlan.carrier] || '#';
+
+    openModal('order-complete-overlay');
+
+  } catch(err) {
+    console.error(err);
+    alert('오류가 발생했습니다. 다시 시도해주세요.');
+  } finally {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = t('btn_submit_order'); }
+  }
 }
 
 // 개통 요청 — 주문번호 조회
-function lookupOrder() {
+async function lookupOrder() {
   const input = document.getElementById('activate-order-input');
   const result = document.getElementById('activate-result');
   if (!input || !result) return;
   const orderNum = input.value.trim().toUpperCase();
   if (!orderNum) { alert(t('lookup_enter_order_number')); return; }
 
-  const orders = getOrderDB();
-  const order = orders.find(o => o.orderNumber === orderNum);
   result.style.display = 'block';
+  result.innerHTML = '<div style="text-align:center;padding:30px;color:var(--ink-soft);">조회 중...</div>';
 
-  if (!order) {
+  const { data: order, error } = await sb.from('orders')
+    .select('*')
+    .eq('order_number', orderNum)
+    .single();
+
+  if (error || !order) {
     result.innerHTML = `
       <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:12px;padding:18px 20px;text-align:center;">
         <div style="font-size:15px;font-weight:800;color:#991B1B;margin-bottom:6px;">${t('lookup_not_found_title')}</div>
@@ -3216,72 +3247,63 @@ function lookupOrder() {
   const canCancel = ['pending','processing'].includes(order.status);
 
   const statusMessages = {
-    pending:    t('status_msg_pending'),
-    processing: t('status_msg_processing'),
-    shipped:    t('status_msg_shipped'),
-    mismatch:   t('status_msg_mismatch'),
-    requested:  t('status_msg_requested'),
-    completed:  t('status_msg_completed'),
-    cancelled:  t('status_msg_cancelled'),
+    pending: t('status_msg_pending'), processing: t('status_msg_processing'),
+    shipped: t('status_msg_shipped'), mismatch: t('status_msg_mismatch'),
+    requested: t('status_msg_requested'), completed: t('status_msg_completed'),
+    cancelled: t('status_msg_cancelled'),
   };
 
   result.innerHTML = `
     <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;">
-      <!-- 상단 헤더 -->
       <div style="background:var(--bg);padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <div>
           <div style="font-size:11px;font-weight:700;color:var(--ink-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">${t('order_number_label')}</div>
-          <div style="font-size:18px;font-weight:800;font-family:monospace;color:var(--ink);">${order.orderNumber}</div>
+          <div style="font-size:18px;font-weight:800;font-family:monospace;color:var(--ink);">${order.order_number}</div>
         </div>
         <div style="display:inline-flex;align-items:center;padding:6px 14px;border-radius:100px;background:${st.bg};border:1.5px solid ${st.color}20;">
           <span style="width:8px;height:8px;border-radius:50%;background:${st.color};margin-right:7px;flex-shrink:0;"></span>
           <span style="font-size:13px;font-weight:800;color:${st.color};">${st.label}</span>
         </div>
       </div>
-      <!-- 상태 안내 메시지 -->
-      <div style="padding:14px 20px;background:${st.bg};border-bottom:1px solid var(--border);font-size:13px;color:${st.color};font-weight:600;line-height:1.6;">
-        ${statusMessages[order.status] || ''}
-      </div>
-      <!-- 주문 정보 -->
+      <div style="padding:14px 20px;background:${st.bg};border-bottom:1px solid var(--border);font-size:13px;color:${st.color};font-weight:600;line-height:1.6;">${statusMessages[order.status] || ''}</div>
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--border);">
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_full_name')}</span><span style="font-weight:700;color:var(--ink);">${order.name}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_plan')}</span><span style="font-weight:700;color:var(--sim);">${order.carrier} · ${order.plan}</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signupType === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_signup_type')}</span><span style="font-weight:700;color:var(--ink);">${order.signup_type === 'new' ? t('signup_new') : t('signup_mnp')}</span></div>
         ${order.iccid ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">ICCID</span><span style="font-weight:700;font-family:monospace;color:var(--ink);font-size:12px;">${order.iccid}</span></div>` : ''}
-        ${order.trackingNumber ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_tracking')}</span><span style="font-weight:700;color:var(--ink);">${order.trackingNumber}</span></div>` : ''}
+        ${order.tracking_number ? `<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--ink-soft);">${t('field_tracking')}</span><span style="font-weight:700;color:var(--ink);">${order.tracking_number}</span></div>` : ''}
       </div>
-      <!-- 액션 버튼 -->
       <div style="padding:16px 20px;display:flex;flex-direction:column;gap:8px;">
-        ${canRequest ? `<button onclick="submitActivationRequest('${order.orderNumber}')" style="width:100%;padding:13px;border-radius:100px;background:var(--accent);color:white;font-size:14px;font-weight:800;border:none;cursor:pointer;">${t('btn_request_activation')}</button>` : ''}
+        ${canRequest ? `<button onclick="submitActivationRequest('${order.order_number}')" style="width:100%;padding:13px;border-radius:100px;background:var(--accent);color:white;font-size:14px;font-weight:800;border:none;cursor:pointer;">${t('btn_request_activation')}</button>` : ''}
         ${isCompleted ? `<div style="text-align:center;padding:10px;font-size:13px;color:var(--job);font-weight:700;">${t('activation_complete_msg')}</div>` : ''}
         ${order.status === 'mismatch' ? `<a href="http://pf.kakao.com/_JbpxhX/chat" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:100px;background:#3B1E08;color:#FAE100;font-size:14px;font-weight:800;text-decoration:none;">${t('activate_kakao_btn')}</a>` : ''}
-        ${canCancel ? `<button onclick="cancelOrder('${order.orderNumber}')" style="width:100%;padding:11px;border-radius:100px;background:var(--bg);color:var(--ink-soft);font-size:13px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;">${t('btn_cancel_order')}</button>` : ''}
+        ${canCancel ? `<button onclick="cancelOrder('${order.order_number}')" style="width:100%;padding:11px;border-radius:100px;background:var(--bg);color:var(--ink-soft);font-size:13px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;">${t('btn_cancel_order')}</button>` : ''}
         ${!canCancel && !isCompleted && !isCancelled ? `<div style="text-align:center;font-size:12px;color:var(--ink-light);padding:6px;">${t('cancel_not_available')}</div>` : ''}
       </div>
     </div>`;
 }
 
-function submitActivationRequest(orderNumber) {
-  const orders = getOrderDB();
-  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
-  if (idx === -1) return;
-  if (orders[idx].status !== 'shipped') { alert(t('activation_not_ready')); return; }
-  orders[idx].status = 'requested';
-  orders[idx].activationRequestedAt = Date.now();
-  saveOrderDB(orders);
+async function submitActivationRequest(orderNumber) {
+  const { error } = await sb.from('orders')
+    .update({ status: 'requested', activation_requested_at: new Date().toISOString() })
+    .eq('order_number', orderNumber)
+    .eq('status', 'shipped');
+  if (error) { alert('오류가 발생했습니다. 다시 시도해주세요.'); return; }
   alert(t('activation_request_success'));
   lookupOrder();
 }
 
-function cancelOrder(orderNumber) {
+async function cancelOrder(orderNumber) {
   if (!confirm(t('confirm_cancel_order'))) return;
-  const orders = getOrderDB();
-  const idx = orders.findIndex(o => o.orderNumber === orderNumber);
-  if (idx === -1) return;
-  orders[idx].status = 'cancelled';
-  orders[idx].cancelledAt = Date.now();
-  orders[idx].cancelCount = (orders[idx].cancelCount || 0) + 1;
-  saveOrderDB(orders);
+  const { data: order } = await sb.from('orders').select('cancel_count').eq('order_number', orderNumber).single();
+  const { error } = await sb.from('orders')
+    .update({
+      status: 'cancelled',
+      cancelled_at: new Date().toISOString(),
+      cancel_count: (order?.cancel_count || 0) + 1
+    })
+    .eq('order_number', orderNumber);
+  if (error) { alert('오류가 발생했습니다.'); return; }
   alert(t('cancel_success_msg'));
   lookupOrder();
 }
